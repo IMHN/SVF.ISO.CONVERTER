@@ -1,0 +1,221 @@
+мммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммм
+
+ўўўўўўўўўўўўўўўў  (c) s1ave77 (tm) [SUCKERS Inc. (SubNode Beta)]  ўўўўўўўўўўўўўўўў
+	
+пппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппп                                        
+мм м   ммм м  ммм м м ммм   м мм ммм мм м мм ммм мм м   ммм мммммммммммммммммммммм
+п  ммппВВл  млБлБпл   лВВппмм  п   лллл   лллл   п  ммппВВл лпБлпплпБл лпБлпплпБл 
+ млпплБББл пплВВл л   лБББлпплм    лплл   ллпл    млпплБББл лББл  лВВл лББл  лВВл 
+лВБл  лААл   лВВБ л   лААл  лВВл   лВВл   лВВл   лВБл  лААл ллпп  лВВл ллпп  лВВл 
+лВВл  пплп   лББА л   плпп  лВВл   лВВл   лВВл   лББл  лБлм    м  ллБл    м  ллБл 
+ пллм    мВм пАББ п мВм    млББл   ллБл   лБлл   ллБл  лААл мВм   пББл мВм   пББл 
+лм  пллмм п  лААВ л  п ммлпплББл м лББл   лББл м лААлммлпп   п м  лААл  п м  лААл 
+      лллл   лААБпл   лллл  лААм м мААл   лААм м мААлп            лААл       лААл 
+ллмм  лВВл   БлББ л   лВВл  пААл   ллАл   лАлл   лББл  ммлл  п  п лББп  п  п лББп 
+лВВл  лББл м лААА л м лББл  лБмл   лББл   лББл   лББл  лААл  АлпА лББл  АлпА лББл 
+мББл  лААм м мВВВ м м мААл  лВВл   пм л   л мп   ллБл  лББм  ББ А лВВл  ББ А лВВл 
+лААл  ллмл   ллБл л   лмлл  лВлл мВм пллмллп мВм лБмл  лллл  м пп лВВл  м пп лВВл 
+ ппллллп м ммлмллмлмм  пплллллллм п м  плп  м п м ппллллп ммпВп ммллллмпВп ммллллм
+
+мммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммм
+
+ўўўўўўўўўўўўўўўўўўўўў +++ P R O U D L Y P R E S E N T S +++ ўўўўўўўўўўўўўўўўўўўўўў
+	
+пппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппп  
+мммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммм
+
+ўўўўўўўўў RELEASE NAME:  [s1ave77s S-M-R-T SVF ISO CONVERTER v0.03.01]  ўўўўўўўўўў
+
+пппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппп 
+	
+пппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппп  
+ 
+ўўўўўўўўўўўўўўўўўўўўўўўўўўўўўў +++ C R E D I T S +++ ўўўўўўўўўўўўўўўўўўўўўўўўўўўўў
+	
+пппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппп  
+
+
+
+
+	mkuba50 @MDL for providing the download script
+	Enthousiast @MDL for the SVF share
+	
+	me for the Front End Script
+	
+	
+	
+мммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммм
+
+ўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўў +++ N O T E S +++ ўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўў
+	
+пппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппп 
+
+
+
+
+	Tool uses the static links for the Enterprise EVAL ISOs to download as source.
+	
+	Then downloads the SVF to create the en-us Consumer or Business ISO from it.
+	
+	When source was created properly it will download the SVF for the chosen language
+	and create the ISO.
+	
+	
+	In case the EVAL/Consumer/Business ISOs are present, the download is skipped, just copy them 
+	to tools folder.
+	
+	1803 17134.1
+	
+	SOURCE ISO INFO:
+	
+		Source x86: 
+		
+		ddb496534203cb98284e5484e0ad60af3c0efce7 *17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us.iso
+		
+		Source x64: 
+		
+		a4ea45ec1282e85fc84af49acf7a8d649c31ac5c *17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso
+		
+	Will be converted to:
+		
+		Source Consumer x86:
+		
+		3f2063b7419675e98c8df82bc0607bbb1ce298bb *en_windows_10_consumer_editions_version_1803_updated_march_2018_x86_dvd_12063380.iso
+		
+		!!! Is identic to Win10_1803_English_x32.iso from Techbench. Simply rename to above name !!!
+		
+		Source Consumer x64:
+		
+		08fbb24627fa768f869c09f44c5d6c1e53a57a6f *en_windows_10_consumer_editions_version_1803_updated_march_2018_x64_dvd_12063379.iso
+		
+		!!! Is identic to Win10_1803_English_x64.iso from Techbench. Simply rename to above name !!!
+		
+		Containing:
+			
+			[01] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Home | Core
+			[02] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Home N | CoreN
+			[03] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Home Single Language | CoreSingleLanguage
+			[04] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Education | Education
+			[05] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Education N | EducationN
+			[06] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro | Professional
+			[07] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro N | ProfessionalN
+			[08] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro Education | ProfessionalEducation
+			[09] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro Education N | ProfessionalEducationN
+			[10] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro for Workstations | ProfessionalWorkstation
+			[11] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro N for Workstations | ProfessionalWorkstationN
+		
+		
+		Source Business x86:
+		
+		a3becd56ba0df0b023a13fe0b3e85f45461fa7ea *en_windows_10_business_editions_version_1803_updated_march_2018_x86_dvd_12063341.iso
+		
+		Source Business x64:
+		
+		28681742fe850aa4bfc7075811c5244b61d462cf *en_windows_10_business_editions_version_1803_updated_march_2018_x64_dvd_12063333.iso
+		
+		Cointaining:
+		
+			[01] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Education | Education
+			[02] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Education N | EducationN
+			[03] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Enterprise | Enterprise
+			[04] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Enterprise N | EnterpriseN
+			[05] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro | Professional
+			[06] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro N | ProfessionalN
+			[07] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro Education | ProfessionalEducation
+			[08] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro Education N | ProfessionalEducationN
+			[09] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro for Workstations | ProfessionalWorkstation
+			[10] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro N for Workstations | ProfessionalWorkstationN
+	
+
+	
+	LTSB 2016 14393.0
+	
+		Source x86:
+
+		45e72d02ff17125c699558719eb946d8e140c9cc *en_windows_10_enterprise_2016_ltsb_x86_dvd_9060010.iso
+
+		Source x64:
+
+		031ed6acdc47b8f582c781b039f501d83997a1cf *en_windows_10_enterprise_2016_ltsb_x64_dvd_9059483.iso
+
+		Source N x86:
+
+		3f8f9811a7e72adf88215060e38ba81340dfb0c0 *en_windows_10_enterprise_2016_ltsb_n_x86_dvd_9058202.iso
+
+		Source N x64:
+
+		b5d4911bd53ec5029781ade0937dad43c4ed90f6 *en_windows_10_enterprise_2016_ltsb_n_x64_dvd_9057894.iso
+
+
+	
+	
+	
+	1709 16299.125
+	
+	
+	
+	Use path with no spaces for project location.
+	
+	
+	
+мммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммм
+
+ўўўўўўўўўўўўўўўўўўўўўўўўўўўў +++ F E A T U R E S +++ ўўўўўўўўўўўўўўўўўўўўўўўўўўўўў
+	
+пппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппп 
+   
+мммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммм
+ўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўў	
+мммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммм
+ўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўў	
+пппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппп 
+
+	
+	
+
+	
+	
+мммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммм
+
+ўўўўўўўўўўўўўўўўўўўўўўўўўўў +++ C H A N G E L O G +++ ўўўўўўўўўўўўўўўўўўўўўўўўўўўў
+	
+пппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппп 
+		
+	v0.03.01
+	--added 1709 16299.125 creation
+		
+	v0.02.01
+	--added EVAL ISO hash check in 1803 process to avoid errors if corrupted
+		(thanks to mkuba50)
+	--added option to download LTSB 2016 SVFs from Enthousiasts file share
+		
+	v0.01.21
+	--switched from powershell to embedded busybox for hash check and colored output
+		
+	v0.01.14
+	--new download script by mkuba50
+		
+	v0.00.01
+	--initial release
+
+мммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммм
+
+ўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўў +++ E N D +++ ўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўўў
+	
+пппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппп 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
