@@ -66,67 +66,68 @@
 	
 	1803 17134.1
 	
-	SOURCE ISO INFO:
-	
-		Source x86: 
+		SOURCE ISO INFO:
 		
-		ddb496534203cb98284e5484e0ad60af3c0efce7 *17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us.iso
-		
-		Source x64: 
-		
-		a4ea45ec1282e85fc84af49acf7a8d649c31ac5c *17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso
-		
-	Will be converted to:
-		
-		Source Consumer x86:
-		
-		3f2063b7419675e98c8df82bc0607bbb1ce298bb *en_windows_10_consumer_editions_version_1803_updated_march_2018_x86_dvd_12063380.iso
-		
-		!!! Is identic to Win10_1803_English_x32.iso from Techbench. Simply rename to above name !!!
-		
-		Source Consumer x64:
-		
-		08fbb24627fa768f869c09f44c5d6c1e53a57a6f *en_windows_10_consumer_editions_version_1803_updated_march_2018_x64_dvd_12063379.iso
-		
-		!!! Is identic to Win10_1803_English_x64.iso from Techbench. Simply rename to above name !!!
-		
-		Containing:
+			Source x86: 
 			
-			[01] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Home | Core
-			[02] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Home N | CoreN
-			[03] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Home Single Language | CoreSingleLanguage
-			[04] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Education | Education
-			[05] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Education N | EducationN
-			[06] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro | Professional
-			[07] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro N | ProfessionalN
-			[08] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro Education | ProfessionalEducation
-			[09] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro Education N | ProfessionalEducationN
-			[10] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro for Workstations | ProfessionalWorkstation
-			[11] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro N for Workstations | ProfessionalWorkstationN
-		
-		
-		Source Business x86:
-		
-		a3becd56ba0df0b023a13fe0b3e85f45461fa7ea *en_windows_10_business_editions_version_1803_updated_march_2018_x86_dvd_12063341.iso
-		
-		Source Business x64:
-		
-		28681742fe850aa4bfc7075811c5244b61d462cf *en_windows_10_business_editions_version_1803_updated_march_2018_x64_dvd_12063333.iso
-		
-		Cointaining:
-		
-			[01] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Education | Education
-			[02] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Education N | EducationN
-			[03] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Enterprise | Enterprise
-			[04] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Enterprise N | EnterpriseN
-			[05] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro | Professional
-			[06] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro N | ProfessionalN
-			[07] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro Education | ProfessionalEducation
-			[08] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro Education N | ProfessionalEducationN
-			[09] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro for Workstations | ProfessionalWorkstation
-			[10] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro N for Workstations | ProfessionalWorkstationN
+			ddb496534203cb98284e5484e0ad60af3c0efce7 *17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us.iso
+			
+			Source x64: 
+			
+			a4ea45ec1282e85fc84af49acf7a8d649c31ac5c *17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso
+			
+		Will be converted to:
+			
+			Source Consumer x86:
+			
+			3f2063b7419675e98c8df82bc0607bbb1ce298bb *en_windows_10_consumer_editions_version_1803_updated_march_2018_x86_dvd_12063380.iso
+			
+			!!! Is identic to Win10_1803_English_x32.iso from Techbench. Simply rename to above name !!!
+			
+			Source Consumer x64:
+			
+			08fbb24627fa768f869c09f44c5d6c1e53a57a6f *en_windows_10_consumer_editions_version_1803_updated_march_2018_x64_dvd_12063379.iso
+			
+			!!! Is identic to Win10_1803_English_x64.iso from Techbench. Simply rename to above name !!!
+			
+			Containing:
+				
+				[01] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Home | Core
+				[02] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Home N | CoreN
+				[03] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Home Single Language | CoreSingleLanguage
+				[04] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Education | Education
+				[05] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Education N | EducationN
+				[06] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro | Professional
+				[07] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro N | ProfessionalN
+				[08] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro Education | ProfessionalEducation
+				[09] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro Education N | ProfessionalEducationN
+				[10] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro for Workstations | ProfessionalWorkstation
+				[11] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro N for Workstations | ProfessionalWorkstationN
+			
+			
+			Source Business x86:
+			
+			a3becd56ba0df0b023a13fe0b3e85f45461fa7ea *en_windows_10_business_editions_version_1803_updated_march_2018_x86_dvd_12063341.iso
+			
+			Source Business x64:
+			
+			28681742fe850aa4bfc7075811c5244b61d462cf *en_windows_10_business_editions_version_1803_updated_march_2018_x64_dvd_12063333.iso
+			
+			Cointaining:
+			
+				[01] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Education | Education
+				[02] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Education N | EducationN
+				[03] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Enterprise | Enterprise
+				[04] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Enterprise N | EnterpriseN
+				[05] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro | Professional
+				[06] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro N | ProfessionalN
+				[07] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro Education | ProfessionalEducation
+				[08] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro Education N | ProfessionalEducationN
+				[09] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro for Workstations | ProfessionalWorkstation
+				[10] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro N for Workstations | ProfessionalWorkstationN
 	
 
+	
 	
 	LTSB 2016 14393.0
 	
@@ -152,6 +153,54 @@
 	
 	1709 16299.125
 	
+		SOURCE ISO INFO:
+		
+			Source x86: 
+			
+			4a75747a47eb689497fe57d64cec375c7949aa97 *16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us.iso
+			
+			Source x64: 
+			
+			3b5f9494d870726d6d8a833aaf6169a964b8a9be *16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso
+		
+		Will be converted to:
+		
+			Source for x64 Client:
+			
+			EA214EE684A5BB8230707104C54A3B74D92F1D69 *en_windows_10_multi-edition_version_1709_updated_dec_2017_x64_dvd_100406711.iso
+			
+			Source for x64 Volume:
+			
+			1851A0007321FA084145EA24B8D30BF7A72BF1C6 *en_windows_10_multi-edition_vl_version_1709_updated_dec_2017_x64_dvd_100406172.iso
+		
+			Source for x86 Client:
+			
+			36005D054F732119BBB00FD9A0E141D54712D751 *en_windows_10_multi-edition_version_1709_updated_dec_2017_x86_dvd_100406359.iso
+			
+			Source for x86 Volume:
+			
+			6EEFF9574366042ED5AD50C48F406CE10EF20E10 *en_windows_10_multi-edition_vl_version_1709_updated_dec_2017_x86_dvd_100406182.iso
+		
+		Consumer Cointaining:
+		
+			[01] 9/29/2017 en-US x64 10.0.16299.125 Windows 10 S | Cloud
+			[02] 9/29/2017 en-US x64 10.0.16299.125 Windows 10 S N | CloudN
+			[03] 9/29/2017 en-US x64 10.0.16299.125 Windows 10 Home | Core
+			[04] 9/29/2017 en-US x64 10.0.16299.125 Windows 10 Home N | CoreN
+			[05] 9/29/2017 en-US x64 10.0.16299.125 Windows 10 Home Single Language | CoreSingleLanguage
+			[06] 9/29/2017 en-US x64 10.0.16299.125 Windows 10 Education | Education
+			[07] 9/29/2017 en-US x64 10.0.16299.125 Windows 10 Education N | EducationN
+			[08] 9/29/2017 en-US x64 10.0.16299.125 Windows 10 Pro | Professional
+			[09] 9/29/2017 en-US x64 10.0.16299.125 Windows 10 Pro N | ProfessionalN	
+		
+		Business Containing:
+		
+			[01] 9/29/2017 en-US x64 10.0.16299.125 Windows 10 Education | Education
+			[02] 9/29/2017 en-US x64 10.0.16299.125 Windows 10 Education N | EducationN
+			[03] 9/29/2017 en-US x64 10.0.16299.125 Windows 10 Enterprise | Enterprise
+			[04] 9/29/2017 en-US x64 10.0.16299.125 Windows 10 Enterprise N | EnterpriseN
+			[05] 9/29/2017 en-US x64 10.0.16299.125 Windows 10 Pro | Professional
+			[06] 9/29/2017 en-US x64 10.0.16299.125 Windows 10 Pro N | ProfessionalN
 	
 	
 	Use path with no spaces for project location.
@@ -183,6 +232,9 @@
 		
 	v0.03.01
 	--added 1709 16299.125 creation
+	--added option to download/resume source ISO files
+	--switched to GitLab distribution
+	--shortened process if en-us version is the target
 		
 	v0.02.01
 	--added EVAL ISO hash check in 1803 process to avoid errors if corrupted

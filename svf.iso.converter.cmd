@@ -11,10 +11,12 @@ setlocal EnableDelayedExpansion
 ::===============================================================================================================
 pushd %~dp0
 set "database1803=files\database.1803.smrt"
-set "database1709=files\database.1709.smrt"
+set "database1709_1=files\database.1709.1.smrt"
+set "database1709_2=files\database.1709.2.smrt"
 set "databaseLTSB=files\database.LTSB.smrt"
 set "aria2c=files\aria2c\aria2c.exe"
 set "busybox=files\ISO\busybox.cmd"
+set "busybox2=files\ISO\busybox.2.cmd"
 set "svfx=files\svfx.exe"
 ::===============================================================================================================
 ::===============================================================================================================
@@ -40,12 +42,14 @@ echo:
 echo      [2] START 1709 PROCESS [16299.125]
 echo:
 echo      [3] START LTSB 2016 PROCESS [14393.0]
-echo:
+call :Footer
+echo      [D] DOWNLOAD/RESUME SOURCE ISO FILES
+call :Footer
 echo      [E] EXIT
 echo:
 call :MenuFooter
 echo:
-CHOICE /C 123E /N /M "[ USER ] YOUR CHOICE ?:"
+CHOICE /C 123DE /N /M "[ USER ] YOUR CHOICE ?:"
 if %errorlevel%==1 (
 	set "show=1803"
 	set "build=17134.1"
@@ -57,7 +61,8 @@ if %errorlevel%==2 (
 	goto:SVFISOProcess1803
 )
 if %errorlevel%==3 goto:SVFISOProcessLTSB16
-if %errorlevel%==4 goto:EXIT
+if %errorlevel%==4 goto:SourceISODownload
+if %errorlevel%==5 goto:EXIT
 goto:SVFISOMainMenu
 :================================================================================================================
 ::===============================================================================================================
@@ -124,46 +129,42 @@ if "%build%"=="17134.1" (
 		set "sishare=iAmZu6da4sFmKP9"
 ))
 if "%build%"=="16299.125" (
-	for /f "tokens=1,2,3* delims=|" %%a in ('type "%database1709%" ^| findstr /i "%lang%" ^| findstr /i "%arch%" ^| findstr /i "%type%"') do (
+	for /f "tokens=1,2,3* delims=|" %%a in ('type "%database1709_2%" ^| findstr /i "%lang%" ^| findstr /i "%arch%" ^| findstr /i "%type%"') do (
 		set "fshare=MLATBBhtSajfaLz"
 		set "fhash=%%b"
 		set "fname=%%c"
 	)
 	if "%type%"=="edition_version" if "%arch%"=="x86" (
-		set "foldershare=EN2XX%20Multi%20CLIENT%20x86%20SVF"
 		set "siename=16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us"
-		set "siehash=ddb496534203cb98284e5484e0ad60af3c0efce7"
+		set "siehash=4a75747a47eb689497fe57d64cec375c7949aa97"
 		set "sielink=http://care.dlservice.microsoft.com/dl/download/6/5/D/65D18931-F626-4A35-AD5B-F5DA41FE6B76/16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us.iso"
 		set "siname=en_windows_10_multi-edition_version_1709_updated_dec_2017_x86_dvd_100406359"
 		set "sihash=36005d054f732119bbb00fd9a0e141d54712d751"
-		set "sishare=KtRGY6XX2kksnK6"
+		set "sishare=9JpXNkAkwCUsqcy"
 	)
 	if "%type%"=="edition_version" if "%arch%"=="x64" (
-		set "foldershare=EN2XX%20Multi%20CLIENT%20x64%20SVF"
 		set "siename=16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us"
-		set "siehash=a4ea45ec1282e85fc84af49acf7a8d649c31ac5c"
+		set "siehash=3b5f9494d870726d6d8a833aaf6169a964b8a9be"
 		set "sielink=http://care.dlservice.microsoft.com/dl/download/6/5/D/65D18931-F626-4A35-AD5B-F5DA41FE6B76/16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso"
 		set "siname=en_windows_10_multi-edition_version_1709_updated_dec_2017_x64_dvd_100406711"
 		set "sihash=ea214ee684a5bb8230707104c54a3b74d92f1d69"
-		set "sishare=H0ckQ69wcsFlIud"
+		set "sishare=Mfxoh7M2KNorBaE"
 	)
 	if "%type%"=="edition_vl_version" if "%arch%"=="x86" (
-		set "foldershare=EN2XX%20Multi%20VOLUME%20x86%20SVF"
 		set "siename=16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us"
-		set "siehash=ddb496534203cb98284e5484e0ad60af3c0efce7"
+		set "siehash=4a75747a47eb689497fe57d64cec375c7949aa97"
 		set "sielink=http://care.dlservice.microsoft.com/dl/download/6/5/D/65D18931-F626-4A35-AD5B-F5DA41FE6B76/16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us.iso"
 		set "siname=en_windows_10_multi-edition_vl_version_1709_updated_dec_2017_x86_dvd_100406182"
 		set "sihash=6eeff9574366042ed5ad50c48f406ce10ef20e10 "
-		set "sishare=wAqHUcjE6v3OAbr"
+		set "sishare=VRdCKPETWzFHOGH"
 	)
 	if "%type%"=="edition_vl_version" if "%arch%"=="x64" (
-		set "foldershare=EN2XX%20Multi%20VOLUME%20x64%20SVF"
 		set "siename=16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us"
-		set "siehash=a4ea45ec1282e85fc84af49acf7a8d649c31ac5c"
+		set "siehash=3b5f9494d870726d6d8a833aaf6169a964b8a9be"
 		set "sielink=http://care.dlservice.microsoft.com/dl/download/6/5/D/65D18931-F626-4A35-AD5B-F5DA41FE6B76/16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso"
 		set "siname=en_windows_10_multi-edition_vl_version_1709_updated_dec_2017_x64_dvd_100406172"
 		set "sihash=1851a0007321fa084145ea24b8d30bf7a72bf1c6"
-		set "sishare=iAmZu6da4sFmKP9"
+		set "sishare=SB0WYFMT6ZItmmc"
 ))
 echo [ INFO ] Source: %siename%
 echo [ INFO ] Hash  : %siehash%
@@ -250,13 +251,14 @@ if %dhash% equ %sihash% (
 	echo [ INFO ] Hash  : %dhash%
 	call :Footer
 )
+if "%lang%"=="en-us" goto:SourceChoiceOTHER
 echo [ INFO ] Downloading SVF ^(if not already pesent^).
 echo [ INFO ] Name  : %fname%
 call :Footer
 if not exist "%fname%.iso" (
 	if not exist "%fname%.svf" (
 		if "%build%"=="17134.1" call %busybox% "%fshare%", "%fname%.svf"
-		if "%build%"=="16299.125" call %busybox% "%fshare%", "%foldershare%/%fname%.svf"
+		if "%build%"=="16299.125" call %busybox% "%fshare%", "%fname%.svf", "%arch%", "%type%
 		call :Footer
 		pushd "%~dp0"
 		move "files\ISO\%fname%.svf" ".\" >nul 2>&1
@@ -288,6 +290,7 @@ if %dhash% equ %fhash% (
 	echo [ INFO ] Hash  : %dhash%
 	call :Footer
 )
+:SourceChoiceOTHER
 pause
 goto:SVFISOMainMenu
 :================================================================================================================
@@ -378,6 +381,7 @@ if %dhash% equ %sihash% (
 	echo [ INFO ] Hash  : %dhash%
 	call :Footer
 )
+if "%lang%"=="en-us" goto:SourceChoiceLTSB
 echo [ INFO ] Downloading SVF ^(if not already pesent^).
 echo [ INFO ] Name  : %fname%
 call :Footer
@@ -415,8 +419,103 @@ if %dhash% equ %fhash% (
 	echo [ INFO ] Hash  : %dhash%
 	call :Footer
 )
+:SourceChoiceLTSB
 pause
 goto:SVFISOMainMenu
+:================================================================================================================
+::===============================================================================================================
+::SOURCE ISO DOWNLOAD
+:SourceISODownload
+pushd %~dp0
+::===============================================================================================================
+cls
+call :MenuHeader "[HEADER] SOURCE ISO DOWNLOAD"
+echo:
+echo      [1] 1803
+echo:
+echo      [2] 1709
+echo:
+echo      [3] LTSB 2016
+call :Footer
+echo      [B] BACK
+call :Footer
+CHOICE /C 123B /N /M "[ USER ] YOUR CHOICE ?:"
+if %errorlevel%==1 set "build=1803"
+if %errorlevel%==2 set "build=1709"
+if %errorlevel%==3 set "build=1607"
+if %errorlevel%==4 goto:SVFISOMainMenu
+cls
+call :Header "[HEADER] SOURCE ISO DOWNLOAD"
+CHOICE /C 68 /N /M "[ USER ] x[6]4 or x[8]6 architecture ?:"
+if %errorlevel%==1 set "arch=x64"
+if %errorlevel%==2 set "arch=x86"
+call :Footer
+if "%build%"=="1607" (
+	CHOICE /C SN /N /M "[ USER ] [S]tandard or [N] Version ISO ?:"
+	if !errorlevel!==1 set "type=_ltsb_x"
+	if !errorlevel!==2 set "type=_ltsb_n"
+)
+if "%build%"=="1803" if "%arch%"=="x86" (
+	set "siname=17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us"
+	set "sihash=ddb496534203cb98284e5484e0ad60af3c0efce7"
+	set "silink=https://software-download.microsoft.com/download/pr/17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us.iso"
+)
+if "%build%"=="1803" if "%arch%"=="x64" (
+	set "siname=17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us"
+	set "sihash=a4ea45ec1282e85fc84af49acf7a8d649c31ac5c"
+	set "silink=https://software-download.microsoft.com/download/pr/17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso"
+)
+if "%build%"=="1709" if "%arch%"=="x86" (
+	set "siname=16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us"
+	set "sihash=4a75747a47eb689497fe57d64cec375c7949aa97"
+	set "silink=http://care.dlservice.microsoft.com/dl/download/6/5/D/65D18931-F626-4A35-AD5B-F5DA41FE6B76/16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us.iso"
+)
+if "%build%"=="1709" if "%arch%"=="x64" (
+	set "siname=16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us"
+	set "sihash=3b5f9494d870726d6d8a833aaf6169a964b8a9be"
+	set "silink=http://care.dlservice.microsoft.com/dl/download/6/5/D/65D18931-F626-4A35-AD5B-F5DA41FE6B76/16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso"
+)
+if "%build%"=="1607" if "%arch%"=="x86" if "%type%"=="_ltsb_x" (
+	set "siname=en_windows_10_enterprise_2016_ltsb_x86_dvd_9060010"
+	set "sihash=45e72d02ff17125c699558719eb946d8e140c9cc"
+	set "ariascript=files\aria2c\aria.ltsb.%arch%.txt"
+)
+if "%build%"=="1607" if "%arch%"=="x64" if "%type%"=="_ltsb_x" (
+	set "siname=en_windows_10_enterprise_2016_ltsb_x64_dvd_9059483"
+	set "sihash=031ed6acdc47b8f582c781b039f501d83997a1cf"
+	set "ariascript=files\aria2c\aria.ltsb.%arch%.txt"
+)
+if "%build%"=="1607" if "%arch%"=="x86" if "%type%"=="_ltsb_n" (
+	set "siname=en_windows_10_enterprise_2016_ltsb_n_x86_dvd_9058202"
+	set "sihash=3f8f9811a7e72adf88215060e38ba81340dfb0c0"
+	set "ariascript=files\aria2c\aria.ltsb.%arch%.n.txt"
+)
+if "%build%"=="1607" if "%arch%"=="x64" if "%type%"=="_ltsb_n" (
+	set "siname=en_windows_10_enterprise_2016_ltsb_n_x64_dvd_9057894"
+	set "sihash=b5d4911bd53ec5029781ade0937dad43c4ed90f6"
+	set "ariascript=files\aria2c\aria.ltsb.%arch%.n.txt"
+)
+cls
+call :Header "[HEADER] SOURCE ISO DOWNLOAD"
+echo [ INFO ] Source: %siname%
+echo [ INFO ] Hash  : %sihash%
+call :Footer
+CHOICE /C SB /N /M "[ USER ] [S]tart or [B]ack ?:"
+if %errorlevel%==2 goto:SourceISODownload
+call :Footer
+echo [ INFO ] Downloading.
+call :Footer
+if "%build%"=="1607" (
+	"%aria2c%" -x16 -s16 -d"%cd%" -i "%ariascript%" -R -c --file-allocation=none --check-certificate=false
+)
+if not "%build%"=="1607" (
+	call :AriaWrite "%silink%", "%siname%.iso", "%sihash%"
+	"%aria2c%" -x16 -s16 -d"%cd%" -i "aria.txt" -R -c --file-allocation=none --check-certificate=false
+	if exist "aria.txt" del /f /q "aria.txt" >nul 2>&1
+)
+call :Footer
+pause
+goto:SourceISODownload
 ::===============================================================================================================
 :================================================================================================================
 ::===============================================================================================================
