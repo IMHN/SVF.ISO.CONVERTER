@@ -15,6 +15,11 @@ setlocal EnableDelayedExpansion
 :================================================================================================================
 ::===============================================================================================================
 pushd %~dp0
+::===============================================================================================================
+::===============================================================================================================
+for /f "tokens=2* delims= " %%a in ('reg query "HKLM\System\CurrentControlSet\Control\Session Manager\Environment" /v "PROCESSOR_ARCHITECTURE"') do if "%%b"=="AMD64" (set vera=x64) else (set vera=x86)
+::===============================================================================================================
+::===============================================================================================================
 set "database1803=files\database.1803.smrt"
 set "database1709_1=files\database.1709.1.smrt"
 set "database1709_2=files\database.1709.2.smrt"
@@ -22,11 +27,7 @@ set "databaseLTSB=files\database.LTSB.smrt"
 set "aria2c=files\aria2c\aria2c.exe"
 set "busybox=files\ISO\busybox.cmd"
 set "busybox2=files\ISO\busybox.2.cmd"
-set "svfx=files\svfx.exe"
-::===============================================================================================================
-::===============================================================================================================
-for /f "tokens=2* delims= " %%a in ('reg query "HKLM\System\CurrentControlSet\Control\Session Manager\Environment" /v "PROCESSOR_ARCHITECTURE"') do if "%%b"=="AMD64" (set vera=x64) else (set vera=x86)
-
+set "smv=files\ISO\smv_%vera%.exe"
 :================================================================================================================
 ::===============================================================================================================
 :================================================================================================================
@@ -42,6 +43,8 @@ echo [CREDIT] mkuba50 for SVF Download Script [forums.mydigitallife.net]
 echo:
 call :MenuFooter
 echo:
+echo      [C] CREATE SVF/ISO
+call :Footer
 echo      [1] START 1803 PROCESS [17134.1]
 echo:
 echo      [2] START 1709 PROCESS [16299.125]
@@ -54,20 +57,21 @@ echo      [E] EXIT
 echo:
 call :MenuFooter
 echo:
-CHOICE /C 123DE /N /M "[ USER ] YOUR CHOICE ?:"
-if %errorlevel%==1 (
+CHOICE /C C123DE /N /M "[ USER ] YOUR CHOICE ?:"
+if %errorlevel%==1 goto:SVFISOCreate
+if %errorlevel%==2 (
 	set "show=1803"
 	set "build=17134.1"
 	goto:SVFISOProcess1803
 )
-if %errorlevel%==2 (
+if %errorlevel%==3 (
 	set "show=1709"
 	set "build=16299.125"
 	goto:SVFISOProcess1803
 )
-if %errorlevel%==3 goto:SVFISOProcessLTSB16
-if %errorlevel%==4 goto:SourceISODownload
-if %errorlevel%==5 goto:EXIT
+if %errorlevel%==4 goto:SVFISOProcessLTSB16
+if %errorlevel%==5 goto:SourceISODownload
+if %errorlevel%==6 goto:EXIT
 goto:SVFISOMainMenu
 :================================================================================================================
 ::===============================================================================================================
@@ -233,9 +237,9 @@ if not exist "%siname%.iso" (
 	echo [ INFO ] Creating Source ISO.
 	echo [ INFO ] Name  : %siname%
 	call :Footer
-	xcopy "files\ISO\smv.exe" /s ".\" /Q /Y >nul 2>&1
-	smv x %siname%.svf -br .
-	if exist "smv.exe" del /f /q "smv.exe" >nul 2>&1
+	xcopy "%smv%" /s ".\" /Q /Y >nul 2>&1
+	smv_%vera% x %siname%.svf -br .
+	if exist "smv_%vera%.exe" del /f /q "smv_%vera%.exe" >nul 2>&1
 	call :Footer
 )
 echo [ INFO ] Checking Source ISO Hash.
@@ -272,9 +276,9 @@ if not exist "%fname%.iso" (
 	echo [ INFO ] Target: %fname%
 	echo [ INFO ] Hash  : %fhash%
 	call :Footer
-	xcopy "files\ISO\smv.exe" /s ".\" /Q /Y >nul 2>&1
-	smv x %fname%.svf -br .
-	if exist "smv.exe" del /f /q "smv.exe" >nul 2>&1
+	xcopy "%smv%" /s ".\" /Q /Y >nul 2>&1
+	smv_%vera% x %fname%.svf -br .
+	if exist "smv_%vera%.exe" del /f /q "smv_%vera%.exe" >nul 2>&1
 	call :Footer
 )
 echo [ INFO ] Checking Target ISO Hash.
@@ -332,7 +336,7 @@ if "%type%"=="_ltsb_x" if "%arch%"=="x86" (
 	set "sihash=45e72d02ff17125c699558719eb946d8e140c9cc"
 	set "siphash=f60802ce368c3e1ce29fa81630af1cb82f579ace"
 	set "sipname=2016_LTSB_SVF/%arch%/%fname%.svf"
-	set "silink=https://www.upload.ee/download/8416235/31e3310275e913777bb8/9060010.svf"
+	set "silink=https://dl.dropboxusercontent.com/s/vfz5r07vguc7vht/9060010.svf?dl=0"
 )
 if "%type%"=="_ltsb_x" if "%arch%"=="x64" (
 	set "siename=14393.0.160715-1616.RS1_RELEASE_CLIENTENTERPRISE_S_EVAL_X64FRE_EN-US"
@@ -342,7 +346,7 @@ if "%type%"=="_ltsb_x" if "%arch%"=="x64" (
 	set "sihash=031ed6acdc47b8f582c781b039f501d83997a1cf"
 	set "siphash=f60802ce368c3e1ce29fa81630af1cb82f579ace"
 	set "sipname=2016_LTSB_SVF/%arch%/%fname%.svf"
-	set "silink=https://www.upload.ee/download/8416239/93f0de2ff3e913777bec/9059483.svf"
+	set "silink=https://dl.dropboxusercontent.com/s/zdrkycf232x300u/9059483.svf?dl=0"
 )
 if "%type%"=="_ltsb_n" if "%arch%"=="x86" (
 	set "siename=14393.0.160715-1616.RS1_RELEASE_CLIENTENTERPRISE_S_EVAL_X86FRE_EN-US"
@@ -352,7 +356,7 @@ if "%type%"=="_ltsb_n" if "%arch%"=="x86" (
 	set "sihash=3f8f9811a7e72adf88215060e38ba81340dfb0c0"
 	set "siphash=e3067f61491a87a8cf2d0873e43d340e24dcdc6e"
 	set "sipname=2016_LTSB_N_SVF/%arch%/%fname%.svf"
-	set "silink=https://www.upload.ee/download/8416253/2fbe99201c0113777c32/9058202.svf"
+	set "silink=https://dl.dropboxusercontent.com/s/4zirgroy2wbvbo8/9058202.svf?dl=0"
 )
 if "%type%"=="_ltsb_n" if "%arch%"=="x64" (
 	set "siename=14393.0.160715-1616.RS1_RELEASE_CLIENTENTERPRISE_S_EVAL_X64FRE_EN-US"
@@ -362,7 +366,7 @@ if "%type%"=="_ltsb_n" if "%arch%"=="x64" (
 	set "sihash=b5d4911bd53ec5029781ade0937dad43c4ed90f6"
 	set "siphash=c093f60e8d50794460f3ec5789f4e65e477fc047"
 	set "sipname=2016_LTSB_N_SVF/%arch%/%fname%.svf"
-	set "silink=https://www.upload.ee/download/8416249/b6cf9cc1119413777c0d/9057894.svf"
+	set "silink=https://dl.dropboxusercontent.com/s/elhqzdc4jthh2q2/9057894.svf?dl=0"
 )
 echo [ INFO ] Source: %siename%
 echo [ INFO ] Hash  : %siehash%
@@ -425,9 +429,9 @@ if not exist "%siname%.iso" (
 	echo [ INFO ] Creating Source ISO.
 	echo [ INFO ] Name  : %siname%
 	call :Footer
-	xcopy "files\ISO\smv.exe" /s ".\" /Q /Y >nul 2>&1
-	smv x %siname%.svf -br .
-	if exist "smv.exe" del /f /q "smv.exe" >nul 2>&1
+	xcopy "%smv%" /s ".\" /Q /Y >nul 2>&1
+	smv_%vera% x %siname%.svf -br .
+	if exist "smv_%vera%.exe" del /f /q "smv_%vera%.exe" >nul 2>&1
 	call :Footer
 )
 echo [ INFO ] Checking Source ISO Hash.
@@ -463,9 +467,9 @@ if not exist "%fname%.iso" (
 	echo [ INFO ] Target: %fname%
 	echo [ INFO ] Hash  : %fhash%
 	call :Footer
-	xcopy "files\ISO\smv.exe" /s ".\" /Q /Y >nul 2>&1
-	smv x %fname%.svf -br .
-	if exist "smv.exe" del /f /q "smv.exe" >nul 2>&1
+	xcopy "%smv%" /s ".\" /Q /Y >nul 2>&1
+	smv_%vera% x %fname%.svf -br .
+	if exist "smv_%vera%.exe" del /f /q "smv_%vera%.exe" >nul 2>&1
 	call :Footer
 )
 echo [ INFO ] Checking Target ISO Hash.
@@ -489,6 +493,78 @@ if %dhash% equ %fhash% (
 :SourceChoiceLTSB
 pause
 goto:SVFISOMainMenu
+:================================================================================================================
+::===============================================================================================================
+:: SVF/ISO CREATION
+:SVFISOCreate
+pushd %~dp0
+::===============================================================================================================
+cls
+call :MenuHeader "[HEADER] SVF/ISO CREATION"
+echo:
+echo      [S] CREATE SVF
+echo:
+echo      [I] CREATE ISO
+echo:
+call :Footer
+echo      [B] BACK
+call :Footer
+CHOICE /C SIB /N /M "[ USER ] YOUR CHOICE ?:"
+if %errorlevel%==1 goto:CreateSVF
+if %errorlevel%==2 goto:CreateISO
+if %errorlevel%==3 goto:SVFISOMainMenu
+goto:SVFISOCreate
+::===============================================================================================================
+:CreateSVF
+cls
+call :Header "[HEADER] SVF CREATION"
+echo Enter Source ISO name ^(no extension^)
+echo Default: %siname%
+call :Footer
+set /p siname=Source ISO name ^>
+call :Footer
+echo Enter Target ISO name ^(no extension^)
+echo Default: %tname%
+call :Footer
+set /p tname=Target ISO name ^>
+call :Footer
+cls
+call :Header "[HEADER] SVF CREATION"
+echo [ INFO ] Source: %siname%
+echo [  TO  ]
+echo [ INFO ] Target: %tname%
+call :Footer
+CHOICE /C SB /N /M "[ USER ] [S]tart or [B]ack ?:"
+if %errorlevel%==2 goto:SVFISOCreate
+call :Footer
+xcopy "%smv%" /s ".\" /Q /Y >nul 2>&1
+smv_%vera% BuildPatch "%tname%" "%siname%.iso" "%tname%.iso" -nbhashbits 24 -compressratio 49 -sha1 -sha25
+if exist "smv_%vera%.exe" del /f /q "smv_%vera%.exe" >nul 2>&1
+call :Footer
+pause
+goto:SVFISOCreate
+::===============================================================================================================
+:CreateISO
+cls
+call :Header "[HEADER] ISO CREATION"
+echo Enter SVF name ^(no extension^)
+echo Default: %sname%
+call :Footer
+set /p sname=SVF name ^>
+call :Footer
+cls
+call :Header "[HEADER] ISO CREATION"
+echo [ INFO ] Target: %sname%
+call :Footer
+CHOICE /C SB /N /M "[ USER ] [S]tart or [B]ack ?:"
+if %errorlevel%==2 goto:SVFISOCreate
+call :Footer
+xcopy "%smv%" /s ".\" /Q /Y >nul 2>&1
+smv_%vera% x %sname%.svf -br .
+if exist "smv_%vera%.exe" del /f /q "smv_%vera%.exe" >nul 2>&1
+call :Footer
+pause
+goto:SVFISOCreate
 :================================================================================================================
 ::===============================================================================================================
 ::SOURCE ISO DOWNLOAD
@@ -597,12 +673,12 @@ exit
 ::===============================================================================================================
 ::TITLE
 :TITLE
-title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.03.15
+title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.04.01
 goto:eof
 ::===============================================================================================================
 ::VERSION
 :VERSION
-set "svfisoconverter=v0.03.15"
+set "svfisoconverter=v0.04.01"
 goto:eof
 :================================================================================================================
 ::===============================================================================================================
