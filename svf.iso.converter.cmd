@@ -325,29 +325,48 @@ for /f "tokens=1,2,3,4* delims=|" %%a in ('type "%databaseLTSB%" ^| findstr /i "
 	set "fname=%%c"
 )
 if "%type%"=="_ltsb_x" if "%arch%"=="x86" (
+	set "siename=14393.0.160715-1616.RS1_RELEASE_CLIENTENTERPRISE_S_EVAL_X86FRE_EN-US"
+	set "siehash=fd65bfe31af5fd59d8537210cd829fe3e83feeb2"
+	set "sielink=http://download.microsoft.com/download/1/B/F/1BFE5194-5951-452C-B62C-B2F667F9B86D/14393.0.160715-1616.RS1_RELEASE_CLIENTENTERPRISE_S_EVAL_X64FRE_EN-US.ISO"
 	set "siname=en_windows_10_enterprise_2016_ltsb_x86_dvd_9060010"
 	set "sihash=45e72d02ff17125c699558719eb946d8e140c9cc"
+	set "siphash=f60802ce368c3e1ce29fa81630af1cb82f579ace"
 	set "sipname=2016_LTSB_SVF/%arch%/%fname%.svf"
-	set "ariascript=files\aria2c\aria.ltsb.%arch%.txt"
+	set "silink=https://www.upload.ee/download/8416235/31e3310275e913777bb8/9060010.svf"
 )
 if "%type%"=="_ltsb_x" if "%arch%"=="x64" (
+	set "siename=14393.0.160715-1616.RS1_RELEASE_CLIENTENTERPRISE_S_EVAL_X64FRE_EN-US"
+	set "siehash=ed6e357cba8d716a6187095e3abd016564670d5b"
+	set "sielink=http://download.microsoft.com/download/1/B/F/1BFE5194-5951-452C-B62C-B2F667F9B86D/14393.0.160715-1616.RS1_RELEASE_CLIENTENTERPRISE_S_EVAL_X86FRE_EN-US.ISO"
 	set "siname=en_windows_10_enterprise_2016_ltsb_x64_dvd_9059483"
 	set "sihash=031ed6acdc47b8f582c781b039f501d83997a1cf"
+	set "siphash=f60802ce368c3e1ce29fa81630af1cb82f579ace"
 	set "sipname=2016_LTSB_SVF/%arch%/%fname%.svf"
-	set "ariascript=files\aria2c\aria.ltsb.%arch%.txt"
+	set "silink=https://www.upload.ee/download/8416239/93f0de2ff3e913777bec/9059483.svf"
 )
 if "%type%"=="_ltsb_n" if "%arch%"=="x86" (
+	set "siename=14393.0.160715-1616.RS1_RELEASE_CLIENTENTERPRISE_S_EVAL_X86FRE_EN-US"
+	set "siehash=fd65bfe31af5fd59d8537210cd829fe3e83feeb2"
+	set "sielink=http://download.microsoft.com/download/1/B/F/1BFE5194-5951-452C-B62C-B2F667F9B86D/14393.0.160715-1616.RS1_RELEASE_CLIENTENTERPRISE_S_EVAL_X64FRE_EN-US.ISO"
 	set "siname=en_windows_10_enterprise_2016_ltsb_n_x86_dvd_9058202"
 	set "sihash=3f8f9811a7e72adf88215060e38ba81340dfb0c0"
+	set "siphash=e3067f61491a87a8cf2d0873e43d340e24dcdc6e"
 	set "sipname=2016_LTSB_N_SVF/%arch%/%fname%.svf"
-	set "ariascript=files\aria2c\aria.ltsb.%arch%.n.txt"
+	set "silink=https://www.upload.ee/download/8416253/2fbe99201c0113777c32/9058202.svf"
 )
 if "%type%"=="_ltsb_n" if "%arch%"=="x64" (
+	set "siename=14393.0.160715-1616.RS1_RELEASE_CLIENTENTERPRISE_S_EVAL_X64FRE_EN-US"
+	set "siehash=ed6e357cba8d716a6187095e3abd016564670d5b"
+	set "sielink=http://download.microsoft.com/download/1/B/F/1BFE5194-5951-452C-B62C-B2F667F9B86D/14393.0.160715-1616.RS1_RELEASE_CLIENTENTERPRISE_S_EVAL_X86FRE_EN-US.ISO"
 	set "siname=en_windows_10_enterprise_2016_ltsb_n_x64_dvd_9057894"
 	set "sihash=b5d4911bd53ec5029781ade0937dad43c4ed90f6"
+	set "siphash=c093f60e8d50794460f3ec5789f4e65e477fc047"
 	set "sipname=2016_LTSB_N_SVF/%arch%/%fname%.svf"
-	set "ariascript=files\aria2c\aria.ltsb.%arch%.n.txt"
+	set "silink=https://www.upload.ee/download/8416249/b6cf9cc1119413777c0d/9057894.svf"
 )
+echo [ INFO ] Source: %siename%
+echo [ INFO ] Hash  : %siehash%
+echo [  TO  ]
 echo [ INFO ] Source: %siname%
 echo [ INFO ] Hash  : %sihash%
 call :Footer
@@ -359,13 +378,56 @@ if %errorlevel%==2 goto:SVFISOMainMenu
 ::===============================================================================================================
 cls
 call :Header "[HEADER] LTSB 2016 SVF ISO CONVERSION"
-echo [ INFO ] Source: %siname%
-echo [ INFO ] Hash  : %sihash%
+echo [ INFO ] Source: %siename%
+echo [ INFO ] Hash  : %siehash%
 call :Footer
 echo [ INFO ] Downloading Source ISO ^(if not already pesent^).
 call :Footer
 if not exist "%siname%.iso" (
-	"%aria2c%" -x16 -s16 -d"%cd%" -i "%ariascript%" -R -c --file-allocation=none --check-certificate=false
+	if not exist "%siename%.iso" (
+		echo [ INFO ] Downloading Eval ISO.
+		call :Footer
+		call :AriaWrite "%sielink%", "%siename%.iso", "%siehash%"
+		"%aria2c%" -x16 -s16 -d"%cd%" -i "aria.txt" -R -c --file-allocation=none --check-certificate=false
+		call :Footer
+		if exist "aria.txt" del /f /q "aria.txt" >nul 2>&1
+	)
+	if exist "%siename%.iso" (
+		echo [ INFO ] Source Eval ISO present.
+		echo [ INFO ] Checking Eval ISO Hash.
+		echo [ INFO ] Hash  : %siehash%
+		call :Footer
+		xcopy "files\ISO\busybox.exe" /s ".\" /Q /Y >nul 2>&1
+		for /f "tokens=1 delims= " %%a in ('busybox.exe sha1sum %siename%.iso') do set "dhash=%%a"
+		if exist "busybox.exe" del /f /q "busybox.exe" >nul 2>&1
+		if not !dhash! equ %siehash% (
+			files\ISO\busybox echo -e "\033[31;1m[ WARN ] Hash Mismatch!\033[0m"
+			echo [ INFO ] Hash  : !dhash!
+			call :Footer
+			pause
+			goto:SVFISOMainMenu
+		)
+		if !dhash! equ %siehash% (
+			files\ISO\busybox echo -e "\033[32;1m[ INFO ] ISO Hash matching.\033[0m"
+			echo [ INFO ] Hash  : !dhash!
+			call :Footer
+		)
+	)
+	if not exist "%siname%.svf" (
+		echo [ INFO ] Downloading Source ISO SVF.
+		echo [ INFO ] Name  : %siname%
+		call :Footer
+		"%aria2c%" -x16 -s16 -d"%cd%" -o"%siname%.svf" "%silink%"
+		call :Footer
+		if exist "aria.txt" del /f /q "aria.txt" >nul 2>&1
+		pushd "%~dp0"
+	)
+	echo [ INFO ] Creating Source ISO.
+	echo [ INFO ] Name  : %siname%
+	call :Footer
+	xcopy "files\ISO\smv.exe" /s ".\" /Q /Y >nul 2>&1
+	smv x %siname%.svf -br .
+	if exist "smv.exe" del /f /q "smv.exe" >nul 2>&1
 	call :Footer
 )
 echo [ INFO ] Checking Source ISO Hash.
@@ -535,12 +597,12 @@ exit
 ::===============================================================================================================
 ::TITLE
 :TITLE
-title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.03.08
+title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.03.15
 goto:eof
 ::===============================================================================================================
 ::VERSION
 :VERSION
-set "svfisoconverter=v0.03.08"
+set "svfisoconverter=v0.03.15"
 goto:eof
 :================================================================================================================
 ::===============================================================================================================
