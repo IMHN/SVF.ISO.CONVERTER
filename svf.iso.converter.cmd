@@ -198,10 +198,8 @@ if not exist "%siname%.iso" (
 	if not exist "%siename%.iso" (
 		echo [ INFO ] Downloading Eval ISO.
 		call :Footer
-		call :AriaWrite "%sielink%", "%siename%.iso", "%siehash%"
-		"%aria2c%" -x16 -s16 -d"%cd%" -i "aria.txt" -R -c --file-allocation=none --check-certificate=false
+		"%aria2c%" -x16 -s16 -d"%cd%" -o"%siename%.iso" --checksum=sha-1=%siehash% "%sielink%" -R -c --file-allocation=none --check-certificate=false
 		call :Footer
-		if exist "aria.txt" del /f /q "aria.txt" >nul 2>&1
 	)
 	if exist "%siename%.iso" (
 		echo [ INFO ] Source Eval ISO present.
@@ -331,7 +329,7 @@ for /f "tokens=1,2,3,4* delims=|" %%a in ('type "%databaseLTSB%" ^| findstr /i "
 if "%type%"=="_ltsb_x" if "%arch%"=="x86" (
 	set "siename=14393.0.160715-1616.RS1_RELEASE_CLIENTENTERPRISE_S_EVAL_X86FRE_EN-US"
 	set "siehash=fd65bfe31af5fd59d8537210cd829fe3e83feeb2"
-	set "sielink=http://download.microsoft.com/download/1/B/F/1BFE5194-5951-452C-B62C-B2F667F9B86D/14393.0.160715-1616.RS1_RELEASE_CLIENTENTERPRISE_S_EVAL_X64FRE_EN-US.ISO"
+	set "sielink=http://download.microsoft.com/download/1/B/F/1BFE5194-5951-452C-B62C-B2F667F9B86D/14393.0.160715-1616.RS1_RELEASE_CLIENTENTERPRISE_S_EVAL_X86FRE_EN-US.ISO"
 	set "siname=en_windows_10_enterprise_2016_ltsb_x86_dvd_9060010"
 	set "sihash=45e72d02ff17125c699558719eb946d8e140c9cc"
 	set "siphash=f60802ce368c3e1ce29fa81630af1cb82f579ace"
@@ -341,7 +339,7 @@ if "%type%"=="_ltsb_x" if "%arch%"=="x86" (
 if "%type%"=="_ltsb_x" if "%arch%"=="x64" (
 	set "siename=14393.0.160715-1616.RS1_RELEASE_CLIENTENTERPRISE_S_EVAL_X64FRE_EN-US"
 	set "siehash=ed6e357cba8d716a6187095e3abd016564670d5b"
-	set "sielink=http://download.microsoft.com/download/1/B/F/1BFE5194-5951-452C-B62C-B2F667F9B86D/14393.0.160715-1616.RS1_RELEASE_CLIENTENTERPRISE_S_EVAL_X86FRE_EN-US.ISO"
+	set "sielink=http://download.microsoft.com/download/1/B/F/1BFE5194-5951-452C-B62C-B2F667F9B86D/14393.0.160715-1616.RS1_RELEASE_CLIENTENTERPRISE_S_EVAL_X64FRE_EN-US.ISO"
 	set "siname=en_windows_10_enterprise_2016_ltsb_x64_dvd_9059483"
 	set "sihash=031ed6acdc47b8f582c781b039f501d83997a1cf"
 	set "siphash=f60802ce368c3e1ce29fa81630af1cb82f579ace"
@@ -351,7 +349,7 @@ if "%type%"=="_ltsb_x" if "%arch%"=="x64" (
 if "%type%"=="_ltsb_n" if "%arch%"=="x86" (
 	set "siename=14393.0.160715-1616.RS1_RELEASE_CLIENTENTERPRISE_S_EVAL_X86FRE_EN-US"
 	set "siehash=fd65bfe31af5fd59d8537210cd829fe3e83feeb2"
-	set "sielink=http://download.microsoft.com/download/1/B/F/1BFE5194-5951-452C-B62C-B2F667F9B86D/14393.0.160715-1616.RS1_RELEASE_CLIENTENTERPRISE_S_EVAL_X64FRE_EN-US.ISO"
+	set "sielink=http://download.microsoft.com/download/1/B/F/1BFE5194-5951-452C-B62C-B2F667F9B86D/14393.0.160715-1616.RS1_RELEASE_CLIENTENTERPRISE_S_EVAL_X86FRE_EN-US.ISO"
 	set "siname=en_windows_10_enterprise_2016_ltsb_n_x86_dvd_9058202"
 	set "sihash=3f8f9811a7e72adf88215060e38ba81340dfb0c0"
 	set "siphash=e3067f61491a87a8cf2d0873e43d340e24dcdc6e"
@@ -361,7 +359,7 @@ if "%type%"=="_ltsb_n" if "%arch%"=="x86" (
 if "%type%"=="_ltsb_n" if "%arch%"=="x64" (
 	set "siename=14393.0.160715-1616.RS1_RELEASE_CLIENTENTERPRISE_S_EVAL_X64FRE_EN-US"
 	set "siehash=ed6e357cba8d716a6187095e3abd016564670d5b"
-	set "sielink=http://download.microsoft.com/download/1/B/F/1BFE5194-5951-452C-B62C-B2F667F9B86D/14393.0.160715-1616.RS1_RELEASE_CLIENTENTERPRISE_S_EVAL_X86FRE_EN-US.ISO"
+	set "sielink=http://download.microsoft.com/download/1/B/F/1BFE5194-5951-452C-B62C-B2F667F9B86D/14393.0.160715-1616.RS1_RELEASE_CLIENTENTERPRISE_S_EVAL_X64FRE_EN-US.ISO"
 	set "siname=en_windows_10_enterprise_2016_ltsb_n_x64_dvd_9057894"
 	set "sihash=b5d4911bd53ec5029781ade0937dad43c4ed90f6"
 	set "siphash=c093f60e8d50794460f3ec5789f4e65e477fc047"
@@ -391,10 +389,8 @@ if not exist "%siname%.iso" (
 	if not exist "%siename%.iso" (
 		echo [ INFO ] Downloading Eval ISO.
 		call :Footer
-		call :AriaWrite "%sielink%", "%siename%.iso", "%siehash%"
-		"%aria2c%" -x16 -s16 -d"%cd%" -i "aria.txt" -R -c --file-allocation=none --check-certificate=false
+		"%aria2c%" -x16 -s16 -d"%cd%" -o"%siename%.iso" --checksum=sha-1=%siehash% "%sielink%" -R -c --file-allocation=none --check-certificate=false
 		call :Footer
-		if exist "aria.txt" del /f /q "aria.txt" >nul 2>&1
 	)
 	if exist "%siename%.iso" (
 		echo [ INFO ] Source Eval ISO present.
@@ -421,7 +417,7 @@ if not exist "%siname%.iso" (
 		echo [ INFO ] Downloading Source ISO SVF.
 		echo [ INFO ] Name  : %siname%
 		call :Footer
-		"%aria2c%" -x16 -s16 -d"%cd%" -o"%siname%.svf" "%silink%"
+		"%aria2c%" -x16 -s16 -d"%cd%" -o"%siname%.svf" "%silink%" -R -c --file-allocation=none --check-certificate=false
 		call :Footer
 		if exist "aria.txt" del /f /q "aria.txt" >nul 2>&1
 		pushd "%~dp0"
@@ -618,25 +614,15 @@ if "%build%"=="1709" if "%arch%"=="x64" (
 	set "sihash=3b5f9494d870726d6d8a833aaf6169a964b8a9be"
 	set "silink=http://care.dlservice.microsoft.com/dl/download/6/5/D/65D18931-F626-4A35-AD5B-F5DA41FE6B76/16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso"
 )
-if "%build%"=="1607" if "%arch%"=="x86" if "%type%"=="_ltsb_x" (
-	set "siname=en_windows_10_enterprise_2016_ltsb_x86_dvd_9060010"
-	set "sihash=45e72d02ff17125c699558719eb946d8e140c9cc"
-	set "ariascript=files\aria2c\aria.ltsb.%arch%.txt"
+if "%build%"=="1607" if "%arch%"=="x86" (
+	set "siname=14393.0.160715-1616.RS1_RELEASE_CLIENTENTERPRISE_S_EVAL_X86FRE_EN-US"
+	set "sihash=fd65bfe31af5fd59d8537210cd829fe3e83feeb2"
+	set "silink=http://download.microsoft.com/download/1/B/F/1BFE5194-5951-452C-B62C-B2F667F9B86D/14393.0.160715-1616.RS1_RELEASE_CLIENTENTERPRISE_S_EVAL_X86FRE_EN-US.ISO"
 )
-if "%build%"=="1607" if "%arch%"=="x64" if "%type%"=="_ltsb_x" (
-	set "siname=en_windows_10_enterprise_2016_ltsb_x64_dvd_9059483"
-	set "sihash=031ed6acdc47b8f582c781b039f501d83997a1cf"
-	set "ariascript=files\aria2c\aria.ltsb.%arch%.txt"
-)
-if "%build%"=="1607" if "%arch%"=="x86" if "%type%"=="_ltsb_n" (
-	set "siname=en_windows_10_enterprise_2016_ltsb_n_x86_dvd_9058202"
-	set "sihash=3f8f9811a7e72adf88215060e38ba81340dfb0c0"
-	set "ariascript=files\aria2c\aria.ltsb.%arch%.n.txt"
-)
-if "%build%"=="1607" if "%arch%"=="x64" if "%type%"=="_ltsb_n" (
-	set "siname=en_windows_10_enterprise_2016_ltsb_n_x64_dvd_9057894"
-	set "sihash=b5d4911bd53ec5029781ade0937dad43c4ed90f6"
-	set "ariascript=files\aria2c\aria.ltsb.%arch%.n.txt"
+if "%build%"=="1607" if "%arch%"=="x64" (
+	set "siname=14393.0.160715-1616.RS1_RELEASE_CLIENTENTERPRISE_S_EVAL_X64FRE_EN-US"
+	set "sihash=ed6e357cba8d716a6187095e3abd016564670d5b"
+	set "silink=http://download.microsoft.com/download/1/B/F/1BFE5194-5951-452C-B62C-B2F667F9B86D/14393.0.160715-1616.RS1_RELEASE_CLIENTENTERPRISE_S_EVAL_X64FRE_EN-US.ISO"
 )
 cls
 call :Header "[HEADER] SOURCE ISO DOWNLOAD"
@@ -648,14 +634,7 @@ if %errorlevel%==2 goto:SourceISODownload
 call :Footer
 echo [ INFO ] Downloading.
 call :Footer
-if "%build%"=="1607" (
-	"%aria2c%" -x16 -s16 -d"%cd%" -i "%ariascript%" -R -c --file-allocation=none --check-certificate=false
-)
-if not "%build%"=="1607" (
-	call :AriaWrite "%silink%", "%siname%.iso", "%sihash%"
-	"%aria2c%" -x16 -s16 -d"%cd%" -i "aria.txt" -R -c --file-allocation=none --check-certificate=false
-	if exist "aria.txt" del /f /q "aria.txt" >nul 2>&1
-)
+"%aria2c%" -x16 -s16 -d"%cd%" -o"%siname%.iso" --checksum=sha-1=%sihash% "%silink%" -R -c --file-allocation=none --check-certificate=false
 call :Footer
 pause
 goto:SourceISODownload
@@ -673,12 +652,12 @@ exit
 ::===============================================================================================================
 ::TITLE
 :TITLE
-title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.04.01
+title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.04.04
 goto:eof
 ::===============================================================================================================
 ::VERSION
 :VERSION
-set "svfisoconverter=v0.04.01"
+set "svfisoconverter=v0.04.04"
 goto:eof
 :================================================================================================================
 ::===============================================================================================================
