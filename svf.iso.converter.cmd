@@ -334,7 +334,7 @@ if "%type%"=="_ltsb_x" if "%arch%"=="x86" (
 	set "sihash=45e72d02ff17125c699558719eb946d8e140c9cc"
 	set "siphash=f60802ce368c3e1ce29fa81630af1cb82f579ace"
 	set "sipname=2016_LTSB_SVF/%arch%/%fname%.svf"
-	set "silink=https://dl.dropboxusercontent.com/s/vfz5r07vguc7vht/9060010.svf?dl=0"
+	set "silink=EVAL_LTSB_2_2016_LTSB/%arch%/!siname!.svf"
 )
 if "%type%"=="_ltsb_x" if "%arch%"=="x64" (
 	set "siename=14393.0.160715-1616.RS1_RELEASE_CLIENTENTERPRISE_S_EVAL_X64FRE_EN-US"
@@ -344,7 +344,7 @@ if "%type%"=="_ltsb_x" if "%arch%"=="x64" (
 	set "sihash=031ed6acdc47b8f582c781b039f501d83997a1cf"
 	set "siphash=f60802ce368c3e1ce29fa81630af1cb82f579ace"
 	set "sipname=2016_LTSB_SVF/%arch%/%fname%.svf"
-	set "silink=https://dl.dropboxusercontent.com/s/zdrkycf232x300u/9059483.svf?dl=0"
+	set "silink=EVAL_LTSB_2_2016_LTSB/%arch%/!siname!.svf"
 )
 if "%type%"=="_ltsb_n" if "%arch%"=="x86" (
 	set "siename=14393.0.160715-1616.RS1_RELEASE_CLIENTENTERPRISE_S_EVAL_X86FRE_EN-US"
@@ -354,7 +354,7 @@ if "%type%"=="_ltsb_n" if "%arch%"=="x86" (
 	set "sihash=3f8f9811a7e72adf88215060e38ba81340dfb0c0"
 	set "siphash=e3067f61491a87a8cf2d0873e43d340e24dcdc6e"
 	set "sipname=2016_LTSB_N_SVF/%arch%/%fname%.svf"
-	set "silink=https://dl.dropboxusercontent.com/s/4zirgroy2wbvbo8/9058202.svf?dl=0"
+	set "silink=EVAL_LTSB_2_2016_LTSB/%arch%/!siname!.svf"
 )
 if "%type%"=="_ltsb_n" if "%arch%"=="x64" (
 	set "siename=14393.0.160715-1616.RS1_RELEASE_CLIENTENTERPRISE_S_EVAL_X64FRE_EN-US"
@@ -364,7 +364,7 @@ if "%type%"=="_ltsb_n" if "%arch%"=="x64" (
 	set "sihash=b5d4911bd53ec5029781ade0937dad43c4ed90f6"
 	set "siphash=c093f60e8d50794460f3ec5789f4e65e477fc047"
 	set "sipname=2016_LTSB_N_SVF/%arch%/%fname%.svf"
-	set "silink=https://dl.dropboxusercontent.com/s/elhqzdc4jthh2q2/9057894.svf?dl=0"
+	set "silink=EVAL_LTSB_2_2016_LTSB/%arch%/!siname!.svf"
 )
 echo [ INFO ] Source: %siename%
 echo [ INFO ] Hash  : %siehash%
@@ -417,9 +417,10 @@ if not exist "%siname%.iso" (
 		echo [ INFO ] Downloading Source ISO SVF.
 		echo [ INFO ] Name  : %siname%
 		call :Footer
-		"%aria2c%" -x16 -s16 -d"%cd%" -o"%siname%.svf" "%silink%" -R -c --file-allocation=none --check-certificate=false
+		call %busybox% "vZysMUyuP9nbx0s", "%silink%"
 		call :Footer
-		if exist "aria.txt" del /f /q "aria.txt" >nul 2>&1
+		pushd "%~dp0"
+		move "files\ISO\%siname%.svf" ".\" >nul 2>&1
 		pushd "%~dp0"
 	)
 	echo [ INFO ] Creating Source ISO.
@@ -652,12 +653,12 @@ exit
 ::===============================================================================================================
 ::TITLE
 :TITLE
-title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.04.04
+title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.04.11
 goto:eof
 ::===============================================================================================================
 ::VERSION
 :VERSION
-set "svfisoconverter=v0.04.04"
+set "svfisoconverter=v0.04.11"
 goto:eof
 :================================================================================================================
 ::===============================================================================================================
