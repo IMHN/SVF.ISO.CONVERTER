@@ -710,16 +710,20 @@ echo:
 echo      [2] 1709
 echo:
 echo      [3] LTSB 2016
+echo:
+echo      [4] SERVER 2016
 call :Footer
 echo      [B] BACK
 call :Footer
-CHOICE /C 123B /N /M "[ USER ] YOUR CHOICE ?:"
+CHOICE /C 1234B /N /M "[ USER ] YOUR CHOICE ?:"
 if %errorlevel%==1 set "build=1803"
 if %errorlevel%==2 set "build=1709"
 if %errorlevel%==3 set "build=1607"
-if %errorlevel%==4 goto:SVFISOMainMenu
+if %errorlevel%==4 set "build=Server2016"
+if %errorlevel%==5 goto:SVFISOMainMenu
 cls
 call :Header "[HEADER] SOURCE ISO DOWNLOAD"
+if "%build%"=="Server2016" goto:SourceServer2016
 CHOICE /C 68 /N /M "[ USER ] x[6]4 or x[8]6 architecture ?:"
 if %errorlevel%==1 set "arch=x64"
 if %errorlevel%==2 set "arch=x86"
@@ -729,6 +733,7 @@ if "%build%"=="1607" (
 	if !errorlevel!==1 set "type=_ltsb_x"
 	if !errorlevel!==2 set "type=_ltsb_n"
 )
+:SourceServer2016
 if "%build%"=="1803" if "%arch%"=="x86" (
 	set "siname=17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us"
 	set "sihash=ddb496534203cb98284e5484e0ad60af3c0efce7"
@@ -759,6 +764,11 @@ if "%build%"=="1607" if "%arch%"=="x64" (
 	set "sihash=ed6e357cba8d716a6187095e3abd016564670d5b"
 	set "silink=http://download.microsoft.com/download/1/B/F/1BFE5194-5951-452C-B62C-B2F667F9B86D/14393.0.160715-1616.RS1_RELEASE_CLIENTENTERPRISE_S_EVAL_X64FRE_EN-US.ISO"
 )
+if "%build%"=="Server2016" (
+	set "siname=14393.0.160715-1616.RS1_RELEASE_SERVER_EVAL_X64FRE_EN-US"
+	set "sihash=3bb1c60417e9aeb3f4ce0eb02189c0c84a1c6691"
+	set "silink=http://care.dlservice.microsoft.com/dl/download/1/6/F/16FA20E6-4662-482A-920B-1A45CF5AAE3C/14393.0.160715-1616.RS1_RELEASE_SERVER_EVAL_X64FRE_EN-US.ISO"
+)
 cls
 call :Header "[HEADER] SOURCE ISO DOWNLOAD"
 echo [ INFO ] Source: %siname%
@@ -787,12 +797,12 @@ exit
 ::===============================================================================================================
 ::TITLE
 :TITLE
-title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.05.01
+title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.05.08
 goto:eof
 ::===============================================================================================================
 ::VERSION
 :VERSION
-set "svfisoconverter=v0.05.01"
+set "svfisoconverter=v0.05.08"
 goto:eof
 :================================================================================================================
 ::===============================================================================================================
