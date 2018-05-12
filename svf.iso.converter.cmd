@@ -24,6 +24,7 @@ set "database1803=files\database.1803.smrt"
 set "database1709_1=files\database.1709.1.smrt"
 set "database1709_2=files\database.1709.2.smrt"
 set "databaseLTSB=files\database.LTSB.smrt"
+set "databaseServer16=files\database.Server2016.smrt"
 set "aria2c=files\aria2c\aria2c.exe"
 set "busybox=files\ISO\busybox.cmd"
 set "busybox2=files\ISO\busybox.2.cmd"
@@ -50,6 +51,8 @@ echo:
 echo      [2] START 1709 PROCESS [16299.125]
 echo:
 echo      [3] START LTSB 2016 PROCESS [14393.0]
+echo:
+echo      [4] START SERVER 2016 PROCESS [14393.0]
 call :Footer
 echo      [D] DOWNLOAD/RESUME SOURCE ISO FILES
 call :Footer
@@ -57,7 +60,7 @@ echo      [E] EXIT
 echo:
 call :MenuFooter
 echo:
-CHOICE /C C123DE /N /M "[ USER ] YOUR CHOICE ?:"
+CHOICE /C C1234DE /N /M "[ USER ] YOUR CHOICE ?:"
 if %errorlevel%==1 goto:SVFISOCreate
 if %errorlevel%==2 (
 	set "show=1803"
@@ -70,8 +73,9 @@ if %errorlevel%==3 (
 	goto:SVFISOProcess1803
 )
 if %errorlevel%==4 goto:SVFISOProcessLTSB16
-if %errorlevel%==5 goto:SourceISODownload
-if %errorlevel%==6 goto:EXIT
+if %errorlevel%==5 goto:SVFISOProcessServer16
+if %errorlevel%==6 goto:SourceISODownload
+if %errorlevel%==7 goto:EXIT
 goto:SVFISOMainMenu
 :================================================================================================================
 ::===============================================================================================================
@@ -194,14 +198,23 @@ echo [ INFO ] Hash  : %sihash%
 call :Footer
 echo [ INFO ] Downloading Source ISO ^(if not already pesent^).
 call :Footer
+set "dhash="
 if not exist "%siname%.iso" (
 	if not exist "%siename%.iso" (
 		echo [ INFO ] Downloading Eval ISO.
 		call :Footer
 		"%aria2c%" -x16 -s16 -d"%cd%" -o"%siename%.iso" --checksum=sha-1=%siehash% "%sielink%" -R -c --file-allocation=none --check-certificate=false
+		if !errorlevel!==0 set "dhash=%siehash%"
+		if not !errorlevel!==0 (
+			files\ISO\busybox echo -e "\033[31;1m[ WARN ] Hash Mismatch!\033[0m"
+			echo [ INFO ] Hash  : !dhash!
+			call :Footer
+			pause
+			goto:SVFISOMainMenu
+		)
 		call :Footer
 	)
-	if exist "%siename%.iso" (
+	if exist "%siename%.iso" if not defined dhash (
 		echo [ INFO ] Source Eval ISO present.
 		echo [ INFO ] Checking Eval ISO Hash.
 		echo [ INFO ] Hash  : %siehash%
@@ -385,14 +398,23 @@ echo [ INFO ] Hash  : %siehash%
 call :Footer
 echo [ INFO ] Downloading Source ISO ^(if not already pesent^).
 call :Footer
+set "dhash="
 if not exist "%siname%.iso" (
 	if not exist "%siename%.iso" (
 		echo [ INFO ] Downloading Eval ISO.
 		call :Footer
 		"%aria2c%" -x16 -s16 -d"%cd%" -o"%siename%.iso" --checksum=sha-1=%siehash% "%sielink%" -R -c --file-allocation=none --check-certificate=false
+		if !errorlevel!==0 set "dhash=%siehash%"
+		if not !errorlevel!==0 (
+			files\ISO\busybox echo -e "\033[31;1m[ WARN ] Hash Mismatch!\033[0m"
+			echo [ INFO ] Hash  : !dhash!
+			call :Footer
+			pause
+			goto:SVFISOMainMenu
+		)
 		call :Footer
 	)
-	if exist "%siename%.iso" (
+	if exist "%siename%.iso" if not defined dhash (
 		echo [ INFO ] Source Eval ISO present.
 		echo [ INFO ] Checking Eval ISO Hash.
 		echo [ INFO ] Hash  : %siehash%
@@ -488,6 +510,118 @@ if %dhash% equ %fhash% (
 	call :Footer
 )
 :SourceChoiceLTSB
+pause
+goto:SVFISOMainMenu
+:================================================================================================================
+::===============================================================================================================
+::SERVER 2016 PROCESS
+:SVFISOProcessServer16
+pushd %~dp0
+::===============================================================================================================
+cls
+call :Header "[HEADER] SERVER 2016 SVF ISO CONVERSION"
+call :LangChoiceS
+::===============================================================================================================
+cls
+call :Header "[HEADER] SERVER 2016 SVF ISO CONVERSION"
+for /f "tokens=1,2,3* delims=|" %%a in ('type "%databaseServer16%" ^| findstr /i "%lang%"') do (
+	set "fhash=%%b"
+	set "fname=%%c"
+)
+set "siename=14393.0.160715-1616.RS1_RELEASE_SERVER_EVAL_X64FRE_EN-US"
+set "siehash=3bb1c60417e9aeb3f4ce0eb02189c0c84a1c6691"
+set "sielink=http://care.dlservice.microsoft.com/dl/download/1/6/F/16FA20E6-4662-482A-920B-1A45CF5AAE3C/14393.0.160715-1616.RS1_RELEASE_SERVER_EVAL_X64FRE_EN-US.ISO"
+set "fpshare=EVAL_Server_2016_enUS_2_XX_windows_server_2016_x64_dvd/%fname%.svf"
+set "fshare=khsqusxKTVkJ0R6"
+echo [ INFO ] Source: %siename%
+echo [ INFO ] Hash  : %siehash%
+call :Footer
+echo [ INFO ] Target: %fname%
+echo [ INFO ] Hash  : %fhash%
+call :Footer
+CHOICE /C SB /N /M "[ USER ] [S]tart or [B]ack ?:"
+if %errorlevel%==2 goto:SVFISOMainMenu
+::===============================================================================================================
+cls
+call :Header "[HEADER] LTSB 2016 SVF ISO CONVERSION"
+echo [ INFO ] Source: %siename%
+echo [ INFO ] Hash  : %siehash%
+call :Footer
+echo [ INFO ] Downloading Source ISO ^(if not already pesent^).
+call :Footer
+set "dhash="
+if not exist "%fname%.iso" (
+	if not exist "%siename%.iso" (
+		echo [ INFO ] Downloading Eval ISO.
+		call :Footer
+		"%aria2c%" -x16 -s16 -d"%cd%" -o"%siename%.iso" --checksum=sha-1=%siehash% "%sielink%" -R -c --file-allocation=none --check-certificate=false
+		if !errorlevel!==0 set "dhash=%fhash%"
+		if not !errorlevel!==0 (
+			files\ISO\busybox echo -e "\033[31;1m[ WARN ] Hash Mismatch!\033[0m"
+			echo [ INFO ] Hash  : !dhash!
+			call :Footer
+			pause
+			goto:SVFISOMainMenu
+		)
+		call :Footer
+	)
+	if exist "%siename%.iso" if not defined dhash (
+		echo [ INFO ] Source Eval ISO present.
+		echo [ INFO ] Checking Eval ISO Hash.
+		echo [ INFO ] Hash  : %siehash%
+		call :Footer
+		xcopy "files\ISO\busybox.exe" /s ".\" /Q /Y >nul 2>&1
+		for /f "tokens=1 delims= " %%a in ('busybox.exe sha1sum %siename%.iso') do set "dhash=%%a"
+		if exist "busybox.exe" del /f /q "busybox.exe" >nul 2>&1
+		if not !dhash! equ %siehash% (
+			files\ISO\busybox echo -e "\033[31;1m[ WARN ] Hash Mismatch!\033[0m"
+			echo [ INFO ] Hash  : !dhash!
+			call :Footer
+			pause
+			goto:SVFISOMainMenu
+		)
+		if !dhash! equ %siehash% (
+			files\ISO\busybox echo -e "\033[32;1m[ INFO ] ISO Hash matching.\033[0m"
+			echo [ INFO ] Hash  : !dhash!
+			call :Footer
+		)
+	)
+	if not exist "%fname%.svf" (
+		echo [ INFO ] Downloading Target ISO SVF.
+		echo [ INFO ] Name  : %fname%
+		call :Footer
+		call %busybox% "%fshare%", "%fpshare%"
+		call :Footer
+		pushd "%~dp0"
+		move "files\ISO\%fname%.svf" ".\" >nul 2>&1
+		pushd "%~dp0"
+	)
+	echo [ INFO ] Creating Target ISO.
+	echo [ INFO ] Name  : %fname%
+	call :Footer
+	xcopy "%smv%" /s ".\" /Q /Y >nul 2>&1
+	smv_%vera% x %fname%.svf -br .
+	if exist "smv_%vera%.exe" del /f /q "smv_%vera%.exe" >nul 2>&1
+	call :Footer
+)
+echo [ INFO ] Checking Target ISO Hash.
+echo [ INFO ] Hash  : %fhash%
+call :Footer
+xcopy "files\ISO\busybox.exe" /s ".\" /Q /Y >nul 2>&1
+for /f "tokens=1 delims= " %%a in ('busybox.exe sha1sum %fname%.iso') do set "dhash=%%a"
+if exist "busybox.exe" del /f /q "busybox.exe" >nul 2>&1
+if not %dhash% equ %fhash% (
+	files\ISO\busybox echo -e "\033[31;1m[ WARN ] Hash Mismatch!\033[0m"
+	echo [ INFO ] Hash  : %dhash%
+	call :Footer
+	pause
+	goto:SVFISOMainMenu
+)
+if %dhash% equ %fhash% (
+	files\ISO\busybox echo -e "\033[32;1m[ INFO ] ISO Hash matching.\033[0m"
+	echo [ INFO ] Hash  : %dhash%
+	call :Footer
+)
 pause
 goto:SVFISOMainMenu
 :================================================================================================================
@@ -653,12 +787,12 @@ exit
 ::===============================================================================================================
 ::TITLE
 :TITLE
-title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.04.11
+title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.05.01
 goto:eof
 ::===============================================================================================================
 ::VERSION
 :VERSION
-set "svfisoconverter=v0.04.11"
+set "svfisoconverter=v0.05.01"
 goto:eof
 :================================================================================================================
 ::===============================================================================================================
@@ -825,6 +959,67 @@ if %number%==35 set "lang=tr-tr"
 if %number%==36 set "lang=uk-ua"
 if %number%==37 set "lang=zh-cn"
 if %number%==38 set "lang=zh-tw"
+goto:eof
+:================================================================================================================
+::===============================================================================================================
+:: LANGUAGE CHOICE SERVER 2016
+:LangChoiceS
+echo Enter chosen language Number.
+echo:
+echo Available:
+echo:
+echo [01] cs-cz = Czech [Czech Republic]
+echo [02] de-de = German [Germany]
+echo [03] en-us = English [United States]
+echo [04] es-es = Spanish [Spain]
+echo [05] fr-fr = French [France]
+echo [06] hu-hu = Hungarian [Hungary]
+echo [07] it-it = Italian [Italy]
+echo [08] ja-jp = Japanese [Japan]
+echo [09] ko-kr = Korean [Korea]
+echo [10] nl-nl = Dutch [Netherlands]
+echo [11] pl-pl = Polish [Poland]
+echo [12] pt-br = Portuguese [Brazil]
+echo [13] pt-pt = Portuguese [Portugal]
+echo [14] ru-ru = Russian [Russia]
+echo [15] sv-se = Swedish [Sweden]
+echo [16] tr-tr = Turkish [Turkey]
+echo [17] zh-cn = Chinese [PRC]
+echo [18] zh-tw = Chinese [Taiwan]
+call :Footer
+CHOICE /C 01 /N /M "[ USER ] Enter Digit One:"
+if %errorlevel%==1 set "number=0"
+if %errorlevel%==2 set "number=10"
+call :Footer
+CHOICE /C 1234567890 /N /M "[ USER ] Enter Digit Two:"
+if %errorlevel%==1 set /a number+=1
+if %errorlevel%==2 set /a number+=2
+if %errorlevel%==3 set /a number+=3
+if %errorlevel%==4 set /a number+=4
+if %errorlevel%==5 set /a number+=5
+if %errorlevel%==6 set /a number+=6
+if %errorlevel%==7 set /a number+=7
+if %errorlevel%==8 set /a number+=8
+if %errorlevel%==9 set /a number+=9
+if %errorlevel%==10 set /a number+=0
+if %number%==1 set "lang=cs-cz"
+if %number%==2 set "lang=de-de"
+if %number%==3 set "lang=en-us"
+if %number%==4 set "lang=es-es"
+if %number%==5 set "lang=fr-fr"
+if %number%==6 set "lang=hu-hu"
+if %number%==7 set "lang=it-it"
+if %number%==8 set "lang=ja-jp"
+if %number%==9 set "lang=ko-kr"
+if %number%==10 set "lang=nl-nl"
+if %number%==11 set "lang=pl-pl"
+if %number%==12 set "lang=pt-br"
+if %number%==13 set "lang=pt-pt"
+if %number%==14 set "lang=ru-ru"
+if %number%==15 set "lang=sv-se"
+if %number%==16 set "lang=tr-tr"
+if %number%==17 set "lang=zh-cn"
+if %number%==18 set "lang=zh-tw"
 goto:eof
 :================================================================================================================
 ::===============================================================================================================
