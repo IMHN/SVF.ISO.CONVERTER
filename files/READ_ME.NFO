@@ -24,7 +24,7 @@
 пппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппп  
 мммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммм
 
-ўўўўўўўўў RELEASE NAME:  [s1ave77s S-M-R-T SVF ISO CONVERTER v0.05.08]  ўўўўўўўўўў
+ўўўўўўўўў RELEASE NAME:  [s1ave77s S-M-R-T SVF ISO CONVERTER v0.06.01]  ўўўўўўўўўў
 
 пппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппп 
 	
@@ -232,6 +232,10 @@
 ўўўўўўўўўўўўўўўўўўўўўўўўўўў +++ C H A N G E L O G +++ ўўўўўўўўўўўўўўўўўўўўўўўўўўўў
 	
 пппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппп 
+		
+	v0.06.01
+	--added Techbench direct download option (thanks to ingenious mkuba50)
+	--option is able to get Win 8.1 Update 3 (N) and Win 10 (identic to MVS consumer)
 		
 	v0.05.08
 	--added Server 2016 EVAL ISO to Source ISO download/resume part

@@ -21,13 +21,15 @@ for /f "tokens=2* delims= " %%a in ('reg query "HKLM\System\CurrentControlSet\Co
 ::===============================================================================================================
 ::===============================================================================================================
 set "database1803=files\database.1803.smrt"
+set "databasetb1803=files\database.tb.1803.smrt"
+set "databasetb81=files\database.tb.81.smrt"
 set "database1709_1=files\database.1709.1.smrt"
 set "database1709_2=files\database.1709.2.smrt"
 set "databaseLTSB=files\database.LTSB.smrt"
 set "databaseServer16=files\database.Server2016.smrt"
 set "aria2c=files\aria2c\aria2c.exe"
 set "busybox=files\ISO\busybox.cmd"
-set "busybox2=files\ISO\busybox.2.cmd"
+set "busyboxtb=files\ISO\busybox.tb.cmd"
 set "smv=files\ISO\smv_%vera%.exe"
 :================================================================================================================
 ::===============================================================================================================
@@ -54,13 +56,15 @@ echo      [3] START LTSB 2016 PROCESS [14393.0]
 echo:
 echo      [4] START SERVER 2016 PROCESS [14393.0]
 call :Footer
+echo      [T] TECHBENCH DOWNLOAD [Win 8.1/10]
+call :Footer
 echo      [D] DOWNLOAD/RESUME SOURCE ISO FILES
 call :Footer
 echo      [E] EXIT
 echo:
 call :MenuFooter
 echo:
-CHOICE /C C1234DE /N /M "[ USER ] YOUR CHOICE ?:"
+CHOICE /C C1234TDE /N /M "[ USER ] YOUR CHOICE ?:"
 if %errorlevel%==1 goto:SVFISOCreate
 if %errorlevel%==2 (
 	set "show=1803"
@@ -74,8 +78,9 @@ if %errorlevel%==3 (
 )
 if %errorlevel%==4 goto:SVFISOProcessLTSB16
 if %errorlevel%==5 goto:SVFISOProcessServer16
-if %errorlevel%==6 goto:SourceISODownload
-if %errorlevel%==7 goto:EXIT
+if %errorlevel%==6 goto:TBISODownload
+if %errorlevel%==7 goto:SourceISODownload
+if %errorlevel%==8 goto:EXIT
 goto:SVFISOMainMenu
 :================================================================================================================
 ::===============================================================================================================
@@ -543,7 +548,7 @@ CHOICE /C SB /N /M "[ USER ] [S]tart or [B]ack ?:"
 if %errorlevel%==2 goto:SVFISOMainMenu
 ::===============================================================================================================
 cls
-call :Header "[HEADER] LTSB 2016 SVF ISO CONVERSION"
+call :Header "[HEADER] SERVER 2016 SVF ISO CONVERSION"
 echo [ INFO ] Source: %siename%
 echo [ INFO ] Hash  : %siehash%
 call :Footer
@@ -626,13 +631,91 @@ pause
 goto:SVFISOMainMenu
 :================================================================================================================
 ::===============================================================================================================
+::TECHBENCH DOWNLOAD
+:TBISODownload
+pushd %~dp0
+::===============================================================================================================
+cls
+call :Header "[HEADER] TECHBENCH DOWNLOAD"
+echo      [1] WINDOWS 8.1
+echo:
+echo      [2] WINDOWS 8.1 N
+echo:
+echo      [3] WINDOWS 10 ^(contains N versions^)
+echo:
+call :Footer
+echo      [B] BACK
+call :Footer
+CHOICE /C 123B /N /M "[ USER ] YOUR CHOICE ?:"
+if %errorlevel%==1 (
+	set "tbwin=Win8.1_"
+	set "tbid=52"
+)
+if %errorlevel%==2 (
+	set "tbwin=Win8.1_Pro_N_"
+	set "tbid=55"
+)
+if %errorlevel%==3 (
+	set "tbwin=Win10_1803_"
+	set "tbid=651"
+)
+if %errorlevel%==4 goto:SVFISOMainMenu
+call :Footer
+CHOICE /C 68 /N /M "[ USER ] x[6]4 or x[8]6 architecture ?:"
+if %errorlevel%==1 set "tbarch=x64"
+if %errorlevel%==2 set "tbarch=x32"
+if "%tbwin%"=="Win8.1_Pro_N_" call :LangChoice81N
+if "%tbwin%"=="Win8.1_" call :LangChoice81
+if "%tbwin%"=="Win10_1803_" call :LangChoiceTB
+call :Footer
+
+::===============================================================================================================
+cls
+call :Header "[HEADER] TECHBENCH DOWNLOAD"
+set "tbfilename=%tbwin%%tblang%_%tbarch%.iso"
+if "%tbwin%"=="Win10_1803_" (
+	if "%tbarch%"=="x64" set "stbarch=x64"
+	if "%tbarch%"=="x32" set "stbarch=x86"
+)
+if "%tbwin%"=="Win10_1803_" for /f "tokens=1,2,3* delims=|" %%a in ('type "%databasetb1803%" ^| findstr /i "%tblang%" ^| findstr /i "_%stbarch%_"') do set "tbhash=%%b"
+if not "%tbwin%"=="Win10_1803_" for /f "tokens=1,2,3,4* delims=|" %%a in ('type "%databasetb81%" ^| findstr /i "%tbfilename%"') do (
+	set "tbhash=%%b"
+	set "tbsize=%%c"
+)
+for /f "tokens=*" %%a in ('call %busyboxtb% "%tbid%", "'%tbfilename%'"') do set "tblink=%%a"
+echo [ INFO ] TB ISO: %tbfilename%
+echo [ INFO ] Hash  : %tbhash%
+if not "%tbwin%"=="Win10_1803_" echo [ INFO ] Size  : %tbsize% GB
+call :Footer
+CHOICE /C SB /N /M "[ USER ] [S]tart or [B]ack ?:"
+if %errorlevel%==2 goto:TBISODownload
+::===============================================================================================================
+cls
+call :Header "[HEADER] TECHBENCH DOWNLOAD"
+echo [ INFO ] TB ISO: %tbfilename%
+echo [ INFO ] Hash  : %tbhash%
+if not "%tbwin%"=="Win10_1803_" echo [ INFO ] Size  : %tbsize% GB
+call :Footer
+if defined tbhash "%aria2c%" -x16 -s16 -d"%cd%" -o"%tbfilename%" --checksum=sha-1=%tbhash% "%tblink%" -R -c --file-allocation=none --check-certificate=false
+if not defined tbhash "%aria2c%" -x16 -s16 -d"%cd%" -o"%tbfilename%" "%tblink%" -R -c --file-allocation=none --check-certificate=false
+if not !errorlevel!==0 (
+	call :Footer
+	files\ISO\busybox echo -e "\033[31;1m[ WARN ] Something went wrong!\033[0m"
+	call :Footer
+	pause
+	goto:TBISODownload
+)
+call :Footer
+pause
+goto:TBISODownload
+:================================================================================================================
+::===============================================================================================================
 :: SVF/ISO CREATION
 :SVFISOCreate
 pushd %~dp0
 ::===============================================================================================================
 cls
 call :MenuHeader "[HEADER] SVF/ISO CREATION"
-echo:
 echo      [S] CREATE SVF
 echo:
 echo      [I] CREATE ISO
@@ -704,7 +787,6 @@ pushd %~dp0
 ::===============================================================================================================
 cls
 call :MenuHeader "[HEADER] SOURCE ISO DOWNLOAD"
-echo:
 echo      [1] 1803
 echo:
 echo      [2] 1709
@@ -728,12 +810,6 @@ CHOICE /C 68 /N /M "[ USER ] x[6]4 or x[8]6 architecture ?:"
 if %errorlevel%==1 set "arch=x64"
 if %errorlevel%==2 set "arch=x86"
 call :Footer
-if "%build%"=="1607" (
-	CHOICE /C SN /N /M "[ USER ] [S]tandard or [N] Version ISO ?:"
-	if !errorlevel!==1 set "type=_ltsb_x"
-	if !errorlevel!==2 set "type=_ltsb_n"
-)
-:SourceServer2016
 if "%build%"=="1803" if "%arch%"=="x86" (
 	set "siname=17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us"
 	set "sihash=ddb496534203cb98284e5484e0ad60af3c0efce7"
@@ -764,6 +840,7 @@ if "%build%"=="1607" if "%arch%"=="x64" (
 	set "sihash=ed6e357cba8d716a6187095e3abd016564670d5b"
 	set "silink=http://download.microsoft.com/download/1/B/F/1BFE5194-5951-452C-B62C-B2F667F9B86D/14393.0.160715-1616.RS1_RELEASE_CLIENTENTERPRISE_S_EVAL_X64FRE_EN-US.ISO"
 )
+:SourceServer2016
 if "%build%"=="Server2016" (
 	set "siname=14393.0.160715-1616.RS1_RELEASE_SERVER_EVAL_X64FRE_EN-US"
 	set "sihash=3bb1c60417e9aeb3f4ce0eb02189c0c84a1c6691"
@@ -797,12 +874,12 @@ exit
 ::===============================================================================================================
 ::TITLE
 :TITLE
-title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.05.08
+title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.06.01
 goto:eof
 ::===============================================================================================================
 ::VERSION
 :VERSION
-set "svfisoconverter=v0.05.08"
+set "svfisoconverter=v0.06.01"
 goto:eof
 :================================================================================================================
 ::===============================================================================================================
@@ -969,6 +1046,284 @@ if %number%==35 set "lang=tr-tr"
 if %number%==36 set "lang=uk-ua"
 if %number%==37 set "lang=zh-cn"
 if %number%==38 set "lang=zh-tw"
+goto:eof
+:================================================================================================================
+::===============================================================================================================
+:: LANGUAGE CHOICE TECHBENCH 10
+:LangChoiceTB
+echo Enter chosen language Number.
+echo:
+echo Available:
+echo:
+echo [01] ar-sa = Arabic [Saudi Arabia]
+echo [02] bg-bg = Bulgarian [Bulgaria]
+echo [03] cs-cz = Czech [Czech Republic]
+echo [04] da-dk = Danish [Denmark]
+echo [05] de-de = German [Germany]
+echo [06] el-gr = Greek [Greece]
+echo [07] en-gb = English [United Kingdom]
+echo [08] en-us = English [United States]
+echo [09] es-es = Spanish [Spain]
+echo [10] es-mx = Spanish [Mexico]
+echo [11] et-ee = Estonian [Estonia]
+echo [12] fi-fi = Finnish [Finland]
+echo [13] fr-ca = French [Canada]
+echo [14] fr-fr = French [France]
+echo [15] he-il = Hebrew [Israel]
+echo [16] hr-hr = Croatian [Croatia]
+echo [17] hu-hu = Hungarian [Hungary]
+echo [18] it-it = Italian [Italy]
+echo [19] ja-jp = Japanese [Japan]
+echo [20] ko-kr = Korean [Korea]
+echo [21] lt-lt = Lithuanian [Lithuania]
+echo [22] lv-lv = Latvian [Latvia]
+echo [23] nb-no = Norwegian [Norway]
+echo [24] nl-nl = Dutch [Netherlands]
+echo [25] pl-pl = Polish [Poland]
+echo [26] pt-br = Portuguese [Brazil]
+echo [27] pt-pt = Portuguese [Portugal]
+echo [28] ro-ro = Romanian [Romania]
+echo [29] ru-ru = Russian [Russia]
+echo [30] sr-latn-rs = Serbian [Serbia]
+echo [31] sk-sk = Slovak [Slovakia]
+echo [32] sl-si = Slovenian [Slovenia]
+echo [33] sv-se = Swedish [Sweden]
+echo [34] th-th = Thai [Thailand]
+echo [35] tr-tr = Turkish [Turkey]
+echo [36] uk-ua = Ukrainian [Ukraine]
+echo [37] zh-cn = Chinese [PRC]
+echo [38] zh-tw = Chinese [Taiwan]
+call :Footer
+CHOICE /C 0123 /N /M "[ USER ] Enter Digit One:"
+if %errorlevel%==1 set "number=0"
+if %errorlevel%==2 set "number=10"
+if %errorlevel%==3 set "number=20"
+if %errorlevel%==4 set "number=30"
+call :Footer
+CHOICE /C 1234567890 /N /M "[ USER ] Enter Digit Two:"
+if %errorlevel%==1 set /a number+=1
+if %errorlevel%==2 set /a number+=2
+if %errorlevel%==3 set /a number+=3
+if %errorlevel%==4 set /a number+=4
+if %errorlevel%==5 set /a number+=5
+if %errorlevel%==6 set /a number+=6
+if %errorlevel%==7 set /a number+=7
+if %errorlevel%==8 set /a number+=8
+if %errorlevel%==9 set /a number+=9
+if %errorlevel%==10 set /a number+=0
+if %number%==1 set "tblang=Arabic"
+if %number%==2 set "tblang=Bulgarian"
+if %number%==3 set "tblang=Czech"
+if %number%==4 set "tblang=Danish"
+if %number%==5 set "tblang=German"
+if %number%==6 set "tblang=Greek"
+if %number%==7 set "tblang=EnglishInternational"
+if %number%==8 set "tblang=English"
+if %number%==9 set "tblang=Spanish"
+if %number%==10 set "tblang=Spanish(Mexico)"
+if %number%==11 set "tblang=Estonian"
+if %number%==12 set "tblang=Finnish"
+if %number%==13 set "tblang=FrenchCanadian"
+if %number%==14 set "tblang=French"
+if %number%==15 set "tblang=Hebrew"
+if %number%==16 set "tblang=Croatian"
+if %number%==17 set "tblang=Hungarian"
+if %number%==18 set "tblang=Italian"
+if %number%==19 set "tblang=Japanese"
+if %number%==20 set "tblang=Korean"
+if %number%==21 set "tblang=Lithuanian"
+if %number%==22 set "tblang=Latvian"
+if %number%==23 set "tblang=Norwegian"
+if %number%==24 set "tblang=Dutch"
+if %number%==25 set "tblang=Polish"
+if %number%==26 set "tblang=BrazilianPortuguese"
+if %number%==27 set "tblang=Portuguese"
+if %number%==28 set "tblang=Romanian"
+if %number%==29 set "tblang=Russian"
+if %number%==30 set "tblang=SerbianLatin"
+if %number%==31 set "tblang=Slovak"
+if %number%==32 set "tblang=Slovenian"
+if %number%==33 set "tblang=Swedish"
+if %number%==34 set "tblang=Thai"
+if %number%==35 set "tblang=Turkish"
+if %number%==36 set "tblang=Ukrainian"
+if %number%==37 set "tblang=Chinese(Simplified)"
+if %number%==38 set "tblang=Chinese(Traditional)"
+goto:eof
+:================================================================================================================
+::===============================================================================================================
+:: LANGUAGE CHOICE TB 8.1
+:LangChoice81
+echo Enter chosen language Number.
+echo:
+echo Available:
+echo:
+echo [01] ar-sa = Arabic [Saudi Arabia]
+echo [02] bg-bg = Bulgarian [Bulgaria]
+echo [03] cs-cz = Czech [Czech Republic]
+echo [04] da-dk = Danish [Denmark]
+echo [05] de-de = German [Germany]
+echo [06] el-gr = Greek [Greece]
+echo [07] en-gb = English [United Kingdom]
+echo [08] en-us = English [United States]
+echo [09] es-es = Spanish [Spain]
+echo [10] et-ee = Estonian [Estonia]
+echo [11] fi-fi = Finnish [Finland]
+echo [12] fr-fr = French [France]
+echo [13] he-il = Hebrew [Israel]
+echo [14] hr-hr = Croatian [Croatia]
+echo [15] hu-hu = Hungarian [Hungary]
+echo [16] it-it = Italian [Italy]
+echo [17] ja-jp = Japanese [Japan]
+echo [18] ko-kr = Korean [Korea]
+echo [19] lt-lt = Lithuanian [Lithuania]
+echo [20] lv-lv = Latvian [Latvia]
+echo [21] nb-no = Norwegian [Norway]
+echo [22] nl-nl = Dutch [Netherlands]
+echo [23] pl-pl = Polish [Poland]
+echo [24] pt-br = Portuguese [Brazil]
+echo [25] pt-pt = Portuguese [Portugal]
+echo [26] ro-ro = Romanian [Romania]
+echo [27] ru-ru = Russian [Russia]
+echo [28] sr-latn-rs = Serbian [Serbia]
+echo [29] sk-sk = Slovak [Slovakia]
+echo [30] sl-si = Slovenian [Slovenia]
+echo [31] sv-se = Swedish [Sweden]
+echo [32] th-th = Thai [Thailand]
+echo [33] tr-tr = Turkish [Turkey]
+echo [34] uk-ua = Ukrainian [Ukraine]
+echo [35] zh-cn = Chinese [PRC]
+echo [36] zh-tw = Chinese [Taiwan]
+echo [37] zh-hk = Chinese [Hong Kong]
+call :Footer
+CHOICE /C 0123 /N /M "[ USER ] Enter Digit One:"
+if %errorlevel%==1 set "number=0"
+if %errorlevel%==2 set "number=10"
+if %errorlevel%==3 set "number=20"
+if %errorlevel%==4 set "number=30"
+call :Footer
+CHOICE /C 1234567890 /N /M "[ USER ] Enter Digit Two:"
+if %errorlevel%==1 set /a number+=1
+if %errorlevel%==2 set /a number+=2
+if %errorlevel%==3 set /a number+=3
+if %errorlevel%==4 set /a number+=4
+if %errorlevel%==5 set /a number+=5
+if %errorlevel%==6 set /a number+=6
+if %errorlevel%==7 set /a number+=7
+if %errorlevel%==8 set /a number+=8
+if %errorlevel%==9 set /a number+=9
+if %errorlevel%==10 set /a number+=0
+if %number%==1 set "tblang=Arabic"
+if %number%==2 set "tblang=Bulgarian"
+if %number%==3 set "tblang=Czech"
+if %number%==4 set "tblang=Danish"
+if %number%==5 set "tblang=German"
+if %number%==6 set "tblang=Greek"
+if %number%==7 set "tblang=EnglishInternational"
+if %number%==8 set "tblang=English"
+if %number%==9 set "tblang=Spanish"
+if %number%==10 set "tblang=Estonian"
+if %number%==11 set "tblang=Finnish"
+if %number%==12 set "tblang=French"
+if %number%==13 set "tblang=Hebrew"
+if %number%==14 set "tblang=Croatian"
+if %number%==15 set "tblang=Hungarian"
+if %number%==16 set "tblang=Italian"
+if %number%==17 set "tblang=Japanese"
+if %number%==18 set "tblang=Korean"
+if %number%==19 set "tblang=Lithuanian"
+if %number%==20 set "tblang=Latvian"
+if %number%==21 set "tblang=Norwegian"
+if %number%==22 set "tblang=Dutch"
+if %number%==23 set "tblang=Polish"
+if %number%==24 set "tblang=BrazilianPortuguese"
+if %number%==25 set "tblang=Portuguese"
+if %number%==26 set "tblang=Romanian"
+if %number%==27 set "tblang=Russian"
+if %number%==28 set "tblang=SerbianLatin"
+if %number%==29 set "tblang=Slovak"
+if %number%==30 set "tblang=Slovenian"
+if %number%==31 set "tblang=Swedish"
+if %number%==32 set "tblang=Thai"
+if %number%==33 set "tblang=Turkish"
+if %number%==34 set "tblang=Ukrainian"
+if %number%==35 set "tblang=Chinese(Simplified)"
+if %number%==36 set "tblang=Chinese(Traditional)"
+if %number%==37 set "tblang=Chinese(TraditionalHongKong)"
+goto:eof
+:================================================================================================================
+::===============================================================================================================
+:: LANGUAGE CHOICE TB 8.1 N
+:LangChoice81N
+echo Enter chosen language Number.
+echo:
+echo Available:
+echo:
+echo [01] bg-bg = Bulgarian [Bulgaria]
+echo [02] cs-cz = Czech [Czech Republic]
+echo [03] da-dk = Danish [Denmark]
+echo [04] de-de = German [Germany]
+echo [05] el-gr = Greek [Greece]
+echo [06] en-gb = English [United Kingdom]
+echo [07] en-us = English [United States]
+echo [08] es-es = Spanish [Spain]
+echo [09] et-ee = Estonian [Estonia]
+echo [10] fi-fi = Finnish [Finland]
+echo [11] fr-fr = French [France]
+echo [12] hr-hr = Croatian [Croatia]
+echo [13] hu-hu = Hungarian [Hungary]
+echo [14] it-it = Italian [Italy]
+echo [15] lt-lt = Lithuanian [Lithuania]
+echo [16] lv-lv = Latvian [Latvia]
+echo [17] nb-no = Norwegian [Norway]
+echo [18] nl-nl = Dutch [Netherlands]
+echo [19] pl-pl = Polish [Poland]
+echo [20] pt-pt = Portuguese [Portugal]
+echo [21] ro-ro = Romanian [Romania]
+echo [22] sk-sk = Slovak [Slovakia]
+echo [23] sl-si = Slovenian [Slovenia]
+echo [24] sv-se = Swedish [Sweden]
+call :Footer
+CHOICE /C 012 /N /M "[ USER ] Enter Digit One:"
+if %errorlevel%==1 set "number=0"
+if %errorlevel%==2 set "number=10"
+if %errorlevel%==3 set "number=20"
+call :Footer
+CHOICE /C 1234567890 /N /M "[ USER ] Enter Digit Two:"
+if %errorlevel%==1 set /a number+=1
+if %errorlevel%==2 set /a number+=2
+if %errorlevel%==3 set /a number+=3
+if %errorlevel%==4 set /a number+=4
+if %errorlevel%==5 set /a number+=5
+if %errorlevel%==6 set /a number+=6
+if %errorlevel%==7 set /a number+=7
+if %errorlevel%==8 set /a number+=8
+if %errorlevel%==9 set /a number+=9
+if %errorlevel%==10 set /a number+=0
+if %number%==1 set "tblang=Bulgarian"
+if %number%==2 set "tblang=Czech"
+if %number%==3 set "tblang=Danish"
+if %number%==4 set "tblang=German"
+if %number%==5 set "tblang=Greek"
+if %number%==6 set "tblang=EnglishInternational"
+if %number%==7 set "tblang=English"
+if %number%==8 set "tblang=Spanish"
+if %number%==9 set "tblang=Estonian"
+if %number%==10 set "tblang=Finnish"
+if %number%==11 set "tblang=French"
+if %number%==12 set "tblang=Croatian"
+if %number%==13 set "tblang=Hungarian"
+if %number%==14 set "tblang=Italian"
+if %number%==15 set "tblang=Lithuanian"
+if %number%==16 set "tblang=Latvian"
+if %number%==17 set "tblang=Norwegian"
+if %number%==18 set "tblang=Dutch"
+if %number%==19 set "tblang=Polish"
+if %number%==20 set "tblang=Portuguese"
+if %number%==21 set "tblang=Romanian"
+if %number%==22 set "tblang=Slovak"
+if %number%==23 set "tblang=Slovenian"
+if %number%==24 set "tblang=Swedish"
 goto:eof
 :================================================================================================================
 ::===============================================================================================================
