@@ -24,7 +24,7 @@
 пппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппп  
 мммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммм
 
-ўўўўўўўўў RELEASE NAME:  [s1ave77s S-M-R-T SVF ISO CONVERTER v0.06.01]  ўўўўўўўўўў
+ўўўўўўўўў RELEASE NAME:  [s1ave77s S-M-R-T SVF ISO CONVERTER v0.06.08]  ўўўўўўўўўў
 
 пппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппп 
 	
@@ -232,6 +232,10 @@
 ўўўўўўўўўўўўўўўўўўўўўўўўўўў +++ C H A N G E L O G +++ ўўўўўўўўўўўўўўўўўўўўўўўўўўўў
 	
 пппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппп 
+		
+	v0.06.08
+	--fixed Techbench Korean K and KN version detection/download
+	--thanks to gladiator01 for info and mkuba50 for correct info
 		
 	v0.06.01
 	--added Techbench direct download option (thanks to ingenious mkuba50)

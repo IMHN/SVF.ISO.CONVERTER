@@ -19,7 +19,7 @@ Win8.1_Hebrew_x64.iso|ca59f6c3ad4a1225ea3b8eb17ec55a42c5a29a39|4.01
 Win8.1_Hungarian_x64.iso|da541398069d067e3e388b36cfeea898f55091d4|3.99
 Win8.1_Italian_x64.iso|a5292abf4784f162399ea4f7402c4674b1182dea|4.01
 Win8.1_Japanese_x64.iso|3b35ed1690accfd0078f03a24b8c44e3cffac6b5|4.09
-Win8.1_Korean_x64.iso|ebdda17a65d8d3f4ab6a18bed2642eac21bda15d|4.06
+Win8.1_K_Korean_x64.iso|ebdda17a65d8d3f4ab6a18bed2642eac21bda15d|4.06
 Win8.1_Latvian_x64.iso|97e8bcd8b80accd276a9602aea7d51538ef5e37f|3.96
 Win8.1_Lithuanian_x64.iso|fe8ec566e513b5d5e56bc7c07f6f936f1e324be0|3.96
 Win8.1_Norwegian_x64.iso|f6181ffd851d55f29b6bf99503ac2c1b2757d012|3.99
@@ -57,7 +57,7 @@ Win8.1_Hebrew_x32.iso|24a238906f458f75bb2e7ff17f6076552265505c|2.96
 Win8.1_Hungarian_x32.iso|cd29b4a5a2c1d858eea3455be60e15f7e23c0fc3|2.95
 Win8.1_Italian_x32.iso|ed3c00086de57049ea65f72e87cba247be7c0399|2.96
 Win8.1_Japanese_x32.iso|adb04f95bf292151f4bb1c8bb989812c2c2e76b8|3.03
-Win8.1_Korean_x32.iso|bc42b12fedfc72f9eac48b235c7ae8700f877fd7|3
+Win8.1_K_Korean_x32.iso|bc42b12fedfc72f9eac48b235c7ae8700f877fd7|3
 Win8.1_Latvian_x32.iso|389f531a6b0c3858fecc862fa2558f0fa0a00b5e|2.93
 Win8.1_Lithuanian_x32.iso|02960cc1cd23b566639571e5bf3e5f247588b8d5|2.92
 Win8.1_Norwegian_x32.iso|3490ca5e3f4ff6efef17998917a402abd2455a09|2.95
@@ -88,6 +88,7 @@ Win8.1_Pro_N_German_x64.iso|833ab9b7d66f0d602e0553b23111401170099df7|3.84
 Win8.1_Pro_N_Greek_x64.iso|6dfc65f3960122a2b3690988d1a22471676e4804|3.78
 Win8.1_Pro_N_Hungarian_x64.iso|e6548d1d14a5621389943d52a889d5f521dd90e3|3.76
 Win8.1_Pro_N_Italian_x64.iso|182064d7947b1bb703387a4d2af81ab594ab6cd0|3.78
+Win8.1_Pro_KN_Korean_x64.iso|37f78e32fe8cb23b4ff1f5b49bcfbf07d278aed5|3.83
 Win8.1_Pro_N_Latvian_x64.iso|c8b7d5040a2eeaf9982470527874b32ca1f97cc5|3.73
 Win8.1_Pro_N_Lithuanian_x64.iso|d49708f08f45ca2afe6045e2a60cecd45714fcb5|3.75
 Win8.1_Pro_N_Norwegian_x64.iso|1f06421d9263eb3c7b7fc6e0cbf10e662ff617bc|3.77
@@ -113,6 +114,7 @@ Win8.1_Pro_N_German_x32.iso|2592b1d176f6392531dcef7a97e3ec4a6f6ac660|2.85
 Win8.1_Pro_N_Greek_x32.iso|45c83668f0fff287d8adde84a5daad5f9855f436|2.79
 Win8.1_Pro_N_Hungarian_x32.iso|9a01670e80c8d0c6f0151073976c53cbb55ff885|2.77
 Win8.1_Pro_N_Italian_x32.iso|8ed2af183ceb1073674734ad7dcf0c1ca9cb313e|2.79
+Win8.1_Pro_KN_Korean_x32.iso|c120e8b4fc39641867d0f6ce99139f0173c7e4f9|2.82
 Win8.1_Pro_N_Latvian_x32.iso|eaf2cb6b1c5064a2834cbfd19b72d4d3f69276b9|2.75
 Win8.1_Pro_N_Lithuanian_x32.iso|4f03cbafff47aac1a7c0bd3e42f487916316a70e|2.75
 Win8.1_Pro_N_Norwegian_x32.iso|b3a4cd3b6447581fb098ea20240655d01d576432|2.77
@@ -123,5 +125,4 @@ Win8.1_Pro_N_Slovak_x32.iso|ea9c8e158dbb2143dfdf2a03beec8353ce52d48c|2.75
 Win8.1_Pro_N_Slovenian_x32.iso|517a9f3697aab09ebfedb0dfd0ff2a6f2fcc5384|2.75
 Win8.1_Pro_N_Spanish_x32.iso|8ea5d452d000b59478437d69d4dc254ce6f8367a|2.83
 Win8.1_Pro_N_Swedish_x32.iso|da132c0c919c70c3a220df36fbede774fb152fd4|2.78
-
 

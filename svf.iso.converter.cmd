@@ -637,11 +637,11 @@ pushd %~dp0
 ::===============================================================================================================
 cls
 call :Header "[HEADER] TECHBENCH DOWNLOAD"
-echo      [1] WINDOWS 8.1
+echo      [1] WINDOWS 8.1 ^(Update 3^)
 echo:
-echo      [2] WINDOWS 8.1 N
+echo      [2] WINDOWS 8.1 N ^(Update 3^)
 echo:
-echo      [3] WINDOWS 10 ^(contains N versions^)
+echo      [3] WINDOWS 10 1803 ^(contains N versions^)
 echo:
 call :Footer
 echo      [B] BACK
@@ -668,15 +668,22 @@ if "%tbwin%"=="Win8.1_Pro_N_" call :LangChoice81N
 if "%tbwin%"=="Win8.1_" call :LangChoice81
 if "%tbwin%"=="Win10_1803_" call :LangChoiceTB
 call :Footer
-
 ::===============================================================================================================
 cls
 call :Header "[HEADER] TECHBENCH DOWNLOAD"
-set "tbfilename=%tbwin%%tblang%_%tbarch%.iso"
 if "%tbwin%"=="Win10_1803_" (
 	if "%tbarch%"=="x64" set "stbarch=x64"
 	if "%tbarch%"=="x32" set "stbarch=x86"
 )
+if "%tblang%"=="Korean" if "%tbwin%"=="Win8.1_" (
+	set "tbwin=Win8.1_K_"
+	set "tbid=61"
+)
+if "%tblang%"=="Korean" if "%tbwin%"=="Win8.1_Pro_N_" (
+	set "tbwin=Win8.1_Pro_KN_"
+	set "tbid=62"
+)
+set "tbfilename=%tbwin%%tblang%_%tbarch%.iso"
 if "%tbwin%"=="Win10_1803_" for /f "tokens=1,2,3* delims=|" %%a in ('type "%databasetb1803%" ^| findstr /i "%tblang%" ^| findstr /i "_%stbarch%_"') do set "tbhash=%%b"
 if not "%tbwin%"=="Win10_1803_" for /f "tokens=1,2,3,4* delims=|" %%a in ('type "%databasetb81%" ^| findstr /i "%tbfilename%"') do (
 	set "tbhash=%%b"
@@ -874,12 +881,12 @@ exit
 ::===============================================================================================================
 ::TITLE
 :TITLE
-title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.06.01
+title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.06.08
 goto:eof
 ::===============================================================================================================
 ::VERSION
 :VERSION
-set "svfisoconverter=v0.06.01"
+set "svfisoconverter=v0.06.08"
 goto:eof
 :================================================================================================================
 ::===============================================================================================================
@@ -1273,16 +1280,17 @@ echo [11] fr-fr = French [France]
 echo [12] hr-hr = Croatian [Croatia]
 echo [13] hu-hu = Hungarian [Hungary]
 echo [14] it-it = Italian [Italy]
-echo [15] lt-lt = Lithuanian [Lithuania]
-echo [16] lv-lv = Latvian [Latvia]
-echo [17] nb-no = Norwegian [Norway]
-echo [18] nl-nl = Dutch [Netherlands]
-echo [19] pl-pl = Polish [Poland]
-echo [20] pt-pt = Portuguese [Portugal]
-echo [21] ro-ro = Romanian [Romania]
-echo [22] sk-sk = Slovak [Slovakia]
-echo [23] sl-si = Slovenian [Slovenia]
-echo [24] sv-se = Swedish [Sweden]
+echo [15] ko-kr = Korean [Korea]
+echo [16] lt-lt = Lithuanian [Lithuania]
+echo [17] lv-lv = Latvian [Latvia]
+echo [18] nb-no = Norwegian [Norway]
+echo [19] nl-nl = Dutch [Netherlands]
+echo [20] pl-pl = Polish [Poland]
+echo [21] pt-pt = Portuguese [Portugal]
+echo [22] ro-ro = Romanian [Romania]
+echo [23] sk-sk = Slovak [Slovakia]
+echo [24] sl-si = Slovenian [Slovenia]
+echo [25] sv-se = Swedish [Sweden]
 call :Footer
 CHOICE /C 012 /N /M "[ USER ] Enter Digit One:"
 if %errorlevel%==1 set "number=0"
@@ -1314,16 +1322,17 @@ if %number%==11 set "tblang=French"
 if %number%==12 set "tblang=Croatian"
 if %number%==13 set "tblang=Hungarian"
 if %number%==14 set "tblang=Italian"
-if %number%==15 set "tblang=Lithuanian"
-if %number%==16 set "tblang=Latvian"
-if %number%==17 set "tblang=Norwegian"
-if %number%==18 set "tblang=Dutch"
-if %number%==19 set "tblang=Polish"
-if %number%==20 set "tblang=Portuguese"
-if %number%==21 set "tblang=Romanian"
-if %number%==22 set "tblang=Slovak"
-if %number%==23 set "tblang=Slovenian"
-if %number%==24 set "tblang=Swedish"
+if %number%==15 set "tblang=Korean"
+if %number%==16 set "tblang=Lithuanian"
+if %number%==17 set "tblang=Latvian"
+if %number%==18 set "tblang=Norwegian"
+if %number%==19 set "tblang=Dutch"
+if %number%==20 set "tblang=Polish"
+if %number%==21 set "tblang=Portuguese"
+if %number%==22 set "tblang=Romanian"
+if %number%==23 set "tblang=Slovak"
+if %number%==24 set "tblang=Slovenian"
+if %number%==25 set "tblang=Swedish"
 goto:eof
 :================================================================================================================
 ::===============================================================================================================
