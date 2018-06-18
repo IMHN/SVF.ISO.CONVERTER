@@ -24,7 +24,7 @@
 пппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппп  
 мммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммм
 
-ўўўўўўўўў RELEASE NAME:  [s1ave77s S-M-R-T SVF ISO CONVERTER v0.06.08]  ўўўўўўўўўў
+ўўўўўўўўў RELEASE NAME:  [s1ave77s S-M-R-T SVF ISO CONVERTER v0.06.22]  ўўўўўўўўўў
 
 пппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппп 
 	
@@ -146,6 +146,17 @@
 		Source N x64:
 
 		b5d4911bd53ec5029781ade0937dad43c4ed90f6 *en_windows_10_enterprise_2016_ltsb_n_x64_dvd_9057894.iso
+		
+		
+	LTSB 2015 10240.0
+	
+		Source (N) x86:
+
+		aa8ce9cc9b660b31245622e49e0d183db355558f *10240.16384.150709-1700.TH1_CLIENTENTERPRISE_S_EVAL_X86FRE_EN-US.ISO
+
+		Source (N) x64:
+
+		90e1c5bada5b96ab05a9fe2035cb26f5cb3cd4d2 *10240.16384.150709-1700.TH1_CLIENTENTERPRISE_S_EVAL_X64FRE_EN-US.ISO
 
 
 	SERVER 2016 14393.0
@@ -232,6 +243,9 @@
 ўўўўўўўўўўўўўўўўўўўўўўўўўўў +++ C H A N G E L O G +++ ўўўўўўўўўўўўўўўўўўўўўўўўўўўў
 	
 пппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппп 
+		
+	v0.06.22
+	--added LTSB 2015 (10240.0) (thanks to Enthousiast)
 		
 	v0.06.08
 	--fixed Techbench Korean K and KN version detection/download

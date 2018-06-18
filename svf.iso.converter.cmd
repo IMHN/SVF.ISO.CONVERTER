@@ -26,6 +26,7 @@ set "databasetb81=files\database.tb.81.smrt"
 set "database1709_1=files\database.1709.1.smrt"
 set "database1709_2=files\database.1709.2.smrt"
 set "databaseLTSB=files\database.LTSB.smrt"
+set "databaseLTSB2=files\database.LTSB2.smrt"
 set "databaseServer16=files\database.Server2016.smrt"
 set "aria2c=files\aria2c\aria2c.exe"
 set "busybox=files\ISO\busybox.cmd"
@@ -54,7 +55,9 @@ echo      [2] START 1709 PROCESS [16299.125]
 echo:
 echo      [3] START LTSB 2016 PROCESS [14393.0]
 echo:
-echo      [4] START SERVER 2016 PROCESS [14393.0]
+echo      [4] START LTSB 2015 PROCESS [10240.0]
+echo:
+echo      [5] START SERVER 2016 PROCESS [14393.0]
 call :Footer
 echo      [T] TECHBENCH DOWNLOAD [Win 8.1/10]
 call :Footer
@@ -64,7 +67,7 @@ echo      [E] EXIT
 echo:
 call :MenuFooter
 echo:
-CHOICE /C C1234TDE /N /M "[ USER ] YOUR CHOICE ?:"
+CHOICE /C C12345TDE /N /M "[ USER ] YOUR CHOICE ?:"
 if %errorlevel%==1 goto:SVFISOCreate
 if %errorlevel%==2 (
 	set "show=1803"
@@ -77,10 +80,11 @@ if %errorlevel%==3 (
 	goto:SVFISOProcess1803
 )
 if %errorlevel%==4 goto:SVFISOProcessLTSB16
-if %errorlevel%==5 goto:SVFISOProcessServer16
-if %errorlevel%==6 goto:TBISODownload
-if %errorlevel%==7 goto:SourceISODownload
-if %errorlevel%==8 goto:EXIT
+if %errorlevel%==5 goto:SVFISOProcessLTSB15
+if %errorlevel%==6 goto:SVFISOProcessServer16
+if %errorlevel%==7 goto:TBISODownload
+if %errorlevel%==8 goto:SourceISODownload
+if %errorlevel%==9 goto:EXIT
 goto:SVFISOMainMenu
 :================================================================================================================
 ::===============================================================================================================
@@ -173,7 +177,7 @@ if "%build%"=="16299.125" (
 		set "siehash=4a75747a47eb689497fe57d64cec375c7949aa97"
 		set "sielink=http://care.dlservice.microsoft.com/dl/download/6/5/D/65D18931-F626-4A35-AD5B-F5DA41FE6B76/16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us.iso"
 		set "siname=en_windows_10_multi-edition_vl_version_1709_updated_dec_2017_x86_dvd_100406182"
-		set "sihash=6eeff9574366042ed5ad50c48f406ce10ef20e10 "
+		set "sihash=6eeff9574366042ed5ad50c48f406ce10ef20e10"
 		set "sishare=VRdCKPETWzFHOGH"
 	)
 	if "%type%"=="edition_vl_version" if "%arch%"=="x64" (
@@ -519,6 +523,158 @@ pause
 goto:SVFISOMainMenu
 :================================================================================================================
 ::===============================================================================================================
+::LTSB 2015 PROCESS
+:SVFISOProcessLTSB15
+pushd %~dp0
+::===============================================================================================================
+cls
+call :Header "[HEADER] LTSB 2015 SVF ISO CONVERSION"
+CHOICE /C 68 /N /M "[ USER ] x[6]4 or x[8]6 architecture ?:"
+if %errorlevel%==1 set "arch=x64"
+if %errorlevel%==2 set "arch=x86"
+call :Footer
+CHOICE /C SN /N /M "[ USER ] [S]tandard or [N] Version ISO ?:"
+if %errorlevel%==1 set "type=_ltsb_x"
+if %errorlevel%==2 set "type=_ltsb_n"
+call :Footer
+if "%type%"=="_ltsb_x" call :LangChoice
+if "%type%"=="_ltsb_n" call :LangChoiceN
+::===============================================================================================================
+cls
+call :Header "[HEADER] LTSB 2015 SVF ISO CONVERSION"
+for /f "tokens=1,2,3,4* delims=|" %%a in ('type "%databaseLTSB2%" ^| findstr /i "%lang%" ^| findstr /i "%arch%" ^| findstr /i "%type%"') do (
+	set "fshare=%%d"
+	set "fhash=%%b"
+	set "fname=%%c"
+)
+if "%type%"=="_ltsb_x" if "%arch%"=="x86" (
+	set "siename=10240.16384.150709-1700.TH1_CLIENTENTERPRISE_S_EVAL_X86FRE_EN-US"
+	set "siehash=aa8ce9cc9b660b31245622e49e0d183db355558f"
+	set "sielink=https://download.microsoft.com/download/6/2/4/624ECF83-38A6-4D64-8758-FABC099503DC/10240.16384.150709-1700.TH1_CLIENTENTERPRISE_S_EVAL_X86FRE_EN-US.ISO"
+	set "sipname=%arch%/%fname%.svf"
+	set "silink=%arch%/!siname!.svf"
+)
+if "%type%"=="_ltsb_x" if "%arch%"=="x64" (
+	set "siename=10240.16384.150709-1700.TH1_CLIENTENTERPRISE_S_EVAL_X64FRE_EN-US"
+	set "siehash=90e1c5bada5b96ab05a9fe2035cb26f5cb3cd4d2"
+	set "sielink=https://download.microsoft.com/download/6/2/4/624ECF83-38A6-4D64-8758-FABC099503DC/10240.16384.150709-1700.TH1_CLIENTENTERPRISE_S_EVAL_X64FRE_EN-US.ISO"
+	set "sipname=%arch%/%fname%.svf"
+	set "silink=%arch%/!siname!.svf"
+)
+if "%type%"=="_ltsb_n" if "%arch%"=="x86" (
+	set "siename=10240.16384.150709-1700.TH1_CLIENTENTERPRISE_S_EVAL_X86FRE_EN-US"
+	set "siehash=aa8ce9cc9b660b31245622e49e0d183db355558f"
+	set "sielink=https://download.microsoft.com/download/6/2/4/624ECF83-38A6-4D64-8758-FABC099503DC/10240.16384.150709-1700.TH1_CLIENTENTERPRISE_S_EVAL_X86FRE_EN-US.ISO"
+	set "sipname=2016_LTSB_N_SVF/%arch%/%fname%.svf"
+	set "silink=EVAL_LTSB_2_2016_LTSB/%arch%/!siname!.svf"
+)
+if "%type%"=="_ltsb_n" if "%arch%"=="x64" (
+	set "siename=10240.16384.150709-1700.TH1_CLIENTENTERPRISE_S_EVAL_X64FRE_EN-US"
+	set "siehash=90e1c5bada5b96ab05a9fe2035cb26f5cb3cd4d2"
+	set "sielink=https://download.microsoft.com/download/6/2/4/624ECF83-38A6-4D64-8758-FABC099503DC/10240.16384.150709-1700.TH1_CLIENTENTERPRISE_S_EVAL_X64FRE_EN-US.ISO"
+	set "sipname=%arch%/%fname%.svf"
+	set "silink=%arch%/!siname!.svf"
+)
+
+echo [ INFO ] Source: %siename%
+echo [ INFO ] Hash  : %siehash%
+echo [  TO  ]
+echo [ INFO ] Source: %siname%
+echo [ INFO ] Hash  : %sihash%
+call :Footer
+echo [ INFO ] Target: %fname%
+echo [ INFO ] Hash  : %fhash%
+call :Footer
+CHOICE /C SB /N /M "[ USER ] [S]tart or [B]ack ?:"
+if %errorlevel%==2 goto:SVFISOMainMenu
+::===============================================================================================================
+cls
+call :Header "[HEADER] LTSB 2015 SVF ISO CONVERSION"
+echo [ INFO ] Source: %siename%
+echo [ INFO ] Hash  : %siehash%
+call :Footer
+echo [ INFO ] Downloading Source ISO ^(if not already pesent^).
+call :Footer
+set "dhash="
+if not exist "%siname%.iso" (
+	if not exist "%siename%.iso" (
+		echo [ INFO ] Downloading Eval ISO.
+		call :Footer
+		"%aria2c%" -x16 -s16 -d"%cd%" -o"%siename%.iso" --checksum=sha-1=%siehash% "%sielink%" -R -c --file-allocation=none --check-certificate=false
+		if !errorlevel!==0 set "dhash=%siehash%"
+		if not !errorlevel!==0 (
+			files\ISO\busybox echo -e "\033[31;1m[ WARN ] Hash Mismatch!\033[0m"
+			echo [ INFO ] Hash  : !dhash!
+			call :Footer
+			pause
+			goto:SVFISOMainMenu
+		)
+		call :Footer
+	)
+	if exist "%siename%.iso" if not defined dhash (
+		echo [ INFO ] Source Eval ISO present.
+		echo [ INFO ] Checking Eval ISO Hash.
+		echo [ INFO ] Hash  : %siehash%
+		call :Footer
+		xcopy "files\ISO\busybox.exe" /s ".\" /Q /Y >nul 2>&1
+		for /f "tokens=1 delims= " %%a in ('busybox.exe sha1sum %siename%.iso') do set "dhash=%%a"
+		if exist "busybox.exe" del /f /q "busybox.exe" >nul 2>&1
+		if not !dhash! equ %siehash% (
+			files\ISO\busybox echo -e "\033[31;1m[ WARN ] Hash Mismatch!\033[0m"
+			echo [ INFO ] Hash  : !dhash!
+			call :Footer
+			pause
+			goto:SVFISOMainMenu
+		)
+		if !dhash! equ %siehash% (
+			files\ISO\busybox echo -e "\033[32;1m[ INFO ] ISO Hash matching.\033[0m"
+			echo [ INFO ] Hash  : !dhash!
+			call :Footer
+		)
+	)
+)
+echo [ INFO ] Downloading SVF ^(if not already pesent^).
+echo [ INFO ] Name  : %fname%
+call :Footer
+if not exist "%fname%.iso" (
+	if not exist "%fname%.svf" (
+		call %busybox% "%fshare%", "%sipname%"
+		call :Footer
+		pushd "%~dp0"
+		move "files\ISO\%fname%.svf" ".\" >nul 2>&1
+	)
+	echo [ INFO ] Creating Target ISO.
+	echo [ INFO ] Target: %fname%
+	echo [ INFO ] Hash  : %fhash%
+	call :Footer
+	xcopy "%smv%" /s ".\" /Q /Y >nul 2>&1
+	smv_%vera% x %fname%.svf -br .
+	if exist "smv_%vera%.exe" del /f /q "smv_%vera%.exe" >nul 2>&1
+	call :Footer
+)
+echo [ INFO ] Checking Target ISO Hash.
+echo [ INFO ] Hash: %fhash%
+call :Footer
+xcopy "files\ISO\busybox.exe" /s ".\" /Q /Y >nul 2>&1
+for /f "tokens=1 delims= " %%a in ('busybox.exe sha1sum %fname%.iso') do set "dhash=%%a"
+if exist "busybox.exe" del /f /q "busybox.exe" >nul 2>&1
+if not %dhash% equ %fhash% (
+	files\ISO\busybox echo -e "\033[31;1m[ WARN ] Hash Mismatch!\033[0m"
+	echo [ INFO ] Hash  : %dhash%
+	call :Footer
+	pause
+	goto:SVFISOMainMenu
+)
+if %dhash% equ %fhash% (
+	files\ISO\busybox echo -e "\033[32;1m[ INFO ] ISO Hash matching.\033[0m"
+	echo [ INFO ] Hash  : %dhash%
+	call :Footer
+)
+:SourceChoiceLTSB2
+pause
+goto:SVFISOMainMenu
+:================================================================================================================
+::===============================================================================================================
 ::SERVER 2016 PROCESS
 :SVFISOProcessServer16
 pushd %~dp0
@@ -800,16 +956,19 @@ echo      [2] 1709
 echo:
 echo      [3] LTSB 2016
 echo:
-echo      [4] SERVER 2016
+echo      [4] LTSB 2015
+echo:
+echo      [5] SERVER 2016
 call :Footer
 echo      [B] BACK
 call :Footer
-CHOICE /C 1234B /N /M "[ USER ] YOUR CHOICE ?:"
+CHOICE /C 12345B /N /M "[ USER ] YOUR CHOICE ?:"
 if %errorlevel%==1 set "build=1803"
 if %errorlevel%==2 set "build=1709"
 if %errorlevel%==3 set "build=1607"
-if %errorlevel%==4 set "build=Server2016"
-if %errorlevel%==5 goto:SVFISOMainMenu
+if %errorlevel%==4 set "build=LTSB15"
+if %errorlevel%==5 set "build=Server2016"
+if %errorlevel%==6 goto:SVFISOMainMenu
 cls
 call :Header "[HEADER] SOURCE ISO DOWNLOAD"
 if "%build%"=="Server2016" goto:SourceServer2016
@@ -847,6 +1006,16 @@ if "%build%"=="1607" if "%arch%"=="x64" (
 	set "sihash=ed6e357cba8d716a6187095e3abd016564670d5b"
 	set "silink=http://download.microsoft.com/download/1/B/F/1BFE5194-5951-452C-B62C-B2F667F9B86D/14393.0.160715-1616.RS1_RELEASE_CLIENTENTERPRISE_S_EVAL_X64FRE_EN-US.ISO"
 )
+if "%build%"=="LTSB15" if "%arch%"=="x86" (
+	set "siname=10240.16384.150709-1700.TH1_CLIENTENTERPRISE_S_EVAL_X86FRE_EN-US"
+	set "sihash=aa8ce9cc9b660b31245622e49e0d183db355558f"
+	set "silink=https://download.microsoft.com/download/6/2/4/624ECF83-38A6-4D64-8758-FABC099503DC/10240.16384.150709-1700.TH1_CLIENTENTERPRISE_S_EVAL_X86FRE_EN-US.ISO"
+)
+if "%build%"=="LTSB15" if "%arch%"=="x64" (
+	set "siname=10240.16384.150709-1700.TH1_CLIENTENTERPRISE_S_EVAL_X64FRE_EN-US"
+	set "sihash=90e1c5bada5b96ab05a9fe2035cb26f5cb3cd4d2"
+	set "silink=https://download.microsoft.com/download/6/2/4/624ECF83-38A6-4D64-8758-FABC099503DC/10240.16384.150709-1700.TH1_CLIENTENTERPRISE_S_EVAL_X64FRE_EN-US.ISO"
+)
 :SourceServer2016
 if "%build%"=="Server2016" (
 	set "siname=14393.0.160715-1616.RS1_RELEASE_SERVER_EVAL_X64FRE_EN-US"
@@ -881,12 +1050,12 @@ exit
 ::===============================================================================================================
 ::TITLE
 :TITLE
-title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.06.08
+title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.06.22
 goto:eof
 ::===============================================================================================================
 ::VERSION
 :VERSION
-set "svfisoconverter=v0.06.08"
+set "svfisoconverter=v0.06.22"
 goto:eof
 :================================================================================================================
 ::===============================================================================================================
