@@ -565,8 +565,8 @@ if "%type%"=="_ltsb_n" if "%arch%"=="x86" (
 	set "siename=10240.16384.150709-1700.TH1_CLIENTENTERPRISE_S_EVAL_X86FRE_EN-US"
 	set "siehash=aa8ce9cc9b660b31245622e49e0d183db355558f"
 	set "sielink=https://download.microsoft.com/download/6/2/4/624ECF83-38A6-4D64-8758-FABC099503DC/10240.16384.150709-1700.TH1_CLIENTENTERPRISE_S_EVAL_X86FRE_EN-US.ISO"
-	set "sipname=2016_LTSB_N_SVF/%arch%/%fname%.svf"
-	set "silink=EVAL_LTSB_2_2016_LTSB/%arch%/!siname!.svf"
+	set "sipname=%arch%/%fname%.svf"
+	set "silink=%arch%/!siname!.svf"
 )
 if "%type%"=="_ltsb_n" if "%arch%"=="x64" (
 	set "siename=10240.16384.150709-1700.TH1_CLIENTENTERPRISE_S_EVAL_X64FRE_EN-US"
@@ -1050,12 +1050,12 @@ exit
 ::===============================================================================================================
 ::TITLE
 :TITLE
-title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.06.22
+title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.06.25
 goto:eof
 ::===============================================================================================================
 ::VERSION
 :VERSION
-set "svfisoconverter=v0.06.22"
+set "svfisoconverter=v0.06.25"
 goto:eof
 :================================================================================================================
 ::===============================================================================================================
