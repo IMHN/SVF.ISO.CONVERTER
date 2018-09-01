@@ -9,7 +9,7 @@ if NOT "%cd%"=="%cd: =%" (
 	call :SpaceTest
     goto :EOF
 )
-(cd /d "%~dp0")&&(NET FILE||(powershell start-process -FilePath '%0' -verb runas)&&(exit /B)) >NUL 2>&1
+(cd /d "%~dp0")&&(NET FILE||(powershell -noprofile start-process -FilePath '%0' -verb runas)&&(exit /B)) >NUL 2>&1
 setlocal EnableExtensions
 setlocal EnableDelayedExpansion
 :================================================================================================================
@@ -20,7 +20,8 @@ pushd %~dp0
 for /f "tokens=2* delims= " %%a in ('reg query "HKLM\System\CurrentControlSet\Control\Session Manager\Environment" /v "PROCESSOR_ARCHITECTURE"') do if "%%b"=="AMD64" (set vera=x64) else (set vera=x86)
 ::===============================================================================================================
 ::===============================================================================================================
-set "database1803=files\database.1803.smrt"
+set "database1803_1=files\database.1803.1.smrt"
+set "database1803_2=files\database.1803.2.smrt"
 set "databasetb1803=files\database.tb.1803.smrt"
 set "databasetb81=files\database.tb.81.smrt"
 set "database1709_1=files\database.1709.1.smrt"
@@ -37,7 +38,7 @@ set "smv=files\ISO\smv_%vera%.exe"
 :================================================================================================================
 ::===============================================================================================================
 :SVFISOMainMenu
-for /f %%I in ('powershell ^(Get-Host^).UI.RawUI.WindowSize.width') do set "cw=%%I"
+for /f %%I in ('powershell -noprofile ^(Get-Host^).UI.RawUI.WindowSize.width') do set "cw=%%I"
 call :TITLE
 cls
 call :MenuHeader "[HEADER] MAIN MENU [SYSTEM: %vera%]"
@@ -49,15 +50,19 @@ call :MenuFooter
 echo:
 echo      [C] CREATE SVF/ISO
 call :Footer
-echo      [1] START 1803 PROCESS [17134.1]
+echo      [1] START 1803 PROCESS 1 [17134.1]
 echo:
-echo      [2] START 1709 PROCESS [16299.125]
+echo      [2] START 1803 PROCESS 2 [17134.228]
 echo:
-echo      [3] START LTSB 2016 PROCESS [14393.0]
+echo      [3] START 1709 PROCESS 1 [16299.15]
 echo:
-echo      [4] START LTSB 2015 PROCESS [10240.0]
+echo      [4] START 1709 PROCESS 2 [16299.125]
 echo:
-echo      [5] START SERVER 2016 PROCESS [14393.0]
+echo      [5] START LTSB 2016 PROCESS [14393.0]
+echo:
+echo      [6] START LTSB 2015 PROCESS [10240.0]
+echo:
+echo      [7] START SERVER 2016 PROCESS [14393.0]
 call :Footer
 echo      [T] TECHBENCH DOWNLOAD [Win 8.1/10]
 call :Footer
@@ -67,7 +72,7 @@ echo      [E] EXIT
 echo:
 call :MenuFooter
 echo:
-CHOICE /C C12345TDE /N /M "[ USER ] YOUR CHOICE ?:"
+CHOICE /C C1234567TDE /N /M "[ USER ] YOUR CHOICE ?:"
 if %errorlevel%==1 goto:SVFISOCreate
 if %errorlevel%==2 (
 	set "show=1803"
@@ -75,16 +80,26 @@ if %errorlevel%==2 (
 	goto:SVFISOProcess1803
 )
 if %errorlevel%==3 (
+	set "show=1803"
+	set "build=17134.228"
+	goto:SVFISOProcess1803
+)
+if %errorlevel%==4 (
+	set "show=1709"
+	set "build=16299.15"
+	goto:SVFISOProcess1803
+)
+if %errorlevel%==5 (
 	set "show=1709"
 	set "build=16299.125"
 	goto:SVFISOProcess1803
 )
-if %errorlevel%==4 goto:SVFISOProcessLTSB16
-if %errorlevel%==5 goto:SVFISOProcessLTSB15
-if %errorlevel%==6 goto:SVFISOProcessServer16
-if %errorlevel%==7 goto:TBISODownload
-if %errorlevel%==8 goto:SourceISODownload
-if %errorlevel%==9 goto:EXIT
+if %errorlevel%==6 goto:SVFISOProcessLTSB16
+if %errorlevel%==7 goto:SVFISOProcessLTSB15
+if %errorlevel%==8 goto:SVFISOProcessServer16
+if %errorlevel%==9 goto:TBISODownload
+if %errorlevel%==10 goto:SourceISODownload
+if %errorlevel%==11 goto:EXIT
 goto:SVFISOMainMenu
 :================================================================================================================
 ::===============================================================================================================
@@ -93,7 +108,7 @@ goto:SVFISOMainMenu
 pushd %~dp0
 ::===============================================================================================================
 cls
-call :Header "[HEADER] %show% SVF ISO CONVERSION"
+call :Header "[HEADER] %show% [%build%] SVF ISO CONVERSION"
 CHOICE /C 68 /N /M "[ USER ] x[6]4 or x[8]6 architecture ?:"
 if %errorlevel%==1 set "arch=x64"
 if %errorlevel%==2 set "arch=x86"
@@ -101,19 +116,23 @@ call :Footer
 CHOICE /C CB /N /M "[ USER ] [C]onsumer or [B]usiness (VL) ISO ?:"
 if %errorlevel%==1 (
 	if "%build%"=="17134.1" set "type=consumer"
+	if "%build%"=="17134.228" set "type=consumer"
+	if "%build%"=="16299.15" set "type=edition_version"
 	if "%build%"=="16299.125" set "type=edition_version"
 )
 if %errorlevel%==2 (
 	if "%build%"=="17134.1" set "type=business"
+	if "%build%"=="17134.228" set "type=business"
+	if "%build%"=="16299.15" set "type=edition_vl_version"
 	if "%build%"=="16299.125" set "type=edition_vl_version"
 )
 call :Footer
 call :LangChoice
 ::===============================================================================================================
 cls
-call :Header "[HEADER] %show% SVF ISO CONVERSION"
+call :Header "[HEADER] %show% [%build%] SVF ISO CONVERSION"
 if "%build%"=="17134.1" (
-	for /f "tokens=1,2,3,4* delims=|" %%a in ('type "%database1803%" ^| findstr /i "%lang%" ^| findstr /i "%arch%" ^| findstr /i "%type%"') do (
+	for /f "tokens=1,2,3,4* delims=|" %%a in ('type "%database1803_1%" ^| findstr /i "%lang%" ^| findstr /i "%arch%" ^| findstr /i "%type%"') do (
 		set "fshare=%%d"
 		set "fhash=%%b"
 		set "fname=%%c"
@@ -150,6 +169,86 @@ if "%build%"=="17134.1" (
 		set "sihash=28681742fe850aa4bfc7075811c5244b61d462cf"
 		set "sishare=iAmZu6da4sFmKP9"
 ))
+if "%build%"=="17134.228" (
+	for /f "tokens=1,2,3* delims=|" %%a in ('type "%database1803_2%" ^| findstr /i "%lang%" ^| findstr /i "%arch%" ^| findstr /i "%type%"') do (
+		set "fshare=Xq6elBGSBdH9RQe"
+		set "fhash=%%b"
+		set "fname=%%c"
+	)
+	if "%type%"=="consumer" if "%arch%"=="x86" (
+		set "siename=17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us"
+		set "siehash=ddb496534203cb98284e5484e0ad60af3c0efce7"
+		set "sielink=https://software-download.microsoft.com/download/pr/17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us.iso"
+		set "siname=en_windows_10_consumer_edition_version_1803_updated_aug_2018_x86_dvd_454b0be7"
+		set "sihash=ca7861c6a41c0f377f1d7c64eb6c59fded843d8a"
+		set "sishare=Consumer_EN_2_XX_x86/!fname!.svf"
+	)
+	if "%type%"=="consumer" if "%arch%"=="x64" (
+		set "siename=17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us"
+		set "siehash=a4ea45ec1282e85fc84af49acf7a8d649c31ac5c"
+		set "sielink=https://software-download.microsoft.com/download/pr/17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso"
+		set "siname=en_windows_10_consumer_edition_version_1803_updated_aug_2018_x64_dvd_f2764cf8"
+		set "sihash=349c43fc744ef45d2cf85e7bef4131373216525d"
+		set "sishare=Consumer_EN_2_XX_x64/!fname!.svf"
+	)
+	if "%type%"=="business" if "%arch%"=="x86" (
+		set "siename=17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us"
+		set "siehash=ddb496534203cb98284e5484e0ad60af3c0efce7"
+		set "sielink=https://software-download.microsoft.com/download/pr/17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us.iso"
+		set "siname=en_windows_10_business_edition_version_1803_updated_aug_2018_x86_dvd_69a0bb10"
+		set "sihash=533545aa095aa18824a9d1f81a95d8db3e23e154"
+		set "sishare=Business_EN_2_XX_x86/!fname!.svf"
+	)
+	if "%type%"=="business" if "%arch%"=="x64" (
+		set "siename=17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us"
+		set "siehash=a4ea45ec1282e85fc84af49acf7a8d649c31ac5c"
+		set "sielink=https://download.microsoft.com/download/download/pr/17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso"
+		set "siname=en_windows_10_business_edition_version_1803_updated_aug_2018_x64_dvd_5d7e729e"
+		set "sihash=2b15efd7926ab9db9181cd7b599452cccc3774de"
+		set "sishare=Business_EN_2_XX_x64/!fname!.svf"
+))
+if "%build%"=="16299.15" (
+	for /f "tokens=1,2,3* delims=|" %%a in ('type "%database1709_1%" ^| findstr /i "%lang%" ^| findstr /i "%arch%" ^| findstr /i "%type%"') do (
+		set "fshare=Sc8UaS9CXJDKtXr"
+		set "fhash=%%b"
+		set "fname=%%c"
+	)
+	if "%type%"=="edition_version" if "%arch%"=="x86" (
+		set "siename=16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us"
+		set "siehash=4a75747a47eb689497fe57d64cec375c7949aa97"
+		set "sielink=https://download.microsoft.com/download/6/5/D/65D18931-F626-4A35-AD5B-F5DA41FE6B76/16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us.iso"
+		set "siname=en_windows_10_multi-edition_version_1709_updated_sept_2017_x86_dvd_100090818"
+		set "sihash=93b317c82b69252027e57aa2d18b50825cdf443e"
+		set "sishare=SbZp6LdwkWOwp3v"
+	)
+	if "%type%"=="edition_version" if "%arch%"=="x64" (
+		set "siename=16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us"
+		set "siehash=3b5f9494d870726d6d8a833aaf6169a964b8a9be"
+		set "sielink=https://download.microsoft.com/download/6/5/D/65D18931-F626-4A35-AD5B-F5DA41FE6B76/16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso"
+		set "siname=en_windows_10_multi-edition_version_1709_updated_sept_2017_x64_dvd_100090817"
+		set "sihash=1ad928cfef439f6aa4044ddc3a96b0b6830bdd0f"
+		set "sishare=SbZp6LdwkWOwp3v"
+	)
+	if "%type%"=="edition_vl_version" if "%arch%"=="x86" (
+		set "siename=16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us"
+		set "siehash=4a75747a47eb689497fe57d64cec375c7949aa97"
+		set "sielink=https://download.microsoft.com/download/6/5/D/65D18931-F626-4A35-AD5B-F5DA41FE6B76/16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us.iso"
+		set "siname=en_windows_10_multi-edition_vl_version_1709_updated_sept_2017_x86_dvd_100090759"
+		set "sihash=8c274ce27b49d43216dfef115b811936880e6e06"
+		set "sishare=SbZp6LdwkWOwp3v"
+	)
+	if "%type%"=="edition_vl_version" if "%arch%"=="x64" (
+		set "siename=16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us"
+		set "siehash=3b5f9494d870726d6d8a833aaf6169a964b8a9be"
+		set "sielink=https://download.microsoft.com/download/6/5/D/65D18931-F626-4A35-AD5B-F5DA41FE6B76/16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso"
+		set "siname=en_windows_10_multi-edition_vl_version_1709_updated_sept_2017_x64_dvd_100090741"
+		set "sihash=1bbf886697a485c18d70ad294a09c08cb3c064ac"
+		set "sishare=SbZp6LdwkWOwp3v"
+))
+::===============================================================================================================
+::set "sielink=http://care.dlservice.microsoft.com/dl/download/6/5/D/65D18931-F626-4A35-AD5B-F5DA41FE6B76/16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us.iso"
+::set "sielink=http://care.dlservice.microsoft.com/dl/download/6/5/D/65D18931-F626-4A35-AD5B-F5DA41FE6B76/16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso"
+::===============================================================================================================
 if "%build%"=="16299.125" (
 	for /f "tokens=1,2,3* delims=|" %%a in ('type "%database1709_2%" ^| findstr /i "%lang%" ^| findstr /i "%arch%" ^| findstr /i "%type%"') do (
 		set "fshare=MLATBBhtSajfaLz"
@@ -159,7 +258,7 @@ if "%build%"=="16299.125" (
 	if "%type%"=="edition_version" if "%arch%"=="x86" (
 		set "siename=16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us"
 		set "siehash=4a75747a47eb689497fe57d64cec375c7949aa97"
-		set "sielink=http://care.dlservice.microsoft.com/dl/download/6/5/D/65D18931-F626-4A35-AD5B-F5DA41FE6B76/16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us.iso"
+		set "sielink=https://download.microsoft.com/download/6/5/D/65D18931-F626-4A35-AD5B-F5DA41FE6B76/16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us.iso"
 		set "siname=en_windows_10_multi-edition_version_1709_updated_dec_2017_x86_dvd_100406359"
 		set "sihash=36005d054f732119bbb00fd9a0e141d54712d751"
 		set "sishare=9JpXNkAkwCUsqcy"
@@ -167,7 +266,7 @@ if "%build%"=="16299.125" (
 	if "%type%"=="edition_version" if "%arch%"=="x64" (
 		set "siename=16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us"
 		set "siehash=3b5f9494d870726d6d8a833aaf6169a964b8a9be"
-		set "sielink=http://care.dlservice.microsoft.com/dl/download/6/5/D/65D18931-F626-4A35-AD5B-F5DA41FE6B76/16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso"
+		set "sielink=https://download.microsoft.com/download/6/5/D/65D18931-F626-4A35-AD5B-F5DA41FE6B76/16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso"
 		set "siname=en_windows_10_multi-edition_version_1709_updated_dec_2017_x64_dvd_100406711"
 		set "sihash=ea214ee684a5bb8230707104c54a3b74d92f1d69"
 		set "sishare=Mfxoh7M2KNorBaE"
@@ -175,7 +274,7 @@ if "%build%"=="16299.125" (
 	if "%type%"=="edition_vl_version" if "%arch%"=="x86" (
 		set "siename=16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us"
 		set "siehash=4a75747a47eb689497fe57d64cec375c7949aa97"
-		set "sielink=http://care.dlservice.microsoft.com/dl/download/6/5/D/65D18931-F626-4A35-AD5B-F5DA41FE6B76/16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us.iso"
+		set "sielink=https://download.microsoft.com/download/6/5/D/65D18931-F626-4A35-AD5B-F5DA41FE6B76/16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us.iso"
 		set "siname=en_windows_10_multi-edition_vl_version_1709_updated_dec_2017_x86_dvd_100406182"
 		set "sihash=6eeff9574366042ed5ad50c48f406ce10ef20e10"
 		set "sishare=VRdCKPETWzFHOGH"
@@ -183,7 +282,7 @@ if "%build%"=="16299.125" (
 	if "%type%"=="edition_vl_version" if "%arch%"=="x64" (
 		set "siename=16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us"
 		set "siehash=3b5f9494d870726d6d8a833aaf6169a964b8a9be"
-		set "sielink=http://care.dlservice.microsoft.com/dl/download/6/5/D/65D18931-F626-4A35-AD5B-F5DA41FE6B76/16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso"
+		set "sielink=https://download.microsoft.com/download/6/5/D/65D18931-F626-4A35-AD5B-F5DA41FE6B76/16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso"
 		set "siname=en_windows_10_multi-edition_vl_version_1709_updated_dec_2017_x64_dvd_100406172"
 		set "sihash=1851a0007321fa084145ea24b8d30bf7a72bf1c6"
 		set "sishare=SB0WYFMT6ZItmmc"
@@ -201,7 +300,7 @@ CHOICE /C SB /N /M "[ USER ] [S]tart or [B]ack ?:"
 if %errorlevel%==2 goto:SVFISOMainMenu
 ::===============================================================================================================
 cls
-call :Header "[HEADER] %show% SVF ISO CONVERSION"
+call :Header "[HEADER] %show% [%build%] SVF ISO CONVERSION"
 echo [ INFO ] Source: %siname%
 echo [ INFO ] Hash  : %sihash%
 call :Footer
@@ -249,6 +348,8 @@ if not exist "%siname%.iso" (
 		echo [ INFO ] Name  : %siname%
 		call :Footer
 		if "%build%"=="17134.1" call %busybox% "%sishare%", ""
+		if "%build%"=="17134.228" call %busybox% "%fshare%", "%siname%.svf"
+		if "%build%"=="16299.15" call %busybox% "%sishare%", "%siname%.svf"
 		if "%build%"=="16299.125" call %busybox% "%sishare%", ""
 		call :Footer
 		pushd "%~dp0"
@@ -287,7 +388,9 @@ call :Footer
 if not exist "%fname%.iso" (
 	if not exist "%fname%.svf" (
 		if "%build%"=="17134.1" call %busybox% "%fshare%", "%fname%.svf"
-		if "%build%"=="16299.125" call %busybox% "%fshare%", "%fname%.svf", "%arch%", "%type%
+		if "%build%"=="17134.228" call %busybox% "%fshare%", "%sishare%"
+		if "%build%"=="16299.15" call %busybox% "%fshare%", "%fname%.svf", "%arch%", "%type%", "%build%"
+		if "%build%"=="16299.125" call %busybox% "%fshare%", "%fname%.svf", "%arch%", "%type%"
 		call :Footer
 		pushd "%~dp0"
 		move "files\ISO\%fname%.svf" ".\" >nul 2>&1
@@ -689,11 +792,11 @@ for /f "tokens=1,2,3* delims=|" %%a in ('type "%databaseServer16%" ^| findstr /i
 	set "fhash=%%b"
 	set "fname=%%c"
 )
-set "siename=14393.0.160715-1616.RS1_RELEASE_SERVER_EVAL_X64FRE_EN-US"
-set "siehash=3bb1c60417e9aeb3f4ce0eb02189c0c84a1c6691"
-set "sielink=http://care.dlservice.microsoft.com/dl/download/1/6/F/16FA20E6-4662-482A-920B-1A45CF5AAE3C/14393.0.160715-1616.RS1_RELEASE_SERVER_EVAL_X64FRE_EN-US.ISO"
-set "fpshare=EVAL_Server_2016_enUS_2_XX_windows_server_2016_x64_dvd/%fname%.svf"
-set "fshare=khsqusxKTVkJ0R6"
+set "siename=14393.0.161119-1705.RS1_REFRESH_SERVER_EVAL_X64FRE_EN-US"
+set "siehash=772700802951b36c8cb26a61c040b9a8dc3816a3"
+set "sielink=https://download.microsoft.com/download/1/4/9/149D5452-9B29-4274-B6B3-5361DBDA30BC/14393.0.161119-1705.RS1_REFRESH_SERVER_EVAL_X64FRE_EN-US.ISO"
+set "fpshare=%fname%.svf"
+set "fshare=394BiaxTUL50e0B"
 echo [ INFO ] Source: %siename%
 echo [ INFO ] Hash  : %siehash%
 call :Footer
@@ -989,12 +1092,12 @@ if "%build%"=="1803" if "%arch%"=="x64" (
 if "%build%"=="1709" if "%arch%"=="x86" (
 	set "siname=16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us"
 	set "sihash=4a75747a47eb689497fe57d64cec375c7949aa97"
-	set "silink=http://care.dlservice.microsoft.com/dl/download/6/5/D/65D18931-F626-4A35-AD5B-F5DA41FE6B76/16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us.iso"
+	set "silink=https://download.microsoft.com/download/6/5/D/65D18931-F626-4A35-AD5B-F5DA41FE6B76/16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us.iso"
 )
 if "%build%"=="1709" if "%arch%"=="x64" (
 	set "siname=16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us"
 	set "sihash=3b5f9494d870726d6d8a833aaf6169a964b8a9be"
-	set "silink=http://care.dlservice.microsoft.com/dl/download/6/5/D/65D18931-F626-4A35-AD5B-F5DA41FE6B76/16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso"
+	set "silink=https://download.microsoft.com/download/6/5/D/65D18931-F626-4A35-AD5B-F5DA41FE6B76/16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso"
 )
 if "%build%"=="1607" if "%arch%"=="x86" (
 	set "siname=14393.0.160715-1616.RS1_RELEASE_CLIENTENTERPRISE_S_EVAL_X86FRE_EN-US"
@@ -1020,7 +1123,7 @@ if "%build%"=="LTSB15" if "%arch%"=="x64" (
 if "%build%"=="Server2016" (
 	set "siname=14393.0.160715-1616.RS1_RELEASE_SERVER_EVAL_X64FRE_EN-US"
 	set "sihash=3bb1c60417e9aeb3f4ce0eb02189c0c84a1c6691"
-	set "silink=http://care.dlservice.microsoft.com/dl/download/1/6/F/16FA20E6-4662-482A-920B-1A45CF5AAE3C/14393.0.160715-1616.RS1_RELEASE_SERVER_EVAL_X64FRE_EN-US.ISO"
+	set "silink=https://download.microsoft.com/download/1/4/9/149D5452-9B29-4274-B6B3-5361DBDA30BC/14393.0.161119-1705.RS1_REFRESH_SERVER_EVAL_X64FRE_EN-US.ISO"
 )
 cls
 call :Header "[HEADER] SOURCE ISO DOWNLOAD"
@@ -1050,12 +1153,12 @@ exit
 ::===============================================================================================================
 ::TITLE
 :TITLE
-title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.06.25
+title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.07.01
 goto:eof
 ::===============================================================================================================
 ::VERSION
 :VERSION
-set "svfisoconverter=v0.06.25"
+set "svfisoconverter=v0.07.01"
 goto:eof
 :================================================================================================================
 ::===============================================================================================================

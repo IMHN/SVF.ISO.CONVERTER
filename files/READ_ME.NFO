@@ -24,7 +24,7 @@
 ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß  
 ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-þþþþþþþþþ RELEASE NAME:  [s1ave77s S-M-R-T SVF ISO CONVERTER v0.06.25]  þþþþþþþþþþ
+þþþþþþþþþ RELEASE NAME:  [s1ave77s S-M-R-T SVF ISO CONVERTER v0.06.53]  þþþþþþþþþþ
 
 ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß 
 	
@@ -125,6 +125,68 @@
 				[08] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro Education N | ProfessionalEducationN
 				[09] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro for Workstations | ProfessionalWorkstation
 				[10] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro N for Workstations | ProfessionalWorkstationN
+				
+				
+	
+	1803 17134.228
+	
+		SOURCE ISO INFO:
+		
+			Source x86: 
+			
+			ddb496534203cb98284e5484e0ad60af3c0efce7 *17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us.iso
+			
+			Source x64: 
+			
+			a4ea45ec1282e85fc84af49acf7a8d649c31ac5c *17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso
+			
+		Will be converted to:
+			
+			Source Consumer x86:
+			
+			ca7861c6a41c0f377f1d7c64eb6c59fded843d8a *en_windows_10_consumer_edition_version_1803_updated_aug_2018_x86_dvd_454b0be7.iso
+			
+			
+			Source Consumer x64:
+			
+			349c43fc744ef45d2cf85e7bef4131373216525d *en_windows_10_consumer_edition_version_1803_updated_aug_2018_x64_dvd_f2764cf8.iso
+			
+			
+			Containing:
+				
+				[01] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Home | Core
+				[02] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Home N | CoreN
+				[03] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Home Single Language | CoreSingleLanguage
+				[04] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Education | Education
+				[05] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Education N | EducationN
+				[06] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro | Professional
+				[07] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro N | ProfessionalN
+				[08] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro Education | ProfessionalEducation
+				[09] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro Education N | ProfessionalEducationN
+				[10] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro for Workstations | ProfessionalWorkstation
+				[11] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro N for Workstations | ProfessionalWorkstationN
+			
+			
+			Source Business x86:
+			
+			533545aa095aa18824a9d1f81a95d8db3e23e154 *en_windows_10_business_edition_version_1803_updated_aug_2018_x86_dvd_69a0bb10.iso
+			
+			Source Business x64:
+			
+			2b15efd7926ab9db9181cd7b599452cccc3774de *en_windows_10_business_edition_version_1803_updated_aug_2018_x64_dvd_5d7e729e.iso
+			
+			Cointaining:
+			
+				[01] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Education | Education
+				[02] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Education N | EducationN
+				[03] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Enterprise | Enterprise
+				[04] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Enterprise N | EnterpriseN
+				[05] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro | Professional
+				[06] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro N | ProfessionalN
+				[07] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro Education | ProfessionalEducation
+				[08] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro Education N | ProfessionalEducationN
+				[09] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro for Workstations | ProfessionalWorkstation
+				[10] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro N for Workstations | ProfessionalWorkstationN
 	
 
 	
@@ -166,6 +228,58 @@
 		3bb1c60417e9aeb3f4ce0eb02189c0c84a1c6691 *14393.0.160715-1616.RS1_RELEASE_SERVER_EVAL_X64FRE_EN-US.ISO
 	
 	
+	1709 16299.15
+	
+		SOURCE ISO INFO:
+		
+			Source x86: 
+			
+			4a75747a47eb689497fe57d64cec375c7949aa97 *16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us.iso
+			
+			Source x64: 
+			
+			3b5f9494d870726d6d8a833aaf6169a964b8a9be *16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso
+		
+		Will be converted to:
+		
+			Source for x64 Client:
+			
+			1ad928cfef439f6aa4044ddc3a96b0b6830bdd0f *en_windows_10_multi-edition_version_1709_updated_sept_2017_x64_dvd_100090817.iso
+			
+			Source for x64 Volume:
+			
+			1bbf886697a485c18d70ad294a09c08cb3c064ac *en_windows_10_multi-edition_vl_version_1709_updated_sept_2017_x64_dvd_100090741.iso
+		
+			Source for x86 Client:
+			
+			93b317c82b69252027e57aa2d18b50825cdf443e *en_windows_10_multi-edition_version_1709_updated_sept_2017_x86_dvd_100090818.iso
+			
+			Source for x86 Volume:
+			
+			8c274ce27b49d43216dfef115b811936880e6e06 *en_windows_10_multi-edition_vl_version_1709_updated_sept_2017_x86_dvd_100090759.iso
+		
+		Consumer Cointaining:
+		
+			[01] 9/29/2017 en-US x64 10.0.16299.15 Windows 10 S | Cloud
+			[02] 9/29/2017 en-US x64 10.0.16299.15 Windows 10 S N | CloudN
+			[03] 9/29/2017 en-US x64 10.0.16299.15 Windows 10 Home | Core
+			[04] 9/29/2017 en-US x64 10.0.16299.15 Windows 10 Home N | CoreN
+			[05] 9/29/2017 en-US x64 10.0.16299.15 Windows 10 Home Single Language | CoreSingleLanguage
+			[06] 9/29/2017 en-US x64 10.0.16299.15 Windows 10 Education | Education
+			[07] 9/29/2017 en-US x64 10.0.16299.15 Windows 10 Education N | EducationN
+			[08] 9/29/2017 en-US x64 10.0.16299.15 Windows 10 Pro | Professional
+			[09] 9/29/2017 en-US x64 10.0.16299.15 Windows 10 Pro N | ProfessionalN	
+		
+		Business Containing:
+		
+			[01] 9/29/2017 en-US x64 10.0.16299.15 Windows 10 Education | Education
+			[02] 9/29/2017 en-US x64 10.0.16299.15 Windows 10 Education N | EducationN
+			[03] 9/29/2017 en-US x64 10.0.16299.15 Windows 10 Enterprise | Enterprise
+			[04] 9/29/2017 en-US x64 10.0.16299.15 Windows 10 Enterprise N | EnterpriseN
+			[05] 9/29/2017 en-US x64 10.0.16299.15 Windows 10 Pro | Professional
+			[06] 9/29/2017 en-US x64 10.0.16299.15 Windows 10 Pro N | ProfessionalN
+			
+			
 	1709 16299.125
 	
 		SOURCE ISO INFO:
@@ -243,6 +357,12 @@
 þþþþþþþþþþþþþþþþþþþþþþþþþþþ +++ C H A N G E L O G +++ þþþþþþþþþþþþþþþþþþþþþþþþþþþþ
 	
 ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß 
+		
+	v0.07.01
+	--added 16299.15 (RTM) (thanks to Enthousiast)
+	--changed 1709 EVAL links (thanks to Sajjo)
+	--added 17134.228 (thanks to Enthousiast)
+	--switched Server 2016 to working EVAL and new Repo (thanks to Enthousiast)
 		
 	v0.06.25
 	--fixed a bug in LTSB 2015 N generation
