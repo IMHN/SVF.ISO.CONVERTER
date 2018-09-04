@@ -202,7 +202,7 @@ if "%build%"=="17134.228" (
 	if "%type%"=="business" if "%arch%"=="x64" (
 		set "siename=17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us"
 		set "siehash=a4ea45ec1282e85fc84af49acf7a8d649c31ac5c"
-		set "sielink=https://download.microsoft.com/download/download/pr/17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso"
+		set "sielink=https://software-download.microsoft.com/download/pr/17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso"
 		set "siname=en_windows_10_business_edition_version_1803_updated_aug_2018_x64_dvd_5d7e729e"
 		set "sihash=2b15efd7926ab9db9181cd7b599452cccc3774de"
 		set "sishare=Business_EN_2_XX_x64/!fname!.svf"
@@ -1153,12 +1153,12 @@ exit
 ::===============================================================================================================
 ::TITLE
 :TITLE
-title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.07.01
+title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.07.04
 goto:eof
 ::===============================================================================================================
 ::VERSION
 :VERSION
-set "svfisoconverter=v0.07.01"
+set "svfisoconverter=v0.07.04"
 goto:eof
 :================================================================================================================
 ::===============================================================================================================
