@@ -32,7 +32,7 @@ set "databaseServer16=files\database.Server2016.smrt"
 set "aria2c=files\aria2c\aria2c.exe"
 set "busybox=files\ISO\busybox.cmd"
 set "busyboxtb=files\ISO\busybox.tb.cmd"
-set "smv=files\ISO\smv_%vera%.exe"
+set "smv=files\ISO\smv.exe"
 :================================================================================================================
 ::===============================================================================================================
 :================================================================================================================
@@ -358,9 +358,11 @@ if not exist "%siname%.iso" (
 	echo [ INFO ] Creating Source ISO.
 	echo [ INFO ] Name  : %siname%
 	call :Footer
+::===============================================================================================================
 	xcopy "%smv%" /s ".\" /Q /Y >nul 2>&1
-	smv_%vera% x %siname%.svf -br .
-	if exist "smv_%vera%.exe" del /f /q "smv_%vera%.exe" >nul 2>&1
+	smv x %siname%.svf -br .
+	if exist "smv.exe" del /f /q "smv.exe" >nul 2>&1
+::===============================================================================================================
 	call :Footer
 )
 echo [ INFO ] Checking Source ISO Hash.
@@ -399,9 +401,11 @@ if not exist "%fname%.iso" (
 	echo [ INFO ] Target: %fname%
 	echo [ INFO ] Hash  : %fhash%
 	call :Footer
+::===============================================================================================================
 	xcopy "%smv%" /s ".\" /Q /Y >nul 2>&1
-	smv_%vera% x %fname%.svf -br .
-	if exist "smv_%vera%.exe" del /f /q "smv_%vera%.exe" >nul 2>&1
+	smv x %fname%.svf -br .
+	if exist "smv.exe" del /f /q "smv.exe" >nul 2>&1
+::===============================================================================================================
 	call :Footer
 )
 echo [ INFO ] Checking Target ISO Hash.
@@ -560,9 +564,11 @@ if not exist "%siname%.iso" (
 	echo [ INFO ] Creating Source ISO.
 	echo [ INFO ] Name  : %siname%
 	call :Footer
+::===============================================================================================================
 	xcopy "%smv%" /s ".\" /Q /Y >nul 2>&1
-	smv_%vera% x %siname%.svf -br .
-	if exist "smv_%vera%.exe" del /f /q "smv_%vera%.exe" >nul 2>&1
+	smv x %siname%.svf -br .
+	if exist "smv.exe" del /f /q "smv.exe" >nul 2>&1
+::===============================================================================================================
 	call :Footer
 )
 echo [ INFO ] Checking Source ISO Hash.
@@ -598,9 +604,11 @@ if not exist "%fname%.iso" (
 	echo [ INFO ] Target: %fname%
 	echo [ INFO ] Hash  : %fhash%
 	call :Footer
+::===============================================================================================================
 	xcopy "%smv%" /s ".\" /Q /Y >nul 2>&1
-	smv_%vera% x %fname%.svf -br .
-	if exist "smv_%vera%.exe" del /f /q "smv_%vera%.exe" >nul 2>&1
+	smv x %fname%.svf -br .
+	if exist "smv.exe" del /f /q "smv.exe" >nul 2>&1
+::===============================================================================================================
 	call :Footer
 )
 echo [ INFO ] Checking Target ISO Hash.
@@ -750,9 +758,11 @@ if not exist "%fname%.iso" (
 	echo [ INFO ] Target: %fname%
 	echo [ INFO ] Hash  : %fhash%
 	call :Footer
+::===============================================================================================================
 	xcopy "%smv%" /s ".\" /Q /Y >nul 2>&1
-	smv_%vera% x %fname%.svf -br .
-	if exist "smv_%vera%.exe" del /f /q "smv_%vera%.exe" >nul 2>&1
+	smv x %fname%.svf -br .
+	if exist "smv.exe" del /f /q "smv.exe" >nul 2>&1
+::===============================================================================================================
 	call :Footer
 )
 echo [ INFO ] Checking Target ISO Hash.
@@ -863,9 +873,11 @@ if not exist "%fname%.iso" (
 	echo [ INFO ] Creating Target ISO.
 	echo [ INFO ] Name  : %fname%
 	call :Footer
+::===============================================================================================================
 	xcopy "%smv%" /s ".\" /Q /Y >nul 2>&1
-	smv_%vera% x %fname%.svf -br .
-	if exist "smv_%vera%.exe" del /f /q "smv_%vera%.exe" >nul 2>&1
+	smv x %fname%.svf -br .
+	if exist "smv.exe" del /f /q "smv.exe" >nul 2>&1
+::===============================================================================================================
 	call :Footer
 )
 echo [ INFO ] Checking Target ISO Hash.
@@ -1018,8 +1030,8 @@ CHOICE /C SB /N /M "[ USER ] [S]tart or [B]ack ?:"
 if %errorlevel%==2 goto:SVFISOCreate
 call :Footer
 xcopy "%smv%" /s ".\" /Q /Y >nul 2>&1
-smv_%vera% BuildPatch "%tname%" "%siname%.iso" "%tname%.iso" -nbhashbits 24 -compressratio 49 -sha1 -sha25
-if exist "smv_%vera%.exe" del /f /q "smv_%vera%.exe" >nul 2>&1
+smv BuildPatch "%tname%" "%siname%.iso" "%tname%.iso" -nbhashbits 24 -compressratio 49 -sha1 -sha25
+if exist "smv.exe" del /f /q "smv.exe" >nul 2>&1
 call :Footer
 pause
 goto:SVFISOCreate
@@ -1040,8 +1052,8 @@ CHOICE /C SB /N /M "[ USER ] [S]tart or [B]ack ?:"
 if %errorlevel%==2 goto:SVFISOCreate
 call :Footer
 xcopy "%smv%" /s ".\" /Q /Y >nul 2>&1
-smv_%vera% x %sname%.svf -br .
-if exist "smv_%vera%.exe" del /f /q "smv_%vera%.exe" >nul 2>&1
+smv x %sname%.svf -br .
+if exist "smv.exe" del /f /q "smv.exe" >nul 2>&1
 call :Footer
 pause
 goto:SVFISOCreate
@@ -1153,12 +1165,12 @@ exit
 ::===============================================================================================================
 ::TITLE
 :TITLE
-title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.07.07
+title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.08.01
 goto:eof
 ::===============================================================================================================
 ::VERSION
 :VERSION
-set "svfisoconverter=v0.07.07"
+set "svfisoconverter=v0.08.01"
 goto:eof
 :================================================================================================================
 ::===============================================================================================================
