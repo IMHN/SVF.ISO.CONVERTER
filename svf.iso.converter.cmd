@@ -22,6 +22,7 @@ for /f "tokens=2* delims= " %%a in ('reg query "HKLM\System\CurrentControlSet\Co
 ::===============================================================================================================
 set "database1803_1=files\database.1803.1.smrt"
 set "database1803_2=files\database.1803.2.smrt"
+set "database1803_3=files\database.1803.3.smrt"
 set "databasetb1803=files\database.tb.1803.smrt"
 set "databasetb81=files\database.tb.81.smrt"
 set "database1709_1=files\database.1709.1.smrt"
@@ -50,19 +51,7 @@ call :MenuFooter
 echo:
 echo      [C] CREATE SVF/ISO
 call :Footer
-echo      [1] START 1803 PROCESS 1 [17134.1]
-echo:
-echo      [2] START 1803 PROCESS 2 [17134.228]
-echo:
-echo      [3] START 1709 PROCESS 1 [16299.15]
-echo:
-echo      [4] START 1709 PROCESS 2 [16299.125]
-echo:
-echo      [5] START LTSB 2016 PROCESS [14393.0]
-echo:
-echo      [6] START LTSB 2015 PROCESS [10240.0]
-echo:
-echo      [7] START SERVER 2016 PROCESS [14393.0]
+echo      [M] MY VISUAL STUDIO DOWNLOADS
 call :Footer
 echo      [T] TECHBENCH DOWNLOAD [Win 8.1/10]
 call :Footer
@@ -72,16 +61,61 @@ echo      [E] EXIT
 echo:
 call :MenuFooter
 echo:
-CHOICE /C C1234567TDE /N /M "[ USER ] YOUR CHOICE ?:"
+CHOICE /C CMTDE /N /M "[ USER ] YOUR CHOICE ?:"
 if %errorlevel%==1 goto:SVFISOCreate
-if %errorlevel%==2 (
+if %errorlevel%==2 goto:SVFISODownMenu
+if %errorlevel%==3 goto:TBISODownload
+if %errorlevel%==4 goto:SourceISODownload
+if %errorlevel%==5 goto:EXIT
+goto:SVFISOMainMenu
+:================================================================================================================
+::===============================================================================================================
+:================================================================================================================
+::===============================================================================================================
+:SVFISODownMenu
+call :TITLE
+cls
+call :MenuHeader "[HEADER] MVS DOWNLOAD MENU [SYSTEM: %vera%]"
+echo:
+echo [CREDIT] Enthousiast for SVF Repo [forums.mydigitallife.net]
+echo [CREDIT] mkuba50 for SVF Download Script [forums.mydigitallife.net]
+echo:
+call :MenuFooter
+echo:
+echo      [1] START 1803 PROCESS 1 [17134.1]
+echo:
+echo      [2] START 1803 PROCESS 2 [17134.228]
+echo:
+echo      [3] START 1803 PROCESS 3 [17134.285]
+echo:
+echo      [4] START 1709 PROCESS 1 [16299.15]
+echo:
+echo      [5] START 1709 PROCESS 2 [16299.125]
+echo:
+echo      [6] START LTSB 2016 PROCESS [14393.0]
+echo:
+echo      [7] START LTSB 2015 PROCESS [10240.0]
+echo:
+echo      [8] START SERVER 2016 PROCESS [14393.0]
+call :Footer
+echo      [B] BACK
+echo:
+call :MenuFooter
+echo:
+CHOICE /C 12345678B /N /M "[ USER ] YOUR CHOICE ?:"
+if %errorlevel%==1 (
 	set "show=1803"
 	set "build=17134.1"
 	goto:SVFISOProcess1803
 )
-if %errorlevel%==3 (
+if %errorlevel%==2 (
 	set "show=1803"
 	set "build=17134.228"
+	goto:SVFISOProcess1803
+)
+if %errorlevel%==3 (
+	set "show=1803"
+	set "build=17134.285"
 	goto:SVFISOProcess1803
 )
 if %errorlevel%==4 (
@@ -97,10 +131,8 @@ if %errorlevel%==5 (
 if %errorlevel%==6 goto:SVFISOProcessLTSB16
 if %errorlevel%==7 goto:SVFISOProcessLTSB15
 if %errorlevel%==8 goto:SVFISOProcessServer16
-if %errorlevel%==9 goto:TBISODownload
-if %errorlevel%==10 goto:SourceISODownload
-if %errorlevel%==11 goto:EXIT
-goto:SVFISOMainMenu
+if %errorlevel%==9 goto:SVFISOMainMenu
+goto:SVFISODownMenu
 :================================================================================================================
 ::===============================================================================================================
 ::1803 PROCESS
@@ -117,12 +149,14 @@ CHOICE /C CB /N /M "[ USER ] [C]onsumer or [B]usiness (VL) ISO ?:"
 if %errorlevel%==1 (
 	if "%build%"=="17134.1" set "type=consumer"
 	if "%build%"=="17134.228" set "type=consumer"
+	if "%build%"=="17134.285" set "type=consumer"
 	if "%build%"=="16299.15" set "type=edition_version"
 	if "%build%"=="16299.125" set "type=edition_version"
 )
 if %errorlevel%==2 (
 	if "%build%"=="17134.1" set "type=business"
 	if "%build%"=="17134.228" set "type=business"
+	if "%build%"=="17134.285" set "type=business"
 	if "%build%"=="16299.15" set "type=edition_vl_version"
 	if "%build%"=="16299.125" set "type=edition_vl_version"
 )
@@ -206,6 +240,44 @@ if "%build%"=="17134.228" (
 		set "siname=en_windows_10_business_edition_version_1803_updated_aug_2018_x64_dvd_5d7e729e"
 		set "sihash=2b15efd7926ab9db9181cd7b599452cccc3774de"
 		set "sishare=Business_EN_2_XX_x64/!fname!.svf"
+))
+if "%build%"=="17134.285" (
+	for /f "tokens=1,2,3,4* delims=|" %%a in ('type "%database1803_3%" ^| findstr /i "%lang%" ^| findstr /i "%arch%" ^| findstr /i "%type%"') do (
+		set "fshare=%%d"
+		set "fhash=%%b"
+		set "fname=%%c"
+	)
+	if "%type%"=="consumer" if "%arch%"=="x86" (
+		set "siename=17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us"
+		set "siehash=ddb496534203cb98284e5484e0ad60af3c0efce7"
+		set "sielink=https://software-download.microsoft.com/download/pr/17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us.iso"
+		set "siname=en_windows_10_consumer_edition_version_1803_updated_sep_2018_x86_dvd_f5ff2c32"
+		set "sihash=4c019f93732aaf9ab4e4d74bec3287b949c1aadf"
+		set "sishare=fPAmBlUVTfdDsER
+	)
+	if "%type%"=="consumer" if "%arch%"=="x64" (
+		set "siename=17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us"
+		set "siehash=a4ea45ec1282e85fc84af49acf7a8d649c31ac5c"
+		set "sielink=https://software-download.microsoft.com/download/pr/17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso"
+		set "siname=en_windows_10_consumer_edition_version_1803_updated_sep_2018_x64_dvd_69339216"
+		set "sihash=0208398915c08fe03f6c63faea9dcc9bbbd00532"
+		set "sishare=fPAmBlUVTfdDsER"
+	)
+	if "%type%"=="business" if "%arch%"=="x86" (
+		set "siename=17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us"
+		set "siehash=ddb496534203cb98284e5484e0ad60af3c0efce7"
+		set "sielink=https://software-download.microsoft.com/download/pr/17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us.iso"
+		set "siname=en_windows_10_business_edition_version_1803_updated_sep_2018_x86_dvd_fb8c8fd4"
+		set "sihash=e0fc7ab79c7e9ec7971fe3a9fd302531564e6dcb"
+		set "sishare=fPAmBlUVTfdDsER"
+	)
+	if "%type%"=="business" if "%arch%"=="x64" (
+		set "siename=17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us"
+		set "siehash=a4ea45ec1282e85fc84af49acf7a8d649c31ac5c"
+		set "sielink=https://software-download.microsoft.com/download/pr/17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso"
+		set "siname=en_windows_10_business_edition_version_1803_updated_sep_2018_x64_dvd_37051f54"
+		set "sihash=d302d2e752c01e53996ae292a8dd4cdf49916bad"
+		set "sishare=fPAmBlUVTfdDsER"
 ))
 if "%build%"=="16299.15" (
 	for /f "tokens=1,2,3* delims=|" %%a in ('type "%database1709_1%" ^| findstr /i "%lang%" ^| findstr /i "%arch%" ^| findstr /i "%type%"') do (
@@ -297,7 +369,7 @@ echo [ INFO ] Target: %fname%
 echo [ INFO ] Hash  : %fhash%
 call :Footer
 CHOICE /C SB /N /M "[ USER ] [S]tart or [B]ack ?:"
-if %errorlevel%==2 goto:SVFISOMainMenu
+if %errorlevel%==2 goto:SVFISODownMenu
 ::===============================================================================================================
 cls
 call :Header "[HEADER] %show% [%build%] SVF ISO CONVERSION"
@@ -318,7 +390,7 @@ if not exist "%siname%.iso" (
 			echo [ INFO ] Hash  : !dhash!
 			call :Footer
 			pause
-			goto:SVFISOMainMenu
+			goto:SVFISODownMenu
 		)
 		call :Footer
 	)
@@ -335,7 +407,7 @@ if not exist "%siname%.iso" (
 			echo [ INFO ] Hash  : !dhash!
 			call :Footer
 			pause
-			goto:SVFISOMainMenu
+			goto:SVFISODownMenu
 		)
 		if !dhash! equ %siehash% (
 			files\ISO\busybox echo -e "\033[32;1m[ INFO ] ISO Hash matching.\033[0m"
@@ -349,6 +421,7 @@ if not exist "%siname%.iso" (
 		call :Footer
 		if "%build%"=="17134.1" call %busybox% "%sishare%", ""
 		if "%build%"=="17134.228" call %busybox% "%fshare%", "%siname%.svf"
+		if "%build%"=="17134.285" call %busybox% "%sishare%", "%siname%.svf"
 		if "%build%"=="16299.15" call %busybox% "%sishare%", "%siname%.svf"
 		if "%build%"=="16299.125" call %busybox% "%sishare%", ""
 		call :Footer
@@ -376,7 +449,7 @@ if not %dhash% equ %sihash% (
 	echo [ INFO ] Hash  : %dhash%
 	call :Footer
 	pause
-	goto:SVFISOMainMenu
+	goto:SVFISODownMenu
 )
 if %dhash% equ %sihash% (
 	files\ISO\busybox echo -e "\033[32;1m[ INFO ] ISO Hash matching.\033[0m"
@@ -391,6 +464,7 @@ if not exist "%fname%.iso" (
 	if not exist "%fname%.svf" (
 		if "%build%"=="17134.1" call %busybox% "%fshare%", "%fname%.svf"
 		if "%build%"=="17134.228" call %busybox% "%fshare%", "%sishare%"
+		if "%build%"=="17134.285" call %busybox% "%fshare%", "%fname%.svf"
 		if "%build%"=="16299.15" call %busybox% "%fshare%", "%fname%.svf", "%arch%", "%type%", "%build%"
 		if "%build%"=="16299.125" call %busybox% "%fshare%", "%fname%.svf", "%arch%", "%type%"
 		call :Footer
@@ -419,7 +493,7 @@ if not %dhash% equ %fhash% (
 	echo [ INFO ] Hash  : %dhash%
 	call :Footer
 	pause
-	goto:SVFISOMainMenu
+	goto:SVFISODownMenu
 )
 if %dhash% equ %fhash% (
 	files\ISO\busybox echo -e "\033[32;1m[ INFO ] ISO Hash matching.\033[0m"
@@ -428,7 +502,7 @@ if %dhash% equ %fhash% (
 )
 :SourceChoiceOTHER
 pause
-goto:SVFISOMainMenu
+goto:SVFISODownMenu
 :================================================================================================================
 ::===============================================================================================================
 ::LTSB 2016 PROCESS
@@ -505,7 +579,7 @@ echo [ INFO ] Target: %fname%
 echo [ INFO ] Hash  : %fhash%
 call :Footer
 CHOICE /C SB /N /M "[ USER ] [S]tart or [B]ack ?:"
-if %errorlevel%==2 goto:SVFISOMainMenu
+if %errorlevel%==2 goto:SVFISODownMenu
 ::===============================================================================================================
 cls
 call :Header "[HEADER] LTSB 2016 SVF ISO CONVERSION"
@@ -526,7 +600,7 @@ if not exist "%siname%.iso" (
 			echo [ INFO ] Hash  : !dhash!
 			call :Footer
 			pause
-			goto:SVFISOMainMenu
+			goto:SVFISODownMenu
 		)
 		call :Footer
 	)
@@ -543,7 +617,7 @@ if not exist "%siname%.iso" (
 			echo [ INFO ] Hash  : !dhash!
 			call :Footer
 			pause
-			goto:SVFISOMainMenu
+			goto:SVFISODownMenu
 		)
 		if !dhash! equ %siehash% (
 			files\ISO\busybox echo -e "\033[32;1m[ INFO ] ISO Hash matching.\033[0m"
@@ -582,7 +656,7 @@ if not %dhash% equ %sihash% (
 	echo [ INFO ] Hash  : %dhash%
 	call :Footer
 	pause
-	goto:SVFISOMainMenu
+	goto:SVFISODownMenu
 )
 if %dhash% equ %sihash% (
 	files\ISO\busybox echo -e "\033[32;1m[ INFO ] ISO Hash matching.\033[0m"
@@ -622,7 +696,7 @@ if not %dhash% equ %fhash% (
 	echo [ INFO ] Hash  : %dhash%
 	call :Footer
 	pause
-	goto:SVFISOMainMenu
+	goto:SVFISODownMenu
 )
 if %dhash% equ %fhash% (
 	files\ISO\busybox echo -e "\033[32;1m[ INFO ] ISO Hash matching.\033[0m"
@@ -631,7 +705,7 @@ if %dhash% equ %fhash% (
 )
 :SourceChoiceLTSB
 pause
-goto:SVFISOMainMenu
+goto:SVFISODownMenu
 :================================================================================================================
 ::===============================================================================================================
 ::LTSB 2015 PROCESS
@@ -697,7 +771,7 @@ echo [ INFO ] Target: %fname%
 echo [ INFO ] Hash  : %fhash%
 call :Footer
 CHOICE /C SB /N /M "[ USER ] [S]tart or [B]ack ?:"
-if %errorlevel%==2 goto:SVFISOMainMenu
+if %errorlevel%==2 goto:SVFISODownMenu
 ::===============================================================================================================
 cls
 call :Header "[HEADER] LTSB 2015 SVF ISO CONVERSION"
@@ -718,7 +792,7 @@ if not exist "%siname%.iso" (
 			echo [ INFO ] Hash  : !dhash!
 			call :Footer
 			pause
-			goto:SVFISOMainMenu
+			goto:SVFISODownMenu
 		)
 		call :Footer
 	)
@@ -735,7 +809,7 @@ if not exist "%siname%.iso" (
 			echo [ INFO ] Hash  : !dhash!
 			call :Footer
 			pause
-			goto:SVFISOMainMenu
+			goto:SVFISODownMenu
 		)
 		if !dhash! equ %siehash% (
 			files\ISO\busybox echo -e "\033[32;1m[ INFO ] ISO Hash matching.\033[0m"
@@ -776,7 +850,7 @@ if not %dhash% equ %fhash% (
 	echo [ INFO ] Hash  : %dhash%
 	call :Footer
 	pause
-	goto:SVFISOMainMenu
+	goto:SVFISODownMenu
 )
 if %dhash% equ %fhash% (
 	files\ISO\busybox echo -e "\033[32;1m[ INFO ] ISO Hash matching.\033[0m"
@@ -785,7 +859,7 @@ if %dhash% equ %fhash% (
 )
 :SourceChoiceLTSB2
 pause
-goto:SVFISOMainMenu
+goto:SVFISODownMenu
 :================================================================================================================
 ::===============================================================================================================
 ::SERVER 2016 PROCESS
@@ -814,7 +888,7 @@ echo [ INFO ] Target: %fname%
 echo [ INFO ] Hash  : %fhash%
 call :Footer
 CHOICE /C SB /N /M "[ USER ] [S]tart or [B]ack ?:"
-if %errorlevel%==2 goto:SVFISOMainMenu
+if %errorlevel%==2 goto:SVFISODownMenu
 ::===============================================================================================================
 cls
 call :Header "[HEADER] SERVER 2016 SVF ISO CONVERSION"
@@ -835,7 +909,7 @@ if not exist "%fname%.iso" (
 			echo [ INFO ] Hash  : !dhash!
 			call :Footer
 			pause
-			goto:SVFISOMainMenu
+			goto:SVFISODownMenu
 		)
 		call :Footer
 	)
@@ -852,7 +926,7 @@ if not exist "%fname%.iso" (
 			echo [ INFO ] Hash  : !dhash!
 			call :Footer
 			pause
-			goto:SVFISOMainMenu
+			goto:SVFISODownMenu
 		)
 		if !dhash! equ %siehash% (
 			files\ISO\busybox echo -e "\033[32;1m[ INFO ] ISO Hash matching.\033[0m"
@@ -891,7 +965,7 @@ if not %dhash% equ %fhash% (
 	echo [ INFO ] Hash  : %dhash%
 	call :Footer
 	pause
-	goto:SVFISOMainMenu
+	goto:SVFISODownMenu
 )
 if %dhash% equ %fhash% (
 	files\ISO\busybox echo -e "\033[32;1m[ INFO ] ISO Hash matching.\033[0m"
@@ -899,7 +973,7 @@ if %dhash% equ %fhash% (
 	call :Footer
 )
 pause
-goto:SVFISOMainMenu
+goto:SVFISODownMenu
 :================================================================================================================
 ::===============================================================================================================
 ::TECHBENCH DOWNLOAD
