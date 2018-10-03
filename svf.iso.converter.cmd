@@ -24,6 +24,7 @@ set "database1803_1=files\database.1803.1.smrt"
 set "database1803_2=files\database.1803.2.smrt"
 set "database1803_3=files\database.1803.3.smrt"
 set "databasetb1803=files\database.tb.1803.smrt"
+set "databasetb1809=files\database.tb.1809.smrt"
 set "databasetb81=files\database.tb.81.smrt"
 set "database1709_1=files\database.1709.1.smrt"
 set "database1709_2=files\database.1709.2.smrt"
@@ -988,10 +989,12 @@ echo      [2] WINDOWS 8.1 N ^(Update 3^)
 echo:
 echo      [3] WINDOWS 10 1803 ^(contains N versions^)
 echo:
+echo      [4] WINDOWS 10 1809 ^(contains N versions^)
+echo:
 call :Footer
 echo      [B] BACK
 call :Footer
-CHOICE /C 123B /N /M "[ USER ] YOUR CHOICE ?:"
+CHOICE /C 1234B /N /M "[ USER ] YOUR CHOICE ?:"
 if %errorlevel%==1 (
 	set "tbwin=Win8.1_"
 	set "tbid=52"
@@ -1004,7 +1007,11 @@ if %errorlevel%==3 (
 	set "tbwin=Win10_1803_"
 	set "tbid=651"
 )
-if %errorlevel%==4 goto:SVFISOMainMenu
+if %errorlevel%==4 (
+	set "tbwin=Win10_1809_"
+	set "tbid=1019"
+)
+if %errorlevel%==5 goto:SVFISOMainMenu
 call :Footer
 CHOICE /C 68 /N /M "[ USER ] x[6]4 or x[8]6 architecture ?:"
 if %errorlevel%==1 set "tbarch=x64"
@@ -1012,10 +1019,15 @@ if %errorlevel%==2 set "tbarch=x32"
 if "%tbwin%"=="Win8.1_Pro_N_" call :LangChoice81N
 if "%tbwin%"=="Win8.1_" call :LangChoice81
 if "%tbwin%"=="Win10_1803_" call :LangChoiceTB
+if "%tbwin%"=="Win10_1809_" call :LangChoiceTB
 call :Footer
 ::===============================================================================================================
 cls
 call :Header "[HEADER] TECHBENCH DOWNLOAD"
+if "%tbwin%"=="Win10_1809_" (
+	if "%tbarch%"=="x64" set "stbarch=x64"
+	if "%tbarch%"=="x32" set "stbarch=x86"
+)
 if "%tbwin%"=="Win10_1803_" (
 	if "%tbarch%"=="x64" set "stbarch=x64"
 	if "%tbarch%"=="x32" set "stbarch=x86"
@@ -1030,7 +1042,11 @@ if "%tblang%"=="Korean" if "%tbwin%"=="Win8.1_Pro_N_" (
 )
 set "tbfilename=%tbwin%%tblang%_%tbarch%.iso"
 if "%tbwin%"=="Win10_1803_" for /f "tokens=1,2,3* delims=|" %%a in ('type "%databasetb1803%" ^| findstr /i "%tblang%" ^| findstr /i "_%stbarch%_"') do set "tbhash=%%b"
-if not "%tbwin%"=="Win10_1803_" for /f "tokens=1,2,3,4* delims=|" %%a in ('type "%databasetb81%" ^| findstr /i "%tbfilename%"') do (
+if "%tbwin%"=="Win10_1809_" for /f "tokens=1,2,3* delims=|" %%a in ('type "%databasetb1809%" ^| findstr /i "%tblang%" ^| findstr /i "%stbarch%"') do (
+	set "tbhash=%%b"
+	set "tbsize=%%c"
+)
+if not "%tbwin%"=="Win10_1803_" if not "%tbwin%"=="Win10_1809_" for /f "tokens=1,2,3,4* delims=|" %%a in ('type "%databasetb81%" ^| findstr /i "%tbfilename%"') do (
 	set "tbhash=%%b"
 	set "tbsize=%%c"
 )
@@ -1239,12 +1255,12 @@ exit
 ::===============================================================================================================
 ::TITLE
 :TITLE
-title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.09.01
+title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.09.08
 goto:eof
 ::===============================================================================================================
 ::VERSION
 :VERSION
-set "svfisoconverter=v0.09.01"
+set "svfisoconverter=v0.09.08"
 goto:eof
 :================================================================================================================
 ::===============================================================================================================
