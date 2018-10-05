@@ -682,7 +682,7 @@ if "%build%"=="17763.1" (
 	if "%arch%"=="x64" (
 		set "siename=17763.1.180914-1434.rs5_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us"
 		set "siehash=b8a6ffac9e15240c39f2ed2b16204341f564208d"
-		set "sielink=https://software-download.microsoft.com/download/pr/17763.1.180914-1434.rs5_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us.iso"
+		set "sielink=https://software-download.microsoft.com/download/pr/17763.1.180914-1434.rs5_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso"
 ))
 echo [ INFO ] Source: %siename%
 echo [ INFO ] Hash  : %siehash%
@@ -1529,12 +1529,12 @@ exit
 ::===============================================================================================================
 ::TITLE
 :TITLE
-title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.10.04
+title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.10.07
 goto:eof
 ::===============================================================================================================
 ::VERSION
 :VERSION
-set "svfisoconverter=v0.10.04"
+set "svfisoconverter=v0.10.07"
 goto:eof
 :================================================================================================================
 ::===============================================================================================================

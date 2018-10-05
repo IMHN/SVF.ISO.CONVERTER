@@ -24,7 +24,7 @@
 пппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппп  
 мммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммм
 
-ўўўўўўўўў RELEASE NAME:  [s1ave77s S-M-R-T SVF ISO CONVERTER v0.10.04]  ўўўўўўўўўў
+ўўўўўўўўў RELEASE NAME:  [s1ave77s S-M-R-T SVF ISO CONVERTER v0.10.07]  ўўўўўўўўўў
 
 пппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппп 
 	
@@ -358,8 +358,11 @@
 	
 пппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппппп 
 		
+	v0.10.07
+	--fixed wrong EVAL link in 1809_1 creation (thanks to bdrs)
+		
 	v0.10.04
-	--fixed broken back-to-main-menu in MVS generation
+	--fixed broken back-to-main-menu in MVS generation (thanks to ZerOx16x)
 		
 	v0.10.01
 	--added 1809 Consumer/Business MVS ISOs (thanks to Enthousiast)
