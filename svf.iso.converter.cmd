@@ -20,6 +20,7 @@ pushd %~dp0
 for /f "tokens=2* delims= " %%a in ('reg query "HKLM\System\CurrentControlSet\Control\Session Manager\Environment" /v "PROCESSOR_ARCHITECTURE"') do if "%%b"=="AMD64" (set vera=x64) else (set vera=x86)
 ::===============================================================================================================
 ::===============================================================================================================
+set "database1809_1=files\database.1809.1.smrt"
 set "database1803_1=files\database.1803.1.smrt"
 set "database1803_2=files\database.1803.2.smrt"
 set "database1803_3=files\database.1803.3.smrt"
@@ -30,6 +31,7 @@ set "database1709_1=files\database.1709.1.smrt"
 set "database1709_2=files\database.1709.2.smrt"
 set "databaseLTSB=files\database.LTSB.smrt"
 set "databaseLTSB2=files\database.LTSB2.smrt"
+set "databaseLTSB3=files\database.LTSB3.smrt"
 set "databaseServer16=files\database.Server2016.smrt"
 set "aria2c=files\aria2c\aria2c.exe"
 set "busybox=files\ISO\busybox.cmd"
@@ -83,6 +85,8 @@ echo [CREDIT] mkuba50 for SVF Download Script [forums.mydigitallife.net]
 echo:
 call :MenuFooter
 echo:
+echo      [0] START 1809 PROCESS 1 [17763.1]
+echo:
 echo      [1] START 1803 PROCESS 1 [17134.1]
 echo:
 echo      [2] START 1803 PROCESS 2 [17134.228]
@@ -93,46 +97,54 @@ echo      [4] START 1709 PROCESS 1 [16299.15]
 echo:
 echo      [5] START 1709 PROCESS 2 [16299.125]
 echo:
-echo      [6] START LTSB 2016 PROCESS [14393.0]
+echo      [6] START LTSC 2019 PROCESS [17763.1]
 echo:
-echo      [7] START LTSB 2015 PROCESS [10240.0]
+echo      [7] START LTSB 2016 PROCESS [14393.0]
 echo:
-echo      [8] START SERVER 2016 PROCESS [14393.0]
+echo      [8] START LTSB 2015 PROCESS [10240.0]
+echo:
+echo      [9] START SERVER 2016 PROCESS [14393.0]
 call :Footer
 echo      [B] BACK
 echo:
 call :MenuFooter
 echo:
-CHOICE /C 12345678B /N /M "[ USER ] YOUR CHOICE ?:"
+CHOICE /C 012345678B /N /M "[ USER ] YOUR CHOICE ?:"
 if %errorlevel%==1 (
+	set "show=1809"
+	set "build=17763.1"
+	goto:SVFISOProcess1809
+)
+if %errorlevel%==2 (
 	set "show=1803"
 	set "build=17134.1"
 	goto:SVFISOProcess1803
 )
-if %errorlevel%==2 (
+if %errorlevel%==3 (
 	set "show=1803"
 	set "build=17134.228"
 	goto:SVFISOProcess1803
 )
-if %errorlevel%==3 (
+if %errorlevel%==4 (
 	set "show=1803"
 	set "build=17134.285"
 	goto:SVFISOProcess1803
 )
-if %errorlevel%==4 (
+if %errorlevel%==5 (
 	set "show=1709"
 	set "build=16299.15"
 	goto:SVFISOProcess1803
 )
-if %errorlevel%==5 (
+if %errorlevel%==6 (
 	set "show=1709"
 	set "build=16299.125"
 	goto:SVFISOProcess1803
 )
-if %errorlevel%==6 goto:SVFISOProcessLTSB16
-if %errorlevel%==7 goto:SVFISOProcessLTSB15
-if %errorlevel%==8 goto:SVFISOProcessServer16
-if %errorlevel%==9 goto:SVFISOMainMenu
+if %errorlevel%==7 goto:SVFISOProcessLTSB19
+if %errorlevel%==8 goto:SVFISOProcessLTSB16
+if %errorlevel%==9 goto:SVFISOProcessLTSB15
+if %errorlevel%==10 goto:SVFISOProcessServer16
+if %errorlevel%==11 goto:SVFISOMainMenu
 goto:SVFISODownMenu
 :================================================================================================================
 ::===============================================================================================================
@@ -502,6 +514,268 @@ if %dhash% equ %fhash% (
 	call :Footer
 )
 :SourceChoiceOTHER
+pause
+goto:SVFISODownMenu
+:================================================================================================================
+::===============================================================================================================
+::LTSC 2019 PROCESS
+:SVFISOProcessLTSB19
+pushd %~dp0
+::===============================================================================================================
+cls
+call :Header "[HEADER] LTSC 2019 SVF ISO CONVERSION"
+CHOICE /C 68 /N /M "[ USER ] x[6]4 or x[8]6 architecture ?:"
+if %errorlevel%==1 set "arch=x64"
+if %errorlevel%==2 set "arch=x86"
+set "sishare=2019_LTSC_%arch%"
+call :Footer
+call :LangChoice
+::===============================================================================================================
+cls
+call :Header "[HEADER] LTSC 2019 SVF ISO CONVERSION"
+for /f "tokens=1,2,3,4* delims=|" %%a in ('type "%databaseLTSB3%" ^| findstr /i "%lang%" ^| findstr /i "%arch%"') do (
+	set "fshare=%%d"
+	set "fhash=%%b"
+	set "fname=%%c"
+)
+if "%arch%"=="x86" (
+	set "siename=17763.1.180914-1434.rs5_release_CLIENT_LTSC_EVAL_x86FRE_en-us"
+	set "siehash=b11efabfc38428b69042da841e1cb4b105be359b"
+	set "sielink=https://software-download.microsoft.com/download/pr/17763.1.180914-1434.rs5_release_CLIENT_LTSC_EVAL_x86FRE_en-us.iso"
+)
+if "%arch%"=="x64" (
+	set "siename=17763.1.180914-1434.rs5_release_CLIENT_LTSC_EVAL_x64FRE_en-us"
+	set "siehash=fba7f17ffdf018e4cffd49a9819d719d3708cf09"
+	set "sielink=https://software-download.microsoft.com/download/pr/17763.1.180914-1434.rs5_release_CLIENT_LTSC_EVAL_x64FRE_en-us.iso"
+)
+echo [ INFO ] Source: %siename%
+echo [ INFO ] Hash  : %siehash%
+echo [  TO  ]
+echo [ INFO ] Target: %fname%
+echo [ INFO ] Hash  : %fhash%
+call :Footer
+CHOICE /C SB /N /M "[ USER ] [S]tart or [B]ack ?:"
+if %errorlevel%==2 goto:SVFISODownMenu
+::===============================================================================================================
+cls
+call :Header "[HEADER] LTSC 2019 SVF ISO CONVERSION"
+echo [ INFO ] Source: %siename%
+echo [ INFO ] Hash  : %siehash%
+call :Footer
+echo [ INFO ] Downloading Source ISO ^(if not already pesent^).
+call :Footer
+set "dhash="
+if not exist "%siname%.iso" (
+	if not exist "%siename%.iso" (
+		echo [ INFO ] Downloading Eval ISO.
+		call :Footer
+		"%aria2c%" -x16 -s16 -d"%cd%" -o"%siename%.iso" --checksum=sha-1=%siehash% "%sielink%" -R -c --file-allocation=none --check-certificate=false
+		if !errorlevel!==0 set "dhash=%siehash%"
+		if not !errorlevel!==0 (
+			files\ISO\busybox echo -e "\033[31;1m[ WARN ] Hash Mismatch!\033[0m"
+			echo [ INFO ] Hash  : !dhash!
+			call :Footer
+			pause
+			goto:SVFISODownMenu
+		)
+		call :Footer
+	)
+	if exist "%siename%.iso" if not defined dhash (
+		echo [ INFO ] Source Eval ISO present.
+		echo [ INFO ] Checking Eval ISO Hash.
+		echo [ INFO ] Hash  : %siehash%
+		call :Footer
+		xcopy "files\ISO\busybox.exe" /s ".\" /Q /Y >nul 2>&1
+		for /f "tokens=1 delims= " %%a in ('busybox.exe sha1sum %siename%.iso') do set "dhash=%%a"
+		if exist "busybox.exe" del /f /q "busybox.exe" >nul 2>&1
+		if not !dhash! equ %siehash% (
+			files\ISO\busybox echo -e "\033[31;1m[ WARN ] Hash Mismatch!\033[0m"
+			echo [ INFO ] Hash  : !dhash!
+			call :Footer
+			pause
+			goto:SVFISODownMenu
+		)
+		if !dhash! equ %siehash% (
+			files\ISO\busybox echo -e "\033[32;1m[ INFO ] ISO Hash matching.\033[0m"
+			echo [ INFO ] Hash  : !dhash!
+			call :Footer
+		)
+	)
+)
+echo [ INFO ] Downloading SVF ^(if not already pesent^).
+echo [ INFO ] Name  : %fname%
+call :Footer
+if not exist "%fname%.iso" (
+	if not exist "%fname%.svf" (
+		call %busybox% "%fshare%", "%sishare%/%fname%.svf"
+		call :Footer
+		pushd "%~dp0"
+		move "files\ISO\%fname%.svf" ".\" >nul 2>&1
+	)
+	echo [ INFO ] Creating Target ISO.
+	echo [ INFO ] Target: %fname%
+	echo [ INFO ] Hash  : %fhash%
+	call :Footer
+::===============================================================================================================
+	xcopy "%smv%" /s ".\" /Q /Y >nul 2>&1
+	smv x %fname%.svf -br .
+	if exist "smv.exe" del /f /q "smv.exe" >nul 2>&1
+::===============================================================================================================
+	call :Footer
+)
+echo [ INFO ] Checking Target ISO Hash.
+echo [ INFO ] Hash: %fhash%
+call :Footer
+xcopy "files\ISO\busybox.exe" /s ".\" /Q /Y >nul 2>&1
+for /f "tokens=1 delims= " %%a in ('busybox.exe sha1sum %fname%.iso') do set "dhash=%%a"
+if exist "busybox.exe" del /f /q "busybox.exe" >nul 2>&1
+if not %dhash% equ %fhash% (
+	files\ISO\busybox echo -e "\033[31;1m[ WARN ] Hash Mismatch!\033[0m"
+	echo [ INFO ] Hash  : %dhash%
+	call :Footer
+	pause
+	goto:SVFISODownMenu
+)
+if %dhash% equ %fhash% (
+	files\ISO\busybox echo -e "\033[32;1m[ INFO ] ISO Hash matching.\033[0m"
+	echo [ INFO ] Hash  : %dhash%
+	call :Footer
+)
+:SourceChoiceLTSB3
+pause
+goto:SVFISODownMenu
+:================================================================================================================
+::===============================================================================================================
+::1809_1 PROCESS
+:SVFISOProcess1809
+pushd %~dp0
+::===============================================================================================================
+cls
+call :Header "[HEADER] %show% [%build%] SVF ISO CONVERSION"
+CHOICE /C 68 /N /M "[ USER ] x[6]4 or x[8]6 architecture ?:"
+if %errorlevel%==1 set "arch=x64"
+if %errorlevel%==2 set "arch=x86"
+call :Footer
+CHOICE /C CB /N /M "[ USER ] [C]onsumer or [B]usiness (VL) ISO ?:"
+if %errorlevel%==1 (
+	if "%build%"=="17763.1" (set "type=consumer")&&(set "sishare=Ent_EVAL_2_ALL_Cons_%arch%")
+)
+if %errorlevel%==2 (
+	if "%build%"=="17763.1" (set "type=business")&&(set "sishare=Ent_EVAL_2_ALL_Bus_%arch%")
+)
+call :Footer
+call :LangChoice
+::===============================================================================================================
+cls
+call :Header "[HEADER] %show% [%build%] SVF ISO CONVERSION"
+if "%build%"=="17763.1" (
+	for /f "tokens=1,2,3,4* delims=|" %%a in ('type "%database1809_1%" ^| findstr /i "%lang%" ^| findstr /i "%arch%" ^| findstr /i "%type%"') do (
+		set "fshare=%%d"
+		set "fhash=%%b"
+		set "fname=%%c"
+	)
+	if "%arch%"=="x86" (
+		set "siename=17763.1.180914-1434.rs5_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us"
+		set "siehash=ae31e79d3369c3df6842b1e21b7b07781a1dc4c7"
+		set "sielink=https://software-download.microsoft.com/download/pr/17763.1.180914-1434.rs5_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us.iso"
+	)
+	if "%arch%"=="x64" (
+		set "siename=17763.1.180914-1434.rs5_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us"
+		set "siehash=b8a6ffac9e15240c39f2ed2b16204341f564208d"
+		set "sielink=https://software-download.microsoft.com/download/pr/17763.1.180914-1434.rs5_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us.iso"
+))
+echo [ INFO ] Source: %siename%
+echo [ INFO ] Hash  : %siehash%
+echo [  TO  ]
+echo [ INFO ] Target: %fname%
+echo [ INFO ] Hash  : %fhash%
+call :Footer
+CHOICE /C SB /N /M "[ USER ] [S]tart or [B]ack ?:"
+if %errorlevel%==2 goto:SVFISODownMenu
+cls
+call :Header "[HEADER] %show% [%build%] SVF ISO CONVERSION"
+echo [ INFO ] Source: %siename%
+echo [ INFO ] Hash  : %siehash%
+call :Footer
+echo [ INFO ] Downloading Source ISO ^(if not already pesent^).
+call :Footer
+set "dhash="
+if not exist "%siname%.iso" (
+	if not exist "%siename%.iso" (
+		echo [ INFO ] Downloading Eval ISO.
+		call :Footer
+		"%aria2c%" -x16 -s16 -d"%cd%" -o"%siename%.iso" --checksum=sha-1=%siehash% "%sielink%" -R -c --file-allocation=none --check-certificate=false
+		if !errorlevel!==0 set "dhash=%siehash%"
+		if not !errorlevel!==0 (
+			files\ISO\busybox echo -e "\033[31;1m[ WARN ] Hash Mismatch!\033[0m"
+			echo [ INFO ] Hash  : !dhash!
+			call :Footer
+			pause
+			goto:SVFISODownMenu
+		)
+		call :Footer
+	)
+	if exist "%siename%.iso" if not defined dhash (
+		echo [ INFO ] Source Eval ISO present.
+		echo [ INFO ] Checking Eval ISO Hash.
+		echo [ INFO ] Hash  : %siehash%
+		call :Footer
+		xcopy "files\ISO\busybox.exe" /s ".\" /Q /Y >nul 2>&1
+		for /f "tokens=1 delims= " %%a in ('busybox.exe sha1sum %siename%.iso') do set "dhash=%%a"
+		if exist "busybox.exe" del /f /q "busybox.exe" >nul 2>&1
+		if not !dhash! equ %siehash% (
+			files\ISO\busybox echo -e "\033[31;1m[ WARN ] Hash Mismatch!\033[0m"
+			echo [ INFO ] Hash  : !dhash!
+			call :Footer
+			pause
+			goto:SVFISODownMenu
+		)
+		if !dhash! equ %siehash% (
+			files\ISO\busybox echo -e "\033[32;1m[ INFO ] ISO Hash matching.\033[0m"
+			echo [ INFO ] Hash  : !dhash!
+			call :Footer
+		)
+	)
+)
+echo [ INFO ] Downloading SVF ^(if not already pesent^).
+echo [ INFO ] Name  : %fname%
+call :Footer
+if not exist "%fname%.iso" (
+	if not exist "%fname%.svf" (
+		call %busybox% "%fshare%", "%sishare%/%fname%.svf"
+		call :Footer
+		pushd "%~dp0"
+		move "files\ISO\%fname%.svf" ".\" >nul 2>&1
+	)
+	echo [ INFO ] Creating Target ISO.
+	echo [ INFO ] Target: %fname%
+	echo [ INFO ] Hash  : %fhash%
+	call :Footer
+::===============================================================================================================
+	xcopy "%smv%" /s ".\" /Q /Y >nul 2>&1
+	smv x %fname%.svf -br .
+	if exist "smv.exe" del /f /q "smv.exe" >nul 2>&1
+::===============================================================================================================
+	call :Footer
+)
+echo [ INFO ] Checking Target ISO Hash.
+echo [ INFO ] Hash: %fhash%
+call :Footer
+xcopy "files\ISO\busybox.exe" /s ".\" /Q /Y >nul 2>&1
+for /f "tokens=1 delims= " %%a in ('busybox.exe sha1sum %fname%.iso') do set "dhash=%%a"
+if exist "busybox.exe" del /f /q "busybox.exe" >nul 2>&1
+if not %dhash% equ %fhash% (
+	files\ISO\busybox echo -e "\033[31;1m[ WARN ] Hash Mismatch!\033[0m"
+	echo [ INFO ] Hash  : %dhash%
+	call :Footer
+	pause
+	goto:SVFISODownMenu
+)
+if %dhash% equ %fhash% (
+	files\ISO\busybox echo -e "\033[32;1m[ INFO ] ISO Hash matching.\033[0m"
+	echo [ INFO ] Hash  : %dhash%
+	call :Footer
+)
 pause
 goto:SVFISODownMenu
 :================================================================================================================
@@ -1255,12 +1529,12 @@ exit
 ::===============================================================================================================
 ::TITLE
 :TITLE
-title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.09.08
+title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.10.01
 goto:eof
 ::===============================================================================================================
 ::VERSION
 :VERSION
-set "svfisoconverter=v0.09.08"
+set "svfisoconverter=v0.10.01"
 goto:eof
 :================================================================================================================
 ::===============================================================================================================
