@@ -24,7 +24,7 @@
 ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß  
 ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-þþþþþþþþþ RELEASE NAME:  [s1ave77s S-M-R-T SVF ISO CONVERTER v0.10.07]  þþþþþþþþþþ
+þþþþþþþþþ RELEASE NAME:  [s1ave77s S-M-R-T SVF ISO CONVERTER v0.10.14]  þþþþþþþþþþ
 
 ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß 
 	
@@ -63,6 +63,52 @@
 	
 	In case the EVAL/Consumer/Business ISOs are present, the download is skipped, just copy them 
 	to tools folder.
+	
+	1809 17763.1
+	
+		SOURCE ISO INFO:
+		
+			Source x86: 
+			
+			b8a6ffac9e15240c39f2ed2b16204341f564208d *17763.1.180914-1434.rs5_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso
+			
+			Source x64: 
+			
+			ae31e79d3369c3df6842b1e21b7b07781a1dc4c7 *17763.1.180914-1434.rs5_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us.iso
+			
+		Will be converted to:
+			
+			Any Language directly
+			
+			Consumer Containing:
+				
+				[01] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Home | Core
+				[02] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Home N | CoreN
+				[03] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Home Single Language | CoreSingleLanguage
+				[04] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Education | Education
+				[05] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Education N | EducationN
+				[06] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro | Professional
+				[07] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro N | ProfessionalN
+				[08] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro Education | ProfessionalEducation
+				[09] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro Education N | ProfessionalEducationN
+				[10] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro for Workstations | ProfessionalWorkstation
+				[11] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro N for Workstations | ProfessionalWorkstationN
+			
+	
+			Business Cointaining:
+			
+				[01] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Education | Education
+				[02] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Education N | EducationN
+				[03] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Enterprise | Enterprise
+				[04] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Enterprise N | EnterpriseN
+				[05] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro | Professional
+				[06] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro N | ProfessionalN
+				[07] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro Education | ProfessionalEducation
+				[08] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro Education N | ProfessionalEducationN
+				[09] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro for Workstations | ProfessionalWorkstation
+				[10] 12/04/2018 en-US x64 10.0.17134.1 Windows 10 Pro N for Workstations | ProfessionalWorkstationN
+				
+				
 	
 	1803 17134.1
 	
@@ -190,44 +236,6 @@
 	
 
 	
-	
-	LTSB 2016 14393.0
-	
-		Source x86:
-
-		45e72d02ff17125c699558719eb946d8e140c9cc *en_windows_10_enterprise_2016_ltsb_x86_dvd_9060010.iso
-
-		Source x64:
-
-		031ed6acdc47b8f582c781b039f501d83997a1cf *en_windows_10_enterprise_2016_ltsb_x64_dvd_9059483.iso
-
-		Source N x86:
-
-		3f8f9811a7e72adf88215060e38ba81340dfb0c0 *en_windows_10_enterprise_2016_ltsb_n_x86_dvd_9058202.iso
-
-		Source N x64:
-
-		b5d4911bd53ec5029781ade0937dad43c4ed90f6 *en_windows_10_enterprise_2016_ltsb_n_x64_dvd_9057894.iso
-		
-		
-	LTSB 2015 10240.0
-	
-		Source (N) x86:
-
-		aa8ce9cc9b660b31245622e49e0d183db355558f *10240.16384.150709-1700.TH1_CLIENTENTERPRISE_S_EVAL_X86FRE_EN-US.ISO
-
-		Source (N) x64:
-
-		90e1c5bada5b96ab05a9fe2035cb26f5cb3cd4d2 *10240.16384.150709-1700.TH1_CLIENTENTERPRISE_S_EVAL_X64FRE_EN-US.ISO
-
-
-	SERVER 2016 14393.0
-	
-		Source x64 (exclusive):
-		
-		3bb1c60417e9aeb3f4ce0eb02189c0c84a1c6691 *14393.0.160715-1616.RS1_RELEASE_SERVER_EVAL_X64FRE_EN-US.ISO
-	
-	
 	1709 16299.15
 	
 		SOURCE ISO INFO:
@@ -332,6 +340,59 @@
 			[06] 9/29/2017 en-US x64 10.0.16299.125 Windows 10 Pro N | ProfessionalN
 			
 			
+	
+	
+	LTSC 2019 17763.1
+	
+		Source x86:
+
+		fba7f17ffdf018e4cffd49a9819d719d3708cf09 *17763.1.180914-1434.rs5_release_CLIENT_LTSC_EVAL_x64FRE_en-us.iso
+
+		Source x64:
+
+		b11efabfc38428b69042da841e1cb4b105be359b *17763.1.180914-1434.rs5_release_CLIENT_LTSC_EVAL_x86FRE_en-us.iso
+		
+		The N versions are included for all supported languages
+		
+		
+
+	LTSB 2016 14393.0
+	
+		Source x86:
+
+		45e72d02ff17125c699558719eb946d8e140c9cc *en_windows_10_enterprise_2016_ltsb_x86_dvd_9060010.iso
+
+		Source x64:
+
+		031ed6acdc47b8f582c781b039f501d83997a1cf *en_windows_10_enterprise_2016_ltsb_x64_dvd_9059483.iso
+
+		Source N x86:
+
+		3f8f9811a7e72adf88215060e38ba81340dfb0c0 *en_windows_10_enterprise_2016_ltsb_n_x86_dvd_9058202.iso
+
+		Source N x64:
+
+		b5d4911bd53ec5029781ade0937dad43c4ed90f6 *en_windows_10_enterprise_2016_ltsb_n_x64_dvd_9057894.iso
+		
+		
+	LTSB 2015 10240.0
+	
+		Source (N) x86:
+
+		aa8ce9cc9b660b31245622e49e0d183db355558f *10240.16384.150709-1700.TH1_CLIENTENTERPRISE_S_EVAL_X86FRE_EN-US.ISO
+
+		Source (N) x64:
+
+		90e1c5bada5b96ab05a9fe2035cb26f5cb3cd4d2 *10240.16384.150709-1700.TH1_CLIENTENTERPRISE_S_EVAL_X64FRE_EN-US.ISO
+
+
+	SERVER 2016 14393.0
+	
+		Source x64 (exclusive):
+		
+		3bb1c60417e9aeb3f4ce0eb02189c0c84a1c6691 *14393.0.160715-1616.RS1_RELEASE_SERVER_EVAL_X64FRE_EN-US.ISO
+	
+	
 			
 			
 	
@@ -357,6 +418,10 @@
 þþþþþþþþþþþþþþþþþþþþþþþþþþþ +++ C H A N G E L O G +++ þþþþþþþþþþþþþþþþþþþþþþþþþþþþ
 	
 ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß 
+		
+	v0.10.14
+	--changed Server 2016 process back to use the Release EVAL instead of the
+	refreshed one (GUI is not affected since it still uses this)
 		
 	v0.10.07
 	--fixed wrong EVAL link in 1809_1 creation (thanks to bdrs)
