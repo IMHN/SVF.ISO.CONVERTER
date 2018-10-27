@@ -1,4 +1,0 @@
-https://the-eye.eu/public/MSDN/Windows%2010/en_windows_10_enterprise_2016_ltsb_x86_dvd_9060010.iso
-	out=en_windows_10_enterprise_2016_ltsb_x86_dvd_9060010.iso
-	checksum=sha-1=45e72d02ff17125c699558719eb946d8e140c9cc
-
