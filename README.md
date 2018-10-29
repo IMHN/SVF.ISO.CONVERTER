@@ -32,19 +32,32 @@ Credits:[Enthousiast](https://forums.mydigitallife.net/members/enthousiast.10468
 
 1. Start ""svf.iso.converter.aio.cmd":
 
-![Start](https://i.imgur.com/ZeuzRmE.png)
+![START](https://gitlab.com/s1ave77/svf2isopics/blob/master/svf2.iso.001.jpg)
 
 2. Press [M] for MVS iso's:
 
-![MVS_Menu](https://i.imgur.com/2vk6Rxq.png)
+![MVS_MENU](https://gitlab.com/s1ave77/svf2isopics/blob/master/svf2.iso.002.jpg)
 
-3. I select [1] to be able to download the MVS business ISO (17134.1):
+3. I select [1] to be able to download the MVS business ISO (17763.1):
 
+![MVS_MENU](https://gitlab.com/s1ave77/svf2isopics/blob/master/svf2.iso.003.jpg)
 
-4. Select the desired architecture [x86] or [x64], next select either Consumer or Business (VL) ISO
-(i've selected Business) and at last select the desired language:
+4. Select the desired architecture [x86] or [x64]
 
+![MVS_MENU](https://gitlab.com/s1ave77/svf2isopics/blob/master/svf2.iso.004.jpg)
 
+4. next select either [C]onsumer or [B]usiness (VL) ISO
 
-5. Hit [S]tart:
+![MVS_MENU](https://gitlab.com/s1ave77/svf2isopics/blob/master/svf2.iso.004.jpg)
 
+(i've selected Consumer)
+
+5. Press the digits of desired Language:
+
+![MVS_MENU](https://gitlab.com/s1ave77/svf2isopics/blob/master/svf2.iso.005.jpg)
+
+6. Press [S]tart:
+
+![RUN](https://gitlab.com/s1ave77/svf2isopics/blob/master/svf2.iso.006.jpg)
+![RUN](https://gitlab.com/s1ave77/svf2isopics/blob/master/svf2.iso.007.jpg)
+![RUN](https://gitlab.com/s1ave77/svf2isopics/blob/master/svf2.iso.008.jpg)
