@@ -4,7 +4,6 @@
 :: Code by s1ave77 [frontend script] // [forums.mydigitallife.info]
 :: Bash script for File download by mkuba50 // [forums.mydigitallife.info]
 :: SVF Provider Enthousiast // [forums.mydigitallife.info]
-:: Self-Elevation BAU // [forums.mydigitallife.info]
 :: Compress2TXT by AveYo // [https://github.com/AveYo/Compressed2TXT]
 :================================================================================================================
 ::===============================================================================================================
@@ -14,7 +13,6 @@ if NOT "%cd%"=="%cd: =%" (
 	call :SpaceTest
     goto :EOF
 )
-reg query "HKEY_USERS\S-1-5-20\Environment" /v TEMP >nul 2>nul||(powershell -noprofile start -FilePath '%~f0' -verb runas &exit)
 setlocal EnableExtensions
 setlocal EnableDelayedExpansion
 :================================================================================================================
@@ -1693,7 +1691,7 @@ echo [ INFO ] Downloading.
 call :Footer
 call :BusyBoxStream
 call :Footer
-xcopy "_temp\smv.exe" /s ".\" /Q /Y >nul 2>&1
+xcopy "_temp\aria2c.exe" /s ".\" /Q /Y >nul 2>&1
 if exist "_temp" rd /s /q "_temp" >nul 2>&1
 "%aria2c%" -x16 -s16 -d"%cd%" -o"%siname%.iso" --checksum=sha-1=%sihash% "%silink%" -R -c --file-allocation=none --check-certificate=false
 if exist "aria2c.exe" del /f /q "aria2c.exe" >nul 2>&1
@@ -1714,12 +1712,12 @@ exit
 ::===============================================================================================================
 ::TITLE
 :TITLE
-title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.20.01
+title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.20.04
 goto:eof
 ::===============================================================================================================
 ::VERSION
 :VERSION
-set "svfisoconverter=v0.20.01"
+set "svfisoconverter=v0.20.04"
 goto:eof
 :================================================================================================================
 ::===============================================================================================================
