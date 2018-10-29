@@ -5,8 +5,11 @@
 **CREDITS:**
 
 [mkuba50](https://forums.mydigitallife.net/members/mkuba50.317641/) for the file download script
+
 [Enthousiast](https://forums.mydigitallife.net/members/enthousiast.104688/) for kindly providing the needed SVFs
+
 [BAU](https://forums.mydigitallife.net/members/bau.58504/) for kindly providing the Compress2Txt know-how
+
 
 **INFO:**
 
