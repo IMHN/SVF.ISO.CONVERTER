@@ -1435,7 +1435,7 @@ if %errorlevel%==5 (
 	set "tbwin=Win10_1809Oct_"
 	set "tbid=1060"
 )
-if %errorlevel%==5 goto:SVFISOMainMenu
+if %errorlevel%==6 goto:SVFISOMainMenu
 call :Footer
 CHOICE /C 68 /N /M "[ USER ] x[6]4 or x[8]6 architecture ?:"
 if %errorlevel%==1 set "tbarch=x64"
@@ -1730,12 +1730,12 @@ exit
 ::===============================================================================================================
 ::TITLE
 :TITLE
-title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.21.01
+title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.21.04
 goto:eof
 ::===============================================================================================================
 ::VERSION
 :VERSION
-set "svfisoconverter=v0.21.01"
+set "svfisoconverter=v0.21.04"
 goto:eof
 :================================================================================================================
 ::===============================================================================================================
