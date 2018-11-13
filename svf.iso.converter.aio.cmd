@@ -28,7 +28,8 @@ set "database1803_1=database.1803.1.smrt"
 set "database1803_2=database.1803.2.smrt"
 set "database1803_3=database.1803.3.smrt"
 set "databasetb1803=database.tb.1803.smrt"
-set "databasetb1809=database.tb.1809.smrt"
+set "databasetb18091=database.tb.18091.smrt"
+set "databasetb18092=database.tb.18092.smrt"
 set "databasetb81=database.tb.81.smrt"
 set "database1709_1=database.1709.1.smrt"
 set "database1709_2=database.1709.2.smrt"
@@ -1396,12 +1397,14 @@ echo      [2] WINDOWS 8.1 N ^(Update 3^)
 echo:
 echo      [3] WINDOWS 10 1803 ^(contains N versions^)
 echo:
-echo      [4] WINDOWS 10 1809 ^(contains N versions^)
+echo      [4] WINDOWS 10 1809 [17763.1] ^(contains N versions^)
+echo:
+echo      [5] WINDOWS 10 1809 [17763.107] ^(contains N versions^)
 echo:
 call :Footer
 echo      [B] BACK
 call :Footer
-CHOICE /C 1234B /N /M "[ USER ] YOUR CHOICE ?:"
+CHOICE /C 12345B /N /M "[ USER ] YOUR CHOICE ?:"
 if %errorlevel%==1 (
 	call :DBTB81
 	call :Footer
@@ -1421,10 +1424,16 @@ if %errorlevel%==3 (
 	set "tbid=651"
 )
 if %errorlevel%==4 (
-	call :DBTB1809
+	call :DBTB18091
 	call :Footer
 	set "tbwin=Win10_1809_"
 	set "tbid=1019"
+)
+if %errorlevel%==5 (
+	call :DBTB18092
+	call :Footer
+	set "tbwin=Win10_1809Oct_"
+	set "tbid=1060"
 )
 if %errorlevel%==5 goto:SVFISOMainMenu
 call :Footer
@@ -1435,11 +1444,16 @@ if "%tbwin%"=="Win8.1_Pro_N_" call :LangChoice81N
 if "%tbwin%"=="Win8.1_" call :LangChoice81
 if "%tbwin%"=="Win10_1803_" call :LangChoiceTB
 if "%tbwin%"=="Win10_1809_" call :LangChoiceTB
+if "%tbwin%"=="Win10_1809Oct_" call :LangChoiceTB
 call :Footer
 ::===============================================================================================================
 cls
 call :Header "[HEADER] TECHBENCH DOWNLOAD"
 if "%tbwin%"=="Win10_1809_" (
+	if "%tbarch%"=="x64" set "stbarch=x64"
+	if "%tbarch%"=="x32" set "stbarch=x86"
+)
+if "%tbwin%"=="Win10_1809Oct_" (
 	if "%tbarch%"=="x64" set "stbarch=x64"
 	if "%tbarch%"=="x32" set "stbarch=x86"
 )
@@ -1457,11 +1471,15 @@ if "%tblang%"=="Korean" if "%tbwin%"=="Win8.1_Pro_N_" (
 )
 set "tbfilename=%tbwin%%tblang%_%tbarch%.iso"
 if "%tbwin%"=="Win10_1803_" for /f "tokens=1,2,3* delims=|" %%a in ('type "%databasetb1803%" ^| findstr /i "%tblang%" ^| findstr /i "_%stbarch%_"') do set "tbhash=%%b"
-if "%tbwin%"=="Win10_1809_" for /f "tokens=1,2,3* delims=|" %%a in ('type "%databasetb1809%" ^| findstr /i "%tblang%" ^| findstr /i "%stbarch%"') do (
+if "%tbwin%"=="Win10_1809_" for /f "tokens=1,2,3* delims=|" %%a in ('type "%databasetb18091%" ^| findstr /i "%tblang%" ^| findstr /i "%stbarch%"') do (
 	set "tbhash=%%b"
 	set "tbsize=%%c"
 )
-if not "%tbwin%"=="Win10_1803_" if not "%tbwin%"=="Win10_1809_" for /f "tokens=1,2,3,4* delims=|" %%a in ('type "%databasetb81%" ^| findstr /i "%tbfilename%"') do (
+if "%tbwin%"=="Win10_1809Oct_" for /f "tokens=1,2,3* delims=|" %%a in ('type "%databasetb18092%" ^| findstr /i "%tblang%" ^| findstr /i "%stbarch%"') do (
+	set "tbhash=%%b"
+	set "tbsize=%%c"
+)
+if not "%tbwin%"=="Win10_1803_" if not "%tbwin%"=="Win10_1809_" if not "%tbwin%"=="Win10_1809Oct_" for /f "tokens=1,2,3,4* delims=|" %%a in ('type "%databasetb81%" ^| findstr /i "%tbfilename%"') do (
 	set "tbhash=%%b"
 	set "tbsize=%%c"
 )
@@ -1712,12 +1730,12 @@ exit
 ::===============================================================================================================
 ::TITLE
 :TITLE
-title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.20.04
+title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.21.01
 goto:eof
 ::===============================================================================================================
 ::VERSION
 :VERSION
-set "svfisoconverter=v0.20.04"
+set "svfisoconverter=v0.21.01"
 goto:eof
 :================================================================================================================
 ::===============================================================================================================
@@ -3869,11 +3887,11 @@ goto:eof
 :================================================================================================================
 :================================================================================================================
 :================================================================================================================
-::DBTB1809 STREAMLINED
+::DBTB18091 STREAMLINED
 ::===============================================================================================================
 ::===============================================================================================================
-:DBTB1809
->>database.tb.1809.smrt (
+:DBTB18091
+>>database.tb.18091.smrt (
 echo Arabic^|29eec618b904e2549463f68d55092b27a16c1dbe^|4.22^|x64
 echo BrazilianPortuguese^|68d8827b66165a87f4b73712273ed48c086^|4.22^|x64
 echo Bulgarian^|16e3d66b8cfdf772cd4dccaf79cf6710198401a1^|4.36^|x64
@@ -3950,6 +3968,94 @@ echo Swedish^|1fe00131e68f5c4dacde972343f56d07890b6650^|3.14^|x86
 echo Thai^|b3313875a453de270e31c76d868029d4cacf53f5^|3.03^|x86
 echo Turkish^|b33a3b0478f131e364458bec94cefd8bd487ae84^|3.02^|x86
 echo Ukrainian^|84ff855355334e63f11a865f24030a9de9f788d6^|3.02^|x86
+)
+goto:eof
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+::DBTB18092 STREAMLINED
+::===============================================================================================================
+::===============================================================================================================
+:DBTB18092
+>>database.tb.18092.smrt (
+echo Arabic^|de626359145eeb49a4149d407191716c7fcb2715^|4.48^|x64
+echo BrazilianPortuguese^|a3c21b871664db66c1a8d9eba71b28332ae4e94f^|4.48^|x64
+echo Bulgarian^|ce154294d64c7d0c6f5ebcfc710f6c611ca53989^|4.61^|x64
+echo Chinese^(Simplified^)^|81766e9fe5793e8781c5336e513ebceedd2f7b90^|4.74^|x64
+echo Chinese^(Traditional^)^|b0f40399f54d739b7b22f5b45c9bdae2502d4bf4^|4.7^|x64
+echo Croatian^|feb14a5656a24285567ac320516833e5e678af91^|4.59^|x64
+echo Czech^|94d19203177653139e56d64a6576cf7667abf6df^|4.61^|x64
+echo Danish^|f2a7c8c03d6fbc86ceab37a701fbf79b00c7486d^|4.63^|x64
+echo Dutch^|442aa55ee3ec7c2a5837e7eb183a956846492fcc^|4.61^|x64
+echo EnglishInternational^|1b7a6d1372140950b9fbb32900e2246c8682750c^|4.73^|x64
+echo English^|bee211937f3ed11606590b541b2f5b97237ac09d^|4.73^|x64
+echo Estonian^|c381dcbe9b7ff91972edcb89867b6c6b42c28d0d^|4.58^|x64
+echo Finnish^|148269dcf8467a0b965b9822cf944fd5832f130f^|4.61^|x64
+echo FrenchCanadian^|678d7540836397a454321a7902084c944042e6e7^|4.47^|x64
+echo French^|9c0cc504ccf1412a124c46863cc2d46c36327666^|4.75^|x64
+echo German^|dd55d5a14ea5a9870508e214d600e2bf44c72093^|4.75^|x64
+echo Greek^|6ce1bfb389535d6fb2aa4e2e028d984e079dff05^|4.64^|x64
+echo Hebrew^|4ea26a6b076c93ff7f2d29034ce2cf0a7cbb9cbc^|4.44^|x64
+echo Hungarian^|b4f88e157d033941569644782a166cc9a73f35b8^|4.61^|x64
+echo Italian^|b66dbfee26d68682b653cdbba2af8da320e9802d^|4.66^|x64
+echo Japanese^|f1cc02f2a6588a32f691d6f07da6726b1a340b9f^|4.67^|x64
+echo Korean^|26ef0a6a7a40895385852f4d3b1326235a966342^|4.49^|x64
+echo Latvian^|411bc9049baff178eb1badfb995ff12f0d465ca0^|4.58^|x64
+echo Lithuanian^|4222684c6aac58dc735a014f4e8246c1c8b412c5^|4.58^|x64
+echo Norwegian^|ec840bb6ef97871f86ffb162b1cbfe0d71deee9d^|4.61^|x64
+echo Polish^|ad1b204aeb5d2145bcb326f6a77be78a61ba4a3d^|4.64^|x64
+echo Portuguese^|4cfc2d2b52e3d2d2d65a580bfdbd6caba2acf668^|4.66^|x64
+echo Romanian^|5341cb961001d1f4b5311ec3aad1107f4a2f440f^|4.59^|x64
+echo Russian^|32ba5564b862fb479b7d5e31f6e1604107dfe07f^|4.49^|x64
+echo SerbianLatin^|97dd94df424b472009a2f85ea80603ad216cbe4c^|4.4^|x64
+echo Slovak^|804325803bb454a7bbf0b61b12c8a5e53e1953b3^|4.59^|x64
+echo Slovenian^|a06574263779581eb9fa9861c1913e90eb30cb62^|4.59^|x64
+echo Spanish^(Mexico^)^|9baec60a872abb8b2fd458b9e1dd0f561bd146a3^|4.47^|x64
+echo Spanish^|420270676e73ded2c6fb777edebb1a46eb9357e7^|4.75^|x64
+echo Swedish^|5c1122e4c90e828e78386bee6e0eec1b7c9f5551^|4.62^|x64
+echo Thai^|b5a235b46bb6602dd097a50f71d97eae6dc2d6ea^|4.43^|x64
+echo Turkish^|5c094a717bcda54a2401b1b1c39ac04947621e38^|4.42^|x64
+echo Ukrainian^|0ab01954daed506f9ad2b337a4b20a5a98e3b464^|4.42^|x64
+echo Arabic^|2c4e8f608517d58e53e7968949c05dbaf891b097^|3.21^|x86
+echo BrazilianPortuguese^|26e94eae1c23ddecec68d11c135be5782501e70e^|3.21^|x86
+echo Bulgarian^|0e1c11d537227b1061e44a64ac5df58e7994e954^|3.28^|x86
+echo Chinese^(Simplified^)^|6e060995a1529b6a664bfdecefb72985601b9897^|3.45^|x86
+echo Chinese^(Traditional^)^|dc97606dbb0a1808e9172f649457f6dc0a287cdd^|3.43^|x86
+echo Croatian^|9ef24cfa800e791cdd5867be4678d69eb9a3f1e3^|3.25^|x86
+echo Czech^|05ea75a2b71c2cb851f089740d75df77e5479391^|3.27^|x86
+echo Danish^|0996a24c91fd76c386f90a323863f244d022bf48^|3.29^|x86
+echo Dutch^|7a2a1b69e336889f3aa2517b7ac2417f8a2818ce^|3.27^|x86
+echo EnglishInternational^|265c8c0d86ce55173c29f727b7634e191d5e751e^|3.38^|x86
+echo English^|cae018b8e164fcbd06cd680e12ec4d264d736291^|3.38^|x86
+echo Estonian^|cfd4dbda96e795396732f1ec9103a14951cded4f^|3.24^|x86
+echo Finnish^|b6279bcbf317cb97fa39f55c69cd94735fd60c50^|3.27^|x86
+echo FrenchCanadian^|256ca03b8f1f52e8b043d94b50e03262e1526f9f^|3.21^|x86
+echo French^|d363480055eb103a8347393849659f39ef930bcd^|3.4^|x86
+echo German^|49bf9963cc55dd137ffb554c95f6f3fa75c654a8^|3.41^|x86
+echo Greek^|0f09b983a16e5cd2879be9e02f156a61d99a4e46^|3.3^|x86
+echo Hebrew^|35b0fb6199a8dfa28b21f3ee19b1bd97f92db33b^|3.18^|x86
+echo Hungarian^|568e53535ff1712a5aed28fa71b3d44ca15e1a58^|3.27^|x86
+echo Italian^|5e10416c481bb2a9770c9bd4133822da021a167c^|3.32^|x86
+echo Japanese^|843586cac656ebb3c48e8288cc4321b10460aeaf^|3.4^|x86
+echo Korean^|a2dd8415d7ffa78b4bca1a666d73d2ca1adb3879^|3.22^|x86
+echo Latvian^|83bdad2ae39341d2bfe181531759ed396b73836d^|3.24^|x86
+echo Lithuanian^|92edbea2ff81604ea3629ad96ef9ed2c8d262338^|3.24^|x86
+echo Norwegian^|ebeff6c4630c6b62dfdb9daed72ab9eaf30caeab^|3.27^|x86
+echo Polish^|9a9f89cb36aeffcef68169009e70837eeaed8154^|3.3^|x86
+echo Portuguese^|d849f076c80282fdb2ff20b0daa3436ee7b54720^|3.31^|x86
+echo Romanian^|407f5a2d9fb2eee6235daf63548adc384ca72564^|3.25^|x86
+echo Russian^|61e800282576f1dc5ccef8af5fa92151a761ece1^|3.22^|x86
+echo SerbianLatin^|ad152ecfd0a996e0df095ba70489bd3d9c689b5b^|3.13^|x86
+echo Slovak^|1fb961565c55e15fd18bf9016e4b55d3f987cf1a^|3.26^|x86
+echo Slovenian^|96d0df9d6276b2b101e9819bc0dde46b2a9be6bd^|3.25^|x86
+echo Spanish^(Mexico^)^|cda4ea8710aa85afc54cc01b7db90a6eb109b378^|3.21^|x86
+echo Spanish^|354337e22469a657bccf7eb67fb355d03006d15d^|3.4^|x86
+echo Swedish^|6da40856077e2f11f441eeb06061c0d6e6ce1572^|3.28^|x86
+echo Thai^|bc1b90d2e3f711272e3d1a7a3c8c1ba93dde774f^|3.16^|x86
+echo Turkish^|24233b9f8a9a03e2662efc7e0104ab07941568aa^|3.16^|x86
+echo Ukrainian^|4930123fc3b9dc48b01d9e4d78f14d8354b59286^|3.16^|x86
 )
 goto:eof
 :================================================================================================================
