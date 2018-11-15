@@ -37,6 +37,7 @@ set "databaseLTSB=database.LTSB.smrt"
 set "databaseLTSB2=database.LTSB2.smrt"
 set "databaseLTSB3=database.LTSB3.smrt"
 set "databaseServer16=database.Server2016.smrt"
+set "databaseServer19=database.Server2019.smrt"
 set "aria2c=aria2c.exe"
 set "smv=smv.exe"
 :================================================================================================================
@@ -106,12 +107,14 @@ echo:
 echo      [8] START LTSB 2015 PROCESS [10240.0]
 echo:
 echo      [9] START SERVER 2016 PROCESS [14393.0]
+echo:
+echo      [A] START SERVER 2019 PROCESS [17763.0]
 call :Footer
 echo      [B] BACK
 echo:
 call :MenuFooter
 echo:
-CHOICE /C 0123456789B /N /M "[ USER ] YOUR CHOICE ?:"
+CHOICE /C 0123456789AB /N /M "[ USER ] YOUR CHOICE ?:"
 if %errorlevel%==1 (
 	set "show=1809"
 	set "build=17763.1"
@@ -146,7 +149,8 @@ if %errorlevel%==7 goto:SVFISOProcessLTSB19
 if %errorlevel%==8 goto:SVFISOProcessLTSB16
 if %errorlevel%==9 goto:SVFISOProcessLTSB15
 if %errorlevel%==10 goto:SVFISOProcessServer16
-if %errorlevel%==11 goto:SVFISOMainMenu
+if %errorlevel%==11 goto:SVFISOProcessServer19
+if %errorlevel%==12 goto:SVFISOMainMenu
 goto:SVFISODownMenu
 :================================================================================================================
 ::===============================================================================================================
@@ -1385,6 +1389,140 @@ pause
 goto:SVFISODownMenu
 :================================================================================================================
 ::===============================================================================================================
+::SERVER 2019 PROCESS
+:SVFISOProcessServer19
+pushd %~dp0
+::===============================================================================================================
+cls
+call :Header "[HEADER] SERVER 2019 SVF ISO CONVERSION"
+call :LangChoiceS
+::===============================================================================================================
+cls
+call :Header "[HEADER] SERVER 2019 SVF ISO CONVERSION"
+call :DBServer2019
+for /f "tokens=1,2,3* delims=|" %%a in ('type "%databaseServer19%" ^| findstr /i "%lang%"') do (
+	set "fhash=%%b"
+	set "fname=%%c"
+	set "fshare=%%d"
+)
+set "siename=17763.1.180914-1434.rs5_release_SERVER_EVAL_X64FRE_EN-US"
+set "siehash=c4834f538a90bb41f625144c9a2e0edf8bb9b9b5"
+set "sielink=https://software-download.microsoft.com/download/pr/17763.1.180914-1434.rs5_release_SERVER_EVAL_X64FRE_EN-US.ISO"
+echo [ INFO ] Source: %siename%
+echo [ INFO ] Hash  : %siehash%
+call :Footer
+echo [ INFO ] Target: %fname%
+echo [ INFO ] Hash  : %fhash%
+call :Footer
+CHOICE /C SB /N /M "[ USER ] [S]tart or [B]ack ?:"
+if %errorlevel%==2 goto:SVFISODownMenu
+::===============================================================================================================
+cls
+call :Header "[HEADER] SERVER 2019 SVF ISO CONVERSION"
+echo [ INFO ] Source: %siename%
+echo [ INFO ] Hash  : %siehash%
+call :Footer
+echo [ INFO ] Downloading Source ISO ^(if not already pesent^).
+call :Footer
+set "dhash="
+call :BusyBoxStream
+call :DownShStream
+call :Footer
+xcopy "_temp\*.exe" /s ".\" /Q /Y >nul 2>&1
+if exist "_temp" rd /s /q "_temp" >nul 2>&1
+if not exist "%fname%.iso" (
+	if not exist "%siename%.iso" (
+		echo [ INFO ] Downloading Eval ISO.
+		call :Footer
+		"%aria2c%" -x16 -s16 -d"%cd%" -o"%siename%.iso" --checksum=sha-1=%siehash% "%sielink%" -R -c --file-allocation=none --check-certificate=false
+		if !errorlevel!==0 set "dhash=%fhash%"
+		if not !errorlevel!==0 (
+			busybox echo -e "\033[31;1m[ WARN ] Hash Mismatch!\033[0m"
+			echo [ INFO ] Hash  : !dhash!
+			call :Footer
+			if exist "aria2c.exe" del /f /q "aria2c.exe" >nul 2>&1
+			if exist "CURL.exe" del /f /q "CURL.exe" >nul 2>&1
+			if exist "smv.exe" del /f /q "smv.exe" >nul 2>&1
+			if exist "busybox.exe" del /f /q "busybox.exe" >nul 2>&1
+			if exist "*.SMRT" del /f /q "*.SMRT" >nul 2>&1
+			if exist "*.sh" del /f /q "*.sh" >nul 2>&1
+			pause
+			goto:SVFISODownMenu
+		)
+		call :Footer
+	)
+	if exist "%siename%.iso" if not defined dhash (
+		echo [ INFO ] Source Eval ISO present.
+		echo [ INFO ] Checking Eval ISO Hash.
+		echo [ INFO ] Hash  : %siehash%
+		call :Footer
+		for /f "tokens=1 delims= " %%a in ('busybox.exe sha1sum %siename%.iso') do set "dhash=%%a"
+		if not !dhash! equ %siehash% (
+			busybox echo -e "\033[31;1m[ WARN ] Hash Mismatch!\033[0m"
+			echo [ INFO ] Hash  : !dhash!
+			call :Footer
+			if exist "aria2c.exe" del /f /q "aria2c.exe" >nul 2>&1
+			if exist "CURL.exe" del /f /q "CURL.exe" >nul 2>&1
+			if exist "smv.exe" del /f /q "smv.exe" >nul 2>&1
+			if exist "busybox.exe" del /f /q "busybox.exe" >nul 2>&1
+			if exist "*.SMRT" del /f /q "*.SMRT" >nul 2>&1
+			if exist "*.sh" del /f /q "*.sh" >nul 2>&1
+			pause
+			goto:SVFISODownMenu
+		)
+		if !dhash! equ %siehash% (
+			busybox echo -e "\033[32;1m[ INFO ] ISO Hash matching.\033[0m"
+			echo [ INFO ] Hash  : !dhash!
+			call :Footer
+		)
+	)
+	if not exist "%fname%.svf" (
+		echo [ INFO ] Downloading Target ISO SVF.
+		echo [ INFO ] Name  : %fname%
+		call :Footer
+		call :Busybox "%fshare%", "%fname%.svf"
+		call :Footer
+	)
+	echo [ INFO ] Creating Target ISO.
+	echo [ INFO ] Name  : %fname%
+	call :Footer
+::===============================================================================================================
+	smv x %fname%.svf -br .
+::===============================================================================================================
+	call :Footer
+)
+echo [ INFO ] Checking Target ISO Hash.
+echo [ INFO ] Hash  : %fhash%
+call :Footer
+for /f "tokens=1 delims= " %%a in ('busybox.exe sha1sum %fname%.iso') do set "dhash=%%a"
+if not %dhash% equ %fhash% (
+	busybox echo -e "\033[31;1m[ WARN ] Hash Mismatch!\033[0m"
+	echo [ INFO ] Hash  : %dhash%
+	call :Footer
+	if exist "aria2c.exe" del /f /q "aria2c.exe" >nul 2>&1
+	if exist "CURL.exe" del /f /q "CURL.exe" >nul 2>&1
+	if exist "smv.exe" del /f /q "smv.exe" >nul 2>&1
+	if exist "busybox.exe" del /f /q "busybox.exe" >nul 2>&1
+	if exist "*.SMRT" del /f /q "*.SMRT" >nul 2>&1
+	if exist "*.sh" del /f /q "*.sh" >nul 2>&1
+	pause
+	goto:SVFISODownMenu
+)
+if %dhash% equ %fhash% (
+	busybox echo -e "\033[32;1m[ INFO ] ISO Hash matching.\033[0m"
+	echo [ INFO ] Hash  : %dhash%
+	call :Footer
+)
+if exist "aria2c.exe" del /f /q "aria2c.exe" >nul 2>&1
+if exist "CURL.exe" del /f /q "CURL.exe" >nul 2>&1
+if exist "smv.exe" del /f /q "smv.exe" >nul 2>&1
+if exist "busybox.exe" del /f /q "busybox.exe" >nul 2>&1
+if exist "*.SMRT" del /f /q "*.SMRT" >nul 2>&1
+if exist "*.sh" del /f /q "*.sh" >nul 2>&1
+pause
+goto:SVFISODownMenu
+:================================================================================================================
+::===============================================================================================================
 ::TECHBENCH DOWNLOAD
 :TBISODownload
 pushd %~dp0
@@ -1624,7 +1762,7 @@ goto:SVFISOCreate
 pushd %~dp0
 ::===============================================================================================================
 cls
-call :MenuHeader "[HEADER] SOURCE ISO DOWNLOAD"
+call :Header "[HEADER] SOURCE ISO DOWNLOAD"
 echo      [1] 1803
 echo:
 echo      [2] 1709
@@ -1634,19 +1772,23 @@ echo:
 echo      [4] LTSB 2015
 echo:
 echo      [5] SERVER 2016
+echo:
+echo      [6] SERVER 2019
 call :Footer
 echo      [B] BACK
 call :Footer
-CHOICE /C 12345B /N /M "[ USER ] YOUR CHOICE ?:"
+CHOICE /C 123456B /N /M "[ USER ] YOUR CHOICE ?:"
 if %errorlevel%==1 set "build=1803"
 if %errorlevel%==2 set "build=1709"
 if %errorlevel%==3 set "build=1607"
 if %errorlevel%==4 set "build=LTSB15"
 if %errorlevel%==5 set "build=Server2016"
-if %errorlevel%==6 goto:SVFISOMainMenu
+if %errorlevel%==6 set "build=Server2019"
+if %errorlevel%==7 goto:SVFISOMainMenu
 cls
 call :Header "[HEADER] SOURCE ISO DOWNLOAD"
 if "%build%"=="Server2016" goto:SourceServer2016
+if "%build%"=="Server2019" goto:SourceServer2016
 CHOICE /C 68 /N /M "[ USER ] x[6]4 or x[8]6 architecture ?:"
 if %errorlevel%==1 set "arch=x64"
 if %errorlevel%==2 set "arch=x86"
@@ -1697,6 +1839,11 @@ if "%build%"=="Server2016" (
 	set "sihash=772700802951b36c8cb26a61c040b9a8dc3816a3"
 	set "silink=https://download.microsoft.com/download/1/4/9/149D5452-9B29-4274-B6B3-5361DBDA30BC/14393.0.161119-1705.RS1_REFRESH_SERVER_EVAL_X64FRE_EN-US.ISO"
 )
+if "%build%"=="Server2019" (
+	set "siname=17763.1.180914-1434.rs5_release_SERVER_EVAL_X64FRE_EN-US"
+	set "sihash=c4834f538a90bb41f625144c9a2e0edf8bb9b9b5"
+	set "silink=https://software-download.microsoft.com/download/pr/17763.1.180914-1434.rs5_release_SERVER_EVAL_X64FRE_EN-US.ISO"
+)
 cls
 call :Header "[HEADER] SOURCE ISO DOWNLOAD"
 echo [ INFO ] Source: %siname%
@@ -1730,12 +1877,12 @@ exit
 ::===============================================================================================================
 ::TITLE
 :TITLE
-title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.21.04
+title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.22.01
 goto:eof
 ::===============================================================================================================
 ::VERSION
 :VERSION
-set "svfisoconverter=v0.21.04"
+set "svfisoconverter=v0.22.01"
 goto:eof
 :================================================================================================================
 ::===============================================================================================================
@@ -3794,6 +3941,28 @@ goto:eof
 ::DBServer2019 STREAMLINED
 ::===============================================================================================================
 ::===============================================================================================================
+:DBServer2019
+>>database.Server2019.smrt (
+echo cs-cz^|ac09494f38f85def2f1189581d35cbb91f6130a5^|cs_windows_server_2019_x64_dvd_1f1d33c9^|Z9xqhzTzQYdZuJH
+echo de-de^|786df0eb437ff99d1ba18c13960039d73053a976^|de_windows_server_2019_x64_dvd_5035aafd^|Z9xqhzTzQYdZuJH
+echo en-us^|24f7c459f3612df82205a45fdb68ca9f96bc5d80^|en_windows_server_2019_x64_dvd_3c2cf1202^|Z9xqhzTzQYdZuJH
+echo es-es^|ba5e1489523655214951d1ef495ccf8f0c421b15^|es_windows_server_2019_x64_dvd_e777f781^|Z9xqhzTzQYdZuJH
+echo fr-fr^|d6130cd5abffbe2540945f0cfcd19e2c75c84279^|fr_windows_server_2019_x64_dvd_09b82a8c^|Z9xqhzTzQYdZuJH
+echo hu-hu^|1e14aa66e99dc38af1a8f1b89eea16cb92f66388^|hu_windows_server_2019_x64_dvd_052f9b8d^|Z9xqhzTzQYdZuJH
+echo it-it^|94e14e1833ceee2e3f7331fee67954b87a981191^|it_windows_server_2019_x64_dvd_853c81a3^|Z9xqhzTzQYdZuJH
+echo ja-jp^|3269b04f07d4d937f93a341a5f71763f469be3cd^|ja_windows_server_2019_x64_dvd_d7f8ec54^|Z9xqhzTzQYdZuJH
+echo ko-kr^|5e3245955f5610acb37cfb85712a1599ed62009c^|ko_windows_server_2019_x64_dvd_3f3b2188^|Z9xqhzTzQYdZuJH
+echo nl-nl^|710540eda7486edcf8136835887e84e488fd8c38^|nl_windows_server_2019_x64_dvd_a79f2817^|Z9xqhzTzQYdZuJH
+echo pl-pl^|1193e5e7c8af6d02fa475e36038c581fba2c203f^|pl_windows_server_2019_x64_dvd_c318d4a8^|Z9xqhzTzQYdZuJH
+echo pt-br^|82a1c1af8120aa97c0f7cbe62dded93b7ff92969^|pt_windows_server_2019_x64_dvd_c02601b1^|Z9xqhzTzQYdZuJH
+echo pt-pt^|24731c48f6822207502f07b516a6ca8121672218^|pp_windows_server_2019_x64_dvd_e0434047^|Z9xqhzTzQYdZuJH
+echo ru-ru^|9e869bdbdcb4978c7aee0527f88ed1973816e5c8^|ru_windows_server_2019_x64_dvd_f37d6021^|Z9xqhzTzQYdZuJH
+echo sv-se^|08cdd335f73e85dab672aa264918a0396e560eac^|sv_windows_server_2019_x64_dvd_f3237e8d^|Z9xqhzTzQYdZuJH
+echo tr-tr^|3ad1705a8070ada7fd3b851958dec86e5a1d648b^|tr_windows_server_2019_x64_dvd_73d77b30^|Z9xqhzTzQYdZuJH
+echo zh-cn^|cfbc1f9bfa00a08e601548a056c67ab732cf32f7^|cn_windows_server_2019_x64_dvd_2d80e042^|Z9xqhzTzQYdZuJH
+echo zh-tw^|27c54e74548a8bdae3611cf5202e24ef7ed86fe1^|ct_windows_server_2019_x64_dvd_af47f9fe^|Z9xqhzTzQYdZuJH
+)
+goto:eof
 :================================================================================================================
 :================================================================================================================
 :================================================================================================================
