@@ -38,6 +38,9 @@ set "databaseLTSB2=database.LTSB2.smrt"
 set "databaseLTSB3=database.LTSB3.smrt"
 set "databaseServer16=database.Server2016.smrt"
 set "databaseServer19=database.Server2019.smrt"
+set "databaseServer192=database.Server2019.2.smrt"
+set "databasevlscLTSC=database.vlsc.LTSC.smrt"
+set "databasevlsc18092=database.vlsc.18092.smrt"
 set "aria2c=aria2c.exe"
 set "smv=smv.exe"
 :================================================================================================================
@@ -59,6 +62,8 @@ echo      [C] CREATE SVF/ISO
 call :Footer
 echo      [M] MY VISUAL STUDIO DOWNLOADS
 call :Footer
+echo      [V] VLSC DOWNLOADS
+call :Footer
 echo      [T] TECHBENCH DOWNLOAD [Win 8.1/10]
 call :Footer
 echo      [D] DOWNLOAD/RESUME SOURCE ISO FILES
@@ -67,12 +72,13 @@ echo      [E] EXIT
 echo:
 call :MenuFooter
 echo:
-CHOICE /C CMTDE /N /M "[ USER ] YOUR CHOICE ?:"
+CHOICE /C CMVTDE /N /M "[ USER ] YOUR CHOICE ?:"
 if %errorlevel%==1 goto:SVFISOCreate
 if %errorlevel%==2 goto:SVFISODownMenu
-if %errorlevel%==3 goto:TBISODownload
-if %errorlevel%==4 goto:SourceISODownload
-if %errorlevel%==5 goto:EXIT
+if %errorlevel%==3 goto:VLSCISODownload
+if %errorlevel%==4 goto:TBISODownload
+if %errorlevel%==5 goto:SourceISODownload
+if %errorlevel%==6 goto:EXIT
 goto:SVFISOMainMenu
 :================================================================================================================
 ::===============================================================================================================
@@ -108,13 +114,15 @@ echo      [8] START LTSB 2015 PROCESS [10240.0]
 echo:
 echo      [9] START SERVER 2016 PROCESS [14393.0]
 echo:
-echo      [A] START SERVER 2019 PROCESS [17763.0]
+echo      [A] START SERVER 2019 PROCESS 1 [17763.0]
+echo:
+echo      [C] START SERVER 2019 PROCESS 2 [17763.107]
 call :Footer
 echo      [B] BACK
 echo:
 call :MenuFooter
 echo:
-CHOICE /C 0123456789AB /N /M "[ USER ] YOUR CHOICE ?:"
+CHOICE /C 0123456789ACB /N /M "[ USER ] YOUR CHOICE ?:"
 if %errorlevel%==1 (
 	set "show=1809"
 	set "build=17763.1"
@@ -150,8 +158,213 @@ if %errorlevel%==8 goto:SVFISOProcessLTSB16
 if %errorlevel%==9 goto:SVFISOProcessLTSB15
 if %errorlevel%==10 goto:SVFISOProcessServer16
 if %errorlevel%==11 goto:SVFISOProcessServer19
-if %errorlevel%==12 goto:SVFISOMainMenu
+if %errorlevel%==12 goto:SVFISOProcessServer19Refresh
+if %errorlevel%==13 goto:SVFISOMainMenu
 goto:SVFISODownMenu
+:================================================================================================================
+::===============================================================================================================
+:================================================================================================================
+::===============================================================================================================
+:VLSCISODownload
+call :TITLE
+cls
+call :MenuHeader "[HEADER] VLSC DOWNLOAD MENU [SYSTEM: %vera%]"
+echo:
+echo [CREDIT] Enthousiast for SVF Repo [forums.mydigitallife.net]
+echo [CREDIT] mkuba50 for SVF Download Script [forums.mydigitallife.net]
+echo:
+call :MenuFooter
+echo:
+echo      [1] START 1809 LTSC Oct Refresh PROCESS [17763.107]
+echo:
+echo      [2] START 1809 Business Oct Refresh PROCESS [17763.107]
+call :Footer
+echo      [B] BACK
+echo:
+call :MenuFooter
+echo:
+CHOICE /C 12B /N /M "[ USER ] YOUR CHOICE ?:"
+if %errorlevel%==1 (
+	set "show=LTSC Oct Refresh"
+	set "build=VLSCLTSC"
+	goto:VLSCISOProcess
+)
+if %errorlevel%==2 (
+	set "show=1809 Oct Refresh"
+	set "build=VLSC18092"
+	goto:VLSCISOProcess
+)
+if %errorlevel%==3 goto:SVFISOMainMenu
+goto:VLSCISODownload
+:================================================================================================================
+::===============================================================================================================
+::VLSC PROCESS
+:VLSCISOProcess
+pushd %~dp0
+::===============================================================================================================
+cls
+call :Header "[HEADER] %show% SVF ISO CONVERSION"
+CHOICE /C 68 /N /M "[ USER ] x[6]4 or x[8]6 architecture ?:"
+if %errorlevel%==1 set "arch=x64"
+if %errorlevel%==2 set "arch=x86"
+call :LangChoiceVLSC
+cls
+call :Header "[HEADER] %show% SVF ISO CONVERSION"
+if "%build%"=="VLSCLTSC" (
+	call :DBVLSCLTSC
+	for /f "tokens=1,2,3,4* delims=|" %%a in ('type "%databasevlscLTSC%" ^| findstr /i "%tblang%" ^| findstr /i "%arch%"') do (
+		set "fshare=D45Y9I1UWgw9jHV"
+		set "fhash=%%b"
+		set "fname=%%c"
+	)
+	if "%arch%"=="x86" (
+		set "siename=17763.107.101029-1455.rs5_release_svc_refresh_CLIENT_LTSC_EVAL_x86FRE_en-us"
+		set "siehash=ba8e0184c61d88b92fb88046339f8ddc58a3b372"
+		set "sielink=https://software-download.microsoft.com/download/pr/17763.107.101029-1455.rs5_release_svc_refresh_CLIENT_LTSC_EVAL_x86FRE_en-us.iso"
+		set "sishare=Oct_Refresh_LTSC_EVAL_2_ALL_LTSC_x86"
+	)
+	if "%arch%"=="x64" (
+		set "siename=17763.107.101029-1455.rs5_release_svc_refresh_CLIENT_LTSC_EVAL_x64FRE_en-us"
+		set "siehash=369e645a197bc2ca8309cb80467a85a16eacd1a7"
+		set "sielink=https://software-download.microsoft.com/download/pr/17763.107.101029-1455.rs5_release_svc_refresh_CLIENT_LTSC_EVAL_x64FRE_en-us.iso"
+		set "sishare=Oct_Refresh_LTSC_EVAL_2_ALL_LTSC_x64"
+))
+if "%build%"=="VLSC18092" (
+	call :DBVLSC18092
+	for /f "tokens=1,2,3,4* delims=|" %%a in ('type "%databasevlsc18092%" ^| findstr /i "%tblang%" ^| findstr /i "%arch%"') do (
+		set "fshare=D45Y9I1UWgw9jHV"
+		set "fhash=%%b"
+		set "fname=%%c"
+	)
+	if "%arch%"=="x86" (
+		set "siename=17763.107.101029-1455.rs5_release_svc_refresh_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us"
+		set "siehash=eee2167b0ea9fe9654357c06d44a9c44eff62f1d"
+		set "sielink=https://software-download.microsoft.com/download/pr/17763.107.101029-1455.rs5_release_svc_refresh_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us.iso"
+		set "sishare=Oct_Refresh_Ent_EVAL_2_ALL_Bus_x86"
+	)
+	if "%arch%"=="x64" (
+		set "siename=17763.107.101029-1455.rs5_release_svc_refresh_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us"
+		set "siehash=164f022a22d2305e6fbd82f6e35d530b6bbadca8"
+		set "sielink=https://software-download.microsoft.com/download/pr/17763.107.101029-1455.rs5_release_svc_refresh_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso"
+		set "sishare=Oct_Refresh_Ent_EVAL_2_ALL_Bus_x64"
+))
+call :Footer
+echo [ INFO ] Source: %siename%
+echo [ INFO ] Hash  : %siehash%
+echo [  TO  ]
+echo [ INFO ] Target: %fname%
+echo [ INFO ] Hash  : %fhash%
+call :Footer
+CHOICE /C SB /N /M "[ USER ] [S]tart or [B]ack ?:"
+if %errorlevel%==2 (
+	if exist "*.smrt" del /f /q "*.smrt" >nul 2>&1
+	goto:VLSCISODownload
+)
+::===============================================================================================================
+cls
+call :Header "[HEADER] %show% SVF ISO CONVERSION"
+echo [ INFO ] Source: %siename%
+echo [ INFO ] Hash  : %siehash%
+call :Footer
+echo [ INFO ] Downloading Source ISO ^(if not already pesent^).
+call :Footer
+set "dhash="
+call :BusyBoxStream
+call :DownShStream
+call :Footer
+xcopy "_temp\*.exe" /s ".\" /Q /Y >nul 2>&1
+if exist "_temp" rd /s /q "_temp" >nul 2>&1
+if not exist "%fname%.iso" (
+	if not exist "%siename%.iso" (
+		echo [ INFO ] Downloading Eval ISO.
+		call :Footer
+		"%aria2c%" -x16 -s16 -d"%cd%" -o"%siename%.iso" --checksum=sha-1=%siehash% "%sielink%" -R -c --file-allocation=none --check-certificate=false
+		if !errorlevel!==0 set "dhash=%fhash%"
+		if not !errorlevel!==0 (
+			busybox echo -e "\033[31;1m[ WARN ] Hash Mismatch!\033[0m"
+			echo [ INFO ] Hash  : !dhash!
+			call :Footer
+			if exist "aria2c.exe" del /f /q "aria2c.exe" >nul 2>&1
+			if exist "CURL.exe" del /f /q "CURL.exe" >nul 2>&1
+			if exist "smv.exe" del /f /q "smv.exe" >nul 2>&1
+			if exist "busybox.exe" del /f /q "busybox.exe" >nul 2>&1
+			if exist "*.smrt" del /f /q "*.smrt" >nul 2>&1
+			if exist "*.sh" del /f /q "*.sh" >nul 2>&1
+			pause
+			goto:VLSCISODownload
+		)
+		call :Footer
+	)
+	if exist "%siename%.iso" if not defined dhash (
+		echo [ INFO ] Source Eval ISO present.
+		echo [ INFO ] Checking Eval ISO Hash.
+		echo [ INFO ] Hash  : %siehash%
+		call :Footer
+		for /f "tokens=1 delims= " %%a in ('busybox.exe sha1sum %siename%.iso') do set "dhash=%%a"
+		if not !dhash! equ %siehash% (
+			busybox echo -e "\033[31;1m[ WARN ] Hash Mismatch!\033[0m"
+			echo [ INFO ] Hash  : !dhash!
+			call :Footer
+			if exist "aria2c.exe" del /f /q "aria2c.exe" >nul 2>&1
+			if exist "CURL.exe" del /f /q "CURL.exe" >nul 2>&1
+			if exist "smv.exe" del /f /q "smv.exe" >nul 2>&1
+			if exist "busybox.exe" del /f /q "busybox.exe" >nul 2>&1
+			if exist "*.smrt" del /f /q "*.smrt" >nul 2>&1
+			if exist "*.sh" del /f /q "*.sh" >nul 2>&1
+			pause
+			goto:VLSCISODownload
+		)
+		if !dhash! equ %siehash% (
+			busybox echo -e "\033[32;1m[ INFO ] ISO Hash matching.\033[0m"
+			echo [ INFO ] Hash  : !dhash!
+			call :Footer
+		)
+	)
+	if not exist "%fname%.svf" (
+		echo [ INFO ] Downloading Target ISO SVF.
+		echo [ INFO ] Name  : %fname%
+		call :Footer
+		call :Busybox "%fshare%", "%sishare%/%fname%.svf"
+		call :Footer
+	)
+	echo [ INFO ] Creating Target ISO.
+	echo [ INFO ] Name  : %fname%
+	call :Footer
+::===============================================================================================================
+	smv x %fname%.svf -br .
+::===============================================================================================================
+	call :Footer
+)
+echo [ INFO ] Checking Target ISO Hash.
+echo [ INFO ] Hash  : %fhash%
+call :Footer
+for /f "tokens=1 delims= " %%a in ('busybox.exe sha1sum %fname%.iso') do set "dhash=%%a"
+if not %dhash% equ %fhash% (
+	busybox echo -e "\033[31;1m[ WARN ] Hash Mismatch!\033[0m"
+	echo [ INFO ] Hash  : %dhash%
+	call :Footer
+	if exist "aria2c.exe" del /f /q "aria2c.exe" >nul 2>&1
+	if exist "CURL.exe" del /f /q "CURL.exe" >nul 2>&1
+	if exist "smv.exe" del /f /q "smv.exe" >nul 2>&1
+	if exist "busybox.exe" del /f /q "busybox.exe" >nul 2>&1
+	if exist "*.smrt" del /f /q "*.smrt" >nul 2>&1
+	if exist "*.sh" del /f /q "*.sh" >nul 2>&1
+	pause
+	goto:VLSCISODownload
+)
+if %dhash% equ %fhash% (
+	busybox echo -e "\033[32;1m[ INFO ] ISO Hash matching.\033[0m"
+	echo [ INFO ] Hash  : %dhash%
+	call :Footer
+)
+if exist "aria2c.exe" del /f /q "aria2c.exe" >nul 2>&1
+if exist "CURL.exe" del /f /q "CURL.exe" >nul 2>&1
+if exist "smv.exe" del /f /q "smv.exe" >nul 2>&1
+if exist "busybox.exe" del /f /q "busybox.exe" >nul 2>&1
+if exist "*.smrt" del /f /q "*.smrt" >nul 2>&1
+if exist "*.sh" del /f /q "*.sh" >nul 2>&1
+pause
+goto:VLSCISODownload
 :================================================================================================================
 ::===============================================================================================================
 ::1803 PROCESS
@@ -394,7 +607,10 @@ echo [ INFO ] Target: %fname%
 echo [ INFO ] Hash  : %fhash%
 call :Footer
 CHOICE /C SB /N /M "[ USER ] [S]tart or [B]ack ?:"
-if %errorlevel%==2 goto:SVFISODownMenu
+if %errorlevel%==2 (
+	if exist "*.smrt" del /f /q "*.smrt" >nul 2>&1
+	goto:SVFISODownMenu
+)
 ::===============================================================================================================
 cls
 call :Header "[HEADER] %show% [%build%] SVF ISO CONVERSION"
@@ -591,7 +807,10 @@ echo [ INFO ] Target: %fname%
 echo [ INFO ] Hash  : %fhash%
 call :Footer
 CHOICE /C SB /N /M "[ USER ] [S]tart or [B]ack ?:"
-if %errorlevel%==2 goto:SVFISODownMenu
+if %errorlevel%==2 (
+	if exist "*.smrt" del /f /q "*.smrt" >nul 2>&1
+	goto:SVFISODownMenu
+)
 ::===============================================================================================================
 cls
 call :Header "[HEADER] LTSC 2019 SVF ISO CONVERSION"
@@ -749,7 +968,10 @@ echo [ INFO ] Target: %fname%
 echo [ INFO ] Hash  : %fhash%
 call :Footer
 CHOICE /C SB /N /M "[ USER ] [S]tart or [B]ack ?:"
-if %errorlevel%==2 goto:SVFISODownMenu
+if %errorlevel%==2 (
+	if exist "*.smrt" del /f /q "*.smrt" >nul 2>&1
+	goto:SVFISODownMenu
+)
 cls
 call :Header "[HEADER] %show% [%build%] SVF ISO CONVERSION"
 echo [ INFO ] Source: %siename%
@@ -934,7 +1156,10 @@ echo [ INFO ] Target: %fname%
 echo [ INFO ] Hash  : %fhash%
 call :Footer
 CHOICE /C SB /N /M "[ USER ] [S]tart or [B]ack ?:"
-if %errorlevel%==2 goto:SVFISODownMenu
+if %errorlevel%==2 (
+	if exist "*.smrt" del /f /q "*.smrt" >nul 2>&1
+	goto:SVFISODownMenu
+)
 ::===============================================================================================================
 cls
 call :Header "[HEADER] LTSB 2016 SVF ISO CONVERSION"
@@ -1147,7 +1372,10 @@ echo [ INFO ] Target: %fname%
 echo [ INFO ] Hash  : %fhash%
 call :Footer
 CHOICE /C SB /N /M "[ USER ] [S]tart or [B]ack ?:"
-if %errorlevel%==2 goto:SVFISODownMenu
+if %errorlevel%==2 (
+	if exist "*.smrt" del /f /q "*.smrt" >nul 2>&1
+	goto:SVFISODownMenu
+)
 ::===============================================================================================================
 cls
 call :Header "[HEADER] LTSB 2015 SVF ISO CONVERSION"
@@ -1281,7 +1509,10 @@ echo [ INFO ] Target: %fname%
 echo [ INFO ] Hash  : %fhash%
 call :Footer
 CHOICE /C SB /N /M "[ USER ] [S]tart or [B]ack ?:"
-if %errorlevel%==2 goto:SVFISODownMenu
+if %errorlevel%==2 (
+	if exist "*.smrt" del /f /q "*.smrt" >nul 2>&1
+	goto:SVFISODownMenu
+)
 ::===============================================================================================================
 cls
 call :Header "[HEADER] SERVER 2016 SVF ISO CONVERSION"
@@ -1415,7 +1646,10 @@ echo [ INFO ] Target: %fname%
 echo [ INFO ] Hash  : %fhash%
 call :Footer
 CHOICE /C SB /N /M "[ USER ] [S]tart or [B]ack ?:"
-if %errorlevel%==2 goto:SVFISODownMenu
+if %errorlevel%==2 (
+	if exist "*.smrt" del /f /q "*.smrt" >nul 2>&1
+	goto:SVFISODownMenu
+)
 ::===============================================================================================================
 cls
 call :Header "[HEADER] SERVER 2019 SVF ISO CONVERSION"
@@ -1523,6 +1757,143 @@ pause
 goto:SVFISODownMenu
 :================================================================================================================
 ::===============================================================================================================
+::SERVER 2019 PROCESS 2
+:SVFISOProcessServer19Refresh
+pushd %~dp0
+::===============================================================================================================
+cls
+call :Header "[HEADER] SERVER 2019 Oct Refresh SVF ISO CONVERSION"
+call :LangChoiceS
+::===============================================================================================================
+cls
+call :Header "[HEADER] SERVER 2019 Oct Refresh SVF ISO CONVERSION"
+call :DBServer20192
+for /f "tokens=1,2,3* delims=|" %%a in ('type "%databaseServer192%" ^| findstr /i "%lang%"') do (
+	set "fhash=%%b"
+	set "fname=%%c"
+	set "fshare=%%d"
+)
+set "siename=17763.107.101029-1455.rs5_release_svc_refresh_SERVERESSENTIALS_OEM_X64FRE_EN-US"
+set "siehash=fbb32c6761640640e48d1652225e6af117eae0ad"
+set "sielink=https://software-download.microsoft.com/download/pr/17763.107.101029-1455.rs5_release_svc_refresh_SERVERESSENTIALS_OEM_X64FRE_EN-US.ISO"
+echo [ INFO ] Source: %siename%
+echo [ INFO ] Hash  : %siehash%
+call :Footer
+echo [ INFO ] Target: %fname%
+echo [ INFO ] Hash  : %fhash%
+call :Footer
+CHOICE /C SB /N /M "[ USER ] [S]tart or [B]ack ?:"
+if %errorlevel%==2 (
+	if exist "*.smrt" del /f /q "*.smrt" >nul 2>&1
+	goto:SVFISODownMenu
+)
+::===============================================================================================================
+cls
+call :Header "[HEADER] SERVER 2019 Oct Refresh SVF ISO CONVERSION"
+echo [ INFO ] Source: %siename%
+echo [ INFO ] Hash  : %siehash%
+call :Footer
+echo [ INFO ] Downloading Source ISO ^(if not already pesent^).
+call :Footer
+set "dhash="
+call :BusyBoxStream
+call :DownShStream
+call :Footer
+xcopy "_temp\*.exe" /s ".\" /Q /Y >nul 2>&1
+if exist "_temp" rd /s /q "_temp" >nul 2>&1
+if not exist "%fname%.iso" (
+	if not exist "%siename%.iso" (
+		echo [ INFO ] Downloading Eval ISO.
+		call :Footer
+		"%aria2c%" -x16 -s16 -d"%cd%" -o"%siename%.iso" --checksum=sha-1=%siehash% "%sielink%" -R -c --file-allocation=none --check-certificate=false
+		if !errorlevel!==0 set "dhash=%fhash%"
+		if not !errorlevel!==0 (
+			busybox echo -e "\033[31;1m[ WARN ] Hash Mismatch!\033[0m"
+			echo [ INFO ] Hash  : !dhash!
+			call :Footer
+			if exist "aria2c.exe" del /f /q "aria2c.exe" >nul 2>&1
+			if exist "CURL.exe" del /f /q "CURL.exe" >nul 2>&1
+			if exist "smv.exe" del /f /q "smv.exe" >nul 2>&1
+			if exist "busybox.exe" del /f /q "busybox.exe" >nul 2>&1
+			if exist "*.SMRT" del /f /q "*.SMRT" >nul 2>&1
+			if exist "*.sh" del /f /q "*.sh" >nul 2>&1
+			pause
+			goto:SVFISODownMenu
+		)
+		call :Footer
+	)
+	if exist "%siename%.iso" if not defined dhash (
+		echo [ INFO ] Source Eval ISO present.
+		echo [ INFO ] Checking Eval ISO Hash.
+		echo [ INFO ] Hash  : %siehash%
+		call :Footer
+		for /f "tokens=1 delims= " %%a in ('busybox.exe sha1sum %siename%.iso') do set "dhash=%%a"
+		if not !dhash! equ %siehash% (
+			busybox echo -e "\033[31;1m[ WARN ] Hash Mismatch!\033[0m"
+			echo [ INFO ] Hash  : !dhash!
+			call :Footer
+			if exist "aria2c.exe" del /f /q "aria2c.exe" >nul 2>&1
+			if exist "CURL.exe" del /f /q "CURL.exe" >nul 2>&1
+			if exist "smv.exe" del /f /q "smv.exe" >nul 2>&1
+			if exist "busybox.exe" del /f /q "busybox.exe" >nul 2>&1
+			if exist "*.SMRT" del /f /q "*.SMRT" >nul 2>&1
+			if exist "*.sh" del /f /q "*.sh" >nul 2>&1
+			pause
+			goto:SVFISODownMenu
+		)
+		if !dhash! equ %siehash% (
+			busybox echo -e "\033[32;1m[ INFO ] ISO Hash matching.\033[0m"
+			echo [ INFO ] Hash  : !dhash!
+			call :Footer
+		)
+	)
+	if not exist "%fname%.svf" (
+		echo [ INFO ] Downloading Target ISO SVF.
+		echo [ INFO ] Name  : %fname%
+		call :Footer
+		call :Busybox "%fshare%", "STD/%fname%.svf"
+		call :Footer
+	)
+	echo [ INFO ] Creating Target ISO.
+	echo [ INFO ] Name  : %fname%
+	call :Footer
+::===============================================================================================================
+	smv x %fname%.svf -br .
+::===============================================================================================================
+	call :Footer
+)
+echo [ INFO ] Checking Target ISO Hash.
+echo [ INFO ] Hash  : %fhash%
+call :Footer
+for /f "tokens=1 delims= " %%a in ('busybox.exe sha1sum %fname%.iso') do set "dhash=%%a"
+if not %dhash% equ %fhash% (
+	busybox echo -e "\033[31;1m[ WARN ] Hash Mismatch!\033[0m"
+	echo [ INFO ] Hash  : %dhash%
+	call :Footer
+	if exist "aria2c.exe" del /f /q "aria2c.exe" >nul 2>&1
+	if exist "CURL.exe" del /f /q "CURL.exe" >nul 2>&1
+	if exist "smv.exe" del /f /q "smv.exe" >nul 2>&1
+	if exist "busybox.exe" del /f /q "busybox.exe" >nul 2>&1
+	if exist "*.SMRT" del /f /q "*.SMRT" >nul 2>&1
+	if exist "*.sh" del /f /q "*.sh" >nul 2>&1
+	pause
+	goto:SVFISODownMenu
+)
+if %dhash% equ %fhash% (
+	busybox echo -e "\033[32;1m[ INFO ] ISO Hash matching.\033[0m"
+	echo [ INFO ] Hash  : %dhash%
+	call :Footer
+)
+if exist "aria2c.exe" del /f /q "aria2c.exe" >nul 2>&1
+if exist "CURL.exe" del /f /q "CURL.exe" >nul 2>&1
+if exist "smv.exe" del /f /q "smv.exe" >nul 2>&1
+if exist "busybox.exe" del /f /q "busybox.exe" >nul 2>&1
+if exist "*.SMRT" del /f /q "*.SMRT" >nul 2>&1
+if exist "*.sh" del /f /q "*.sh" >nul 2>&1
+pause
+goto:SVFISODownMenu
+:================================================================================================================
+::===============================================================================================================
 ::TECHBENCH DOWNLOAD
 :TBISODownload
 pushd %~dp0
@@ -1538,7 +1909,6 @@ echo:
 echo      [4] WINDOWS 10 1809 [17763.1] ^(contains N versions^)
 echo:
 echo      [5] WINDOWS 10 1809 [17763.107] ^(contains N versions^)
-echo:
 call :Footer
 echo      [B] BACK
 call :Footer
@@ -1578,6 +1948,7 @@ call :Footer
 CHOICE /C 68 /N /M "[ USER ] x[6]4 or x[8]6 architecture ?:"
 if %errorlevel%==1 set "tbarch=x64"
 if %errorlevel%==2 set "tbarch=x32"
+:ServerEssentials
 if "%tbwin%"=="Win8.1_Pro_N_" call :LangChoice81N
 if "%tbwin%"=="Win8.1_" call :LangChoice81
 if "%tbwin%"=="Win10_1803_" call :LangChoiceTB
@@ -1652,8 +2023,7 @@ cls
 call :Header "[HEADER] TECHBENCH DOWNLOAD"
 echo [ INFO ] TB ISO: %tbfilename%
 echo [ INFO ] Hash  : %tbhash%
-if not "%tbwin%"=="Win10_1803_" echo [ INFO ] Size  : %tbsize% GB
-call :Footer
+if not "%tbwin%"=="Win10_1803_" if not "%tbwin%"=="17763.107.101029-1455.rs5_release_svc_refresh_SERVERESSENTIALS_OEM_X64FRE_" echo [ INFO ] Size  : %tbsize% GB
 if defined tbhash "%aria2c%" -x16 -s16 -d"%cd%" -o"%tbfilename%" --checksum=sha-1=%tbhash% "%tblink%" -R -c --file-allocation=none --check-certificate=false
 if not defined tbhash "%aria2c%" -x16 -s16 -d"%cd%" -o"%tbfilename%" "%tblink%" -R -c --file-allocation=none --check-certificate=false
 if not !errorlevel!==0 (
@@ -1762,29 +2132,41 @@ goto:SVFISOCreate
 pushd %~dp0
 ::===============================================================================================================
 cls
-call :Header "[HEADER] SOURCE ISO DOWNLOAD"
-echo      [1] 1803
+call :Header "[HEADER] SOURCE EVAL ISO DOWNLOAD"
+echo      [1] 1809
 echo:
-echo      [2] 1709
+echo      [2] 1809 Refresh
 echo:
-echo      [3] LTSB 2016
+echo      [3] 1803
 echo:
-echo      [4] LTSB 2015
+echo      [4] 1709
 echo:
-echo      [5] SERVER 2016
+echo      [5] LTSB 2015
 echo:
-echo      [6] SERVER 2019
+echo      [6] LTSB 2016
+echo:
+echo      [7] LTSC 2019
+echo:
+echo      [8] LTSC 2019 Refresh
+echo:
+echo      [9] SERVER 2016
+echo:
+echo      [0] SERVER 2019
 call :Footer
 echo      [B] BACK
 call :Footer
-CHOICE /C 123456B /N /M "[ USER ] YOUR CHOICE ?:"
-if %errorlevel%==1 set "build=1803"
-if %errorlevel%==2 set "build=1709"
-if %errorlevel%==3 set "build=1607"
-if %errorlevel%==4 set "build=LTSB15"
-if %errorlevel%==5 set "build=Server2016"
-if %errorlevel%==6 set "build=Server2019"
-if %errorlevel%==7 goto:SVFISOMainMenu
+CHOICE /C 1234567890B /N /M "[ USER ] YOUR CHOICE ?:"
+if %errorlevel%==1 set "build=18091"
+if %errorlevel%==2 set "build=18092"
+if %errorlevel%==3 set "build=1803"
+if %errorlevel%==4 set "build=1709"
+if %errorlevel%==5 set "build=1607"
+if %errorlevel%==6 set "build=LTSB15"
+if %errorlevel%==7 set "build=LTSC19"
+if %errorlevel%==8 set "build=LTSC192"
+if %errorlevel%==9 set "build=Server2016"
+if %errorlevel%==10 set "build=Server2019"
+if %errorlevel%==11 goto:SVFISOMainMenu
 cls
 call :Header "[HEADER] SOURCE ISO DOWNLOAD"
 if "%build%"=="Server2016" goto:SourceServer2016
@@ -1793,6 +2175,46 @@ CHOICE /C 68 /N /M "[ USER ] x[6]4 or x[8]6 architecture ?:"
 if %errorlevel%==1 set "arch=x64"
 if %errorlevel%==2 set "arch=x86"
 call :Footer
+if "%build%"=="18091" if "%arch%"=="x86" (
+	set "siname=17763.1.180914-1434.rs5_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us"
+	set "sihash=ae31e79d3369c3df6842b1e21b7b07781a1dc4c7"
+	set "silink=https://software-download.microsoft.com/download/pr/17763.1.180914-1434.rs5_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us.iso"
+)
+if "%build%"=="18091" if "%arch%"=="x64" (
+	set "siname=17763.1.180914-1434.rs5_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us"
+	set "sihash=b8a6ffac9e15240c39f2ed2b16204341f564208d"
+	set "silink=https://software-download.microsoft.com/download/pr/17763.1.180914-1434.rs5_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso"
+)
+if "%build%"=="18092" if "%arch%"=="x86" (
+	set "siname=17763.107.101029-1455.rs5_release_svc_refresh_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us"
+	set "sihash=eee2167b0ea9fe9654357c06d44a9c44eff62f1d"
+	set "silink=https://software-download.microsoft.com/download/pr/17763.107.101029-1455.rs5_release_svc_refresh_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us.iso"
+)
+if "%build%"=="18092" if "%arch%"=="x64" (
+	set "siname=17763.107.101029-1455.rs5_release_svc_refresh_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us"
+	set "sihash=164f022a22d2305e6fbd82f6e35d530b6bbadca8"
+	set "silink=https://software-download.microsoft.com/download/pr/17763.107.101029-1455.rs5_release_svc_refresh_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso"
+)
+if "%build%"=="LTSC19" if "%arch%"=="x86" (
+	set "siname=17763.1.180914-1434.rs5_release_CLIENT_LTSC_EVAL_x86FRE_en-us"
+	set "sihash=b11efabfc38428b69042da841e1cb4b105be359b"
+	set "silink=https://software-download.microsoft.com/download/pr/17763.1.180914-1434.rs5_release_CLIENT_LTSC_EVAL_x86FRE_en-us.iso"
+)
+if "%build%"=="LTSC19" if "%arch%"=="x64" (
+	set "siname=17763.1.180914-1434.rs5_release_CLIENT_LTSC_EVAL_x64FRE_en-us"
+	set "sihash=fba7f17ffdf018e4cffd49a9819d719d3708cf09"
+	set "silink=https://software-download.microsoft.com/download/pr/17763.1.180914-1434.rs5_release_CLIENT_LTSC_EVAL_x64FRE_en-us.iso"
+)
+if "%build%"=="LTSC192" if "%arch%"=="x86" (
+	set "siname=17763.107.101029-1455.rs5_release_svc_refresh_CLIENT_LTSC_EVAL_x86FRE_en-us"
+	set "sihash=ba8e0184c61d88b92fb88046339f8ddc58a3b372"
+	set "silink=https://software-download.microsoft.com/download/pr/17763.107.101029-1455.rs5_release_svc_refresh_CLIENT_LTSC_EVAL_x86FRE_en-us.iso"
+)
+if "%build%"=="LTSC192" if "%arch%"=="x64" (
+	set "siname=17763.107.101029-1455.rs5_release_svc_refresh_CLIENT_LTSC_EVAL_x64FRE_en-us"
+	set "sihash=369e645a197bc2ca8309cb80467a85a16eacd1a7"
+	set "silink=https://software-download.microsoft.com/download/pr/17763.107.101029-1455.rs5_release_svc_refresh_CLIENT_LTSC_EVAL_x64FRE_en-us.iso"
+)
 if "%build%"=="1803" if "%arch%"=="x86" (
 	set "siname=17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us"
 	set "sihash=ddb496534203cb98284e5484e0ad60af3c0efce7"
@@ -1877,12 +2299,12 @@ exit
 ::===============================================================================================================
 ::TITLE
 :TITLE
-title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.22.01
+title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.23.01
 goto:eof
 ::===============================================================================================================
 ::VERSION
 :VERSION
-set "svfisoconverter=v0.22.01"
+set "svfisoconverter=v0.23.01"
 goto:eof
 :================================================================================================================
 ::===============================================================================================================
@@ -2152,6 +2574,109 @@ if %number%==35 set "tblang=Turkish"
 if %number%==36 set "tblang=Ukrainian"
 if %number%==37 set "tblang=Chinese(Simplified)"
 if %number%==38 set "tblang=Chinese(Traditional)"
+goto:eof
+:================================================================================================================
+::===============================================================================================================
+:: LANGUAGE CHOICE VLSC
+:LangChoiceVLSC
+echo Enter chosen language Number.
+echo:
+echo Available:
+echo:
+echo [01] ar-sa = Arabic [Saudi Arabia]
+echo [02] bg-bg = Bulgarian [Bulgaria]
+echo [03] cs-cz = Czech [Czech Republic]
+echo [04] da-dk = Danish [Denmark]
+echo [05] de-de = German [Germany]
+echo [06] el-gr = Greek [Greece]
+echo [07] en-gb = English [United Kingdom]
+echo [08] en-us = English [United States]
+echo [09] es-es = Spanish [Spain]
+echo [10] es-mx = Spanish [Mexico]
+echo [11] et-ee = Estonian [Estonia]
+echo [12] fi-fi = Finnish [Finland]
+echo [13] fr-ca = French [Canada]
+echo [14] fr-fr = French [France]
+echo [15] he-il = Hebrew [Israel]
+echo [16] hr-hr = Croatian [Croatia]
+echo [17] hu-hu = Hungarian [Hungary]
+echo [18] it-it = Italian [Italy]
+echo [19] ja-jp = Japanese [Japan]
+echo [20] ko-kr = Korean [Korea]
+echo [21] lt-lt = Lithuanian [Lithuania]
+echo [22] lv-lv = Latvian [Latvia]
+echo [23] nb-no = Norwegian [Norway]
+echo [24] nl-nl = Dutch [Netherlands]
+echo [25] pl-pl = Polish [Poland]
+echo [26] pt-br = Portuguese [Brazil]
+echo [27] pt-pt = Portuguese [Portugal]
+echo [28] ro-ro = Romanian [Romania]
+echo [29] ru-ru = Russian [Russia]
+echo [30] sr-latn-rs = Serbian [Serbia]
+echo [31] sk-sk = Slovak [Slovakia]
+echo [32] sl-si = Slovenian [Slovenia]
+echo [33] sv-se = Swedish [Sweden]
+echo [34] th-th = Thai [Thailand]
+echo [35] tr-tr = Turkish [Turkey]
+echo [36] uk-ua = Ukrainian [Ukraine]
+echo [37] zh-cn = Chinese [PRC]
+echo [38] zh-tw = Chinese [Taiwan]
+call :Footer
+CHOICE /C 0123 /N /M "[ USER ] Enter Digit One:"
+if %errorlevel%==1 set "number=0"
+if %errorlevel%==2 set "number=10"
+if %errorlevel%==3 set "number=20"
+if %errorlevel%==4 set "number=30"
+call :Footer
+CHOICE /C 1234567890 /N /M "[ USER ] Enter Digit Two:"
+if %errorlevel%==1 set /a number+=1
+if %errorlevel%==2 set /a number+=2
+if %errorlevel%==3 set /a number+=3
+if %errorlevel%==4 set /a number+=4
+if %errorlevel%==5 set /a number+=5
+if %errorlevel%==6 set /a number+=6
+if %errorlevel%==7 set /a number+=7
+if %errorlevel%==8 set /a number+=8
+if %errorlevel%==9 set /a number+=9
+if %errorlevel%==10 set /a number+=0
+if %number%==1 set "tblang=Arabic"
+if %number%==2 set "tblang=Bulgarian"
+if %number%==3 set "tblang=Czech"
+if %number%==4 set "tblang=Danish"
+if %number%==5 set "tblang=German"
+if %number%==6 set "tblang=Greek"
+if %number%==7 set "tblang=English_International"
+if %number%==8 set "tblang=English_MLF"
+if %number%==9 set "tblang=Spanish_MLF"
+if %number%==10 set "tblang=Spanish_Latam"
+if %number%==11 set "tblang=Estonian"
+if %number%==12 set "tblang=Finnish"
+if %number%==13 set "tblang=French_Canadian"
+if %number%==14 set "tblang=French_MLF"
+if %number%==15 set "tblang=Hebrew"
+if %number%==16 set "tblang=Croatian"
+if %number%==17 set "tblang=Hungarian"
+if %number%==18 set "tblang=Italian"
+if %number%==19 set "tblang=Japanese"
+if %number%==20 set "tblang=Korean"
+if %number%==21 set "tblang=Lithuanian"
+if %number%==22 set "tblang=Latvian"
+if %number%==23 set "tblang=Norwegian"
+if %number%==24 set "tblang=Dutch"
+if %number%==25 set "tblang=Polish"
+if %number%==26 set "tblang=Brazilian_MLF"
+if %number%==27 set "tblang=Portuguese_MLF"
+if %number%==28 set "tblang=Romanian"
+if %number%==29 set "tblang=Russian"
+if %number%==30 set "tblang=Serbian_Latin"
+if %number%==31 set "tblang=Slovak"
+if %number%==32 set "tblang=Slovenian"
+if %number%==33 set "tblang=Swedish"
+if %number%==34 set "tblang=Thai"
+if %number%==35 set "tblang=Turkish"
+if %number%==36 set "tblang=Ukrainian"
+if %number%==37 set "tblang=Chinese_Simplified"
+if %number%==38 set "tblang=Chinese_Traditional"
 goto:eof
 :================================================================================================================
 ::===============================================================================================================
@@ -3968,6 +4493,36 @@ goto:eof
 :================================================================================================================
 :================================================================================================================
 :================================================================================================================
+::DBServer20192 Refresh STREAMLINED
+::===============================================================================================================
+::===============================================================================================================
+:DBServer20192
+>>database.Server2019.2.smrt (
+echo cs-cz^|0264fec7d694c956fc3e9a1a58d9ee2123cec249^|cs_windows_server_2019_x64_dvd_65383121^|IlAilxINJk1c162
+echo de-de^|927e4325a7b87f5dbcc5507a6cd512bc172cf85e^|de_windows_server_2019_x64_dvd_17559a5b^|IlAilxINJk1c162
+echo en-us^|2047f4e9fe2894f138395f3fac037c007dd1493e^|en_windows_server_2019_x64_dvd_4cb967d8^|IlAilxINJk1c162
+echo es-es^|9042ab26d73328870ef36bef103d66fcbb3f11dd^|es_windows_server_2019_x64_dvd_dd6b7747^|IlAilxINJk1c162
+echo fr-fr^|8bf56defd1295d8404895f09b6cedfcdff1efb41^|fr_windows_server_2019_x64_dvd_d936fc7a^|IlAilxINJk1c162
+echo hu-hu^|cf3bca7b72e29a2997f7d54ab269936706113f19^|hu_windows_server_2019_x64_dvd_c8f2c460^|IlAilxINJk1c162
+echo it-it^|fdc486adf7ae5d5cbffd054be32a530657389e8c^|it_windows_server_2019_x64_dvd_03c34df6^|IlAilxINJk1c162
+echo ja-jp^|4bba8656cdae4c1e06a986509f7eeb8dbb1cc404^|ja_windows_server_2019_x64_dvd_260a1d93^|IlAilxINJk1c162
+echo ko-kr^|2e19936aff54320cbed727462035016d10171cf1^|ko_windows_server_2019_x64_dvd_8778047d^|IlAilxINJk1c162
+echo nl-nl^|bd69ea7938b24f171cdbe2bf3bd5c1c7f82e161f^|nl_windows_server_2019_x64_dvd_82f9a152^|IlAilxINJk1c162
+echo pl-pl^|ababdca9c39eb463d02ac99f5325fa6b4f79a77d^|pl_windows_server_2019_x64_dvd_2cd7adba^|IlAilxINJk1c162
+echo pt-br^|85994b170d55cefe56f6a3448ac7c12083bc3dfd^|pt_windows_server_2019_x64_dvd_e078dea6^|IlAilxINJk1c162
+echo pt-pt^|1f58f87537f83cdb08c3261a141f8b4a866497cc^|pp_windows_server_2019_x64_dvd_e8fadd22^|IlAilxINJk1c162
+echo ru-ru^|447775253bdcbe8ec4177f4ee7e8e820be5044ad^|ru_windows_server_2019_x64_dvd_3411c84a^|IlAilxINJk1c162
+echo sv-se^|3c506eb3187b087c511b0b19aca6aae2a7d94c0a^|sv_windows_server_2019_x64_dvd_ce3d1a8d^|IlAilxINJk1c162
+echo tr-tr^|b3b3adc41147ead6569d25e7c27461d306ff5fee^|tr_windows_server_2019_x64_dvd_475b2d44^|IlAilxINJk1c162
+echo zh-cn^|cfa339cdbb4a1a4162bed38218b88ee376867b4f^|cn_windows_server_2019_x64_dvd_4de40f33^|IlAilxINJk1c162
+echo zh-tw^|2404a91d44297cba853b6327ed33fd5a27f509ac^|ct_windows_server_2019_x64_dvd_b776f44b^|IlAilxINJk1c162
+)
+goto:eof
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
 ::DBTB1803 STREAMLINED
 ::===============================================================================================================
 ::===============================================================================================================
@@ -4361,6 +4916,182 @@ echo Win8.1_Pro_N_Slovak_x32.iso^|ea9c8e158dbb2143dfdf2a03beec8353ce52d48c^|2.75
 echo Win8.1_Pro_N_Slovenian_x32.iso^|517a9f3697aab09ebfedb0dfd0ff2a6f2fcc5384^|2.75
 echo Win8.1_Pro_N_Spanish_x32.iso^|8ea5d452d000b59478437d69d4dc254ce6f8367a^|2.83
 echo Win8.1_Pro_N_Swedish_x32.iso^|da132c0c919c70c3a220df36fbede774fb152fd4^|2.78
+)
+goto:eof
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+::DBVLSCLTSC STREAMLINED
+::===============================================================================================================
+::===============================================================================================================
+:DBVLSCLTSC
+>>database.vlsc.LTSC.smrt (
+echo ar-sa^|0a8185d3cc65eccc0bc31b71e5af0d7bd1e0d7f4^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_Arabic_MLF_X21-96407^|x64
+echo bg-bg^|fb0659f6d35605fae4f386549a481228ee73b0e0^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_Bulgarian_MLF_X21-96411^|x64
+echo cs-cz^|d96085a6b00f9ebfae7a65c28be59cbbf9815bd1^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_Czech_MLF_X21-96419^|x64
+echo da-dk^|1cc73e05131b286f3486f85e5cee11a53e65295f^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_Danish_MLF_X21-96421^|x64
+echo de-de^|3faa84fb5533eac76e4ea8b3ee056f0148a977b9^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_German_MLF_X21-96437^|x64
+echo el-gr^|4208625ce65ff9e12c2ffb1882bbe57e382dbb1f^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_Greek_MLF_X21-96439^|x64
+echo en-gb^|dad202319f78e8e0549966eaf8e57d54b1e7cb8f^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_English_International_MLF_X21-96427^|x64
+echo en-us^|d5b2f95e3dd658517fe7c14df4f36de633ca4845^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_English_MLF_X21-96425^|x64
+echo es-es^|dc66bc264ac8ffdd4764761cc578e5c4bd94a1f8^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_Spanish_MLF_X21-96471^|x64
+echo es-mx^|e1af525a2212a06b89fc53bc8473956bcf658196^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_Spanish_Latam_MLF_X21-96473^|x64
+echo et-ee^|488f4a95043050abcb961d6844a957b325f08398^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_Estonian_MLF_X21-96429^|x64
+echo fi-fi^|46af56d7b655d690587d98f723e44d3ca90d4f35^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_Finnish_MLF_X21-96431^|x64
+echo fr-ca^|52d06c9135ccc45a84b9485289a2a70d87efdb58^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_French_Canadian_MLF_X21-96434^|x64
+echo fr-fr^|ef03cc0a7b5e0f16d2b0b6646fed2c1343b85ce1^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_French_MLF_X21-96433^|x64
+echo he-il^|33ba3e7f44afb344fbc0e125c6631447f3a97f4c^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_Hebrew_MLF_X21-96441^|x64
+echo hr-hr^|60fc3fcfc5332e32bf991f2b9a4f3be3a2f21f1a^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_Croatian_MLF_X21-96417^|x64
+echo hu-hu^|f57c497b725f7bfff6bc4f31d20c9cb63c0db115^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_Hungarian_MLF_X21-96443^|x64
+echo it-it^|9a9ef958765a7eb038516790f161d3e47c4b8a6a^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_Italian_MLF_X21-96445^|x64
+echo ja-jp^|2f5642c2c510489ab0be999d2b473364306894ff^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_Japanese_MLF_X21-96447^|x64
+echo ko-kr^|5ee42e4abdc6da6a95f99fa806c41e21a99df9cc^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_Korean_MLF_X21-96449^|x64
+echo lt-lt^|6e199aa9e8d896b1dcb3c4421473edcfc12aa106^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_Lithuanian_MLF_X21-96453^|x64
+echo lv-lv^|325e70bbf4039b20a78e6242782b1fdec6a8a3d8^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_Latvian_MLF_X21-96451^|x64
+echo nb-no^|a0e7cc2b7c5a58b643fa0426cdab46679d1b84c2^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_Norwegian_MLF_X21-96455^|x64
+echo nl-nl^|c4e01e87988858c329155a6ca22f87866e5b5a0b^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_Dutch_MLF_X21-96423^|x64
+echo pl-pl^|195814265315820942aaaa3d412fb98f1d19f917^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_Polish_MLF_X21-96457^|x64
+echo pt-br^|ddc18e3e24540d465d3157f686a0771b89068f03^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_Brazilian_MLF_X21-96409^|x64
+echo pt-pt^|6dd358844943daf960ebddeba50e1f346d3793e1^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_Portuguese_MLF_X21-96459^|x64
+echo ro-ro^|c089df3326951965b262c3dbce213685586bc8b4^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_Romanian_MLF_X21-96461^|x64
+echo ru-ru^|e5d8d073a899917a3cc0bed51a432390694e39b5^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_Russian_MLF_X21-96463^|x64
+echo sr-latn-rs^|1189d0bc67a4169bac93b15bc0620f31efcc7e8a^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_Serbian_Latin_MLF_X21-96465^|x64
+echo sk-sk^|a4a9a9b1354a75f34f7eb9ed27dc430c683c7f98^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_Slovak_MLF_X21-96467^|x64
+echo sl-si^|4bff53c8bee7abeed0b24b4fddd3347ab706b93d^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_Slovenian_MLF_X21-96469^|x64
+echo sv-se^|c0e86ff99a1708810787e6f17cddc86bfd515e58^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_Swedish_MLF_X21-96475^|x64
+echo th-th^|224bace50580511e141e8dc2a2a7467614f0d83c^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_Thai_MLF_X21-96477^|x64
+echo tr-tr^|4547d9fb7cf2acff368964d0586b5459585bfec8^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_Turkish_MLF_X21-96479^|x64
+echo uk-ua^|9c5210c7e611b930d3f4cd197a138109164a27ac^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_Ukrainian_MLF_X21-96481^|x64
+echo zh-cn^|c0b4704e1336281c98a91438c7df0f14b8f41e46^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_Chinese_Simplified_MLF_X21-96413^|x64
+echo zh-tw^|0c7bd68d1796485997d1977e5d80974b1b9fa4f1^|SW_DVD5_WIN_ENT_LTSC_2019_64-bit_Chinese_Traditional_MLF_X21-96415^|x64
+echo ar-sa^|890a0a85ad7ad60f2ba34bdc66c38e452279342a^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_Arabic_MLF_X21-96406^|x86
+echo bg-bg^|ec40ae2dac4814eddae0829ac5132d72af3bfb54^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_Bulgarian_MLF_X21-96410^|x86
+echo cs-cz^|da3f151b8a9b3ef5d9c9d039ecb725c5e3484f51^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_Czech_MLF_X21-96418^|x86
+echo da-dk^|097e27f7e4cebbda810fed104519c90a58bbd677^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_Danish_MLF_X21-96420^|x86
+echo de-de^|9a36adb05e7ff77353ad494dcbd6186b6a9bafe9^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_German_MLF_X21-96436^|x86
+echo el-gr^|ebb4fe3eb2194396418d36be008c7b8a3287342e^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_Greek_MLF_X21-96438^|x86
+echo en-gb^|eb491aed6c00ff050436e9e8deb12c9d25ac8285^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_English_International_MLF_X21-96426^|x86
+echo en-us^|220eb673d4aed9f1652c1ce3d2731cd96a8138f2^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_English_MLF_X21-96424^|x86
+echo es-es^|cb973b46a3f7c34d09aad7e15a83a577a207daac^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_Spanish_MLF_X21-96470^|x86
+echo es-mx^|de023654906c2585fa7fc412ab0506d87bdebafd^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_Spanish_Latam_MLF_X21-96472^|x86
+echo et-ee^|033d031a033e61518d3dac11efd92417335f5b82^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_Estonian_MLF_X21-96428^|x86
+echo fi-fi^|3f49f36a0ad9905b257fe9231eb4a5aae3004460^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_Finnish_MLF_X21-96430^|x86
+echo fr-ca^|78fcaf2ed6d252b68d2652dad334822dc45ab2ee^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_French_Canadian_MLF_X21-96435^|x86
+echo fr-fr^|28bc831500815f957a3ab4b79ba0d36f7354a779^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_French_MLF_X21-96432^|x86
+echo he-il^|c763fc14e5d9255c0e3dd1d84ab7a7c6e3f11290^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_Hebrew_MLF_X21-96440^|x86
+echo hr-hr^|d38ae2f467bc3382e84b616f6112b75dec0c537e^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_Croatian_MLF_X21-96416^|x86
+echo hu-hu^|4d0cbe23c879244208458cef46cc58c0d8fdbbdf^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_Hungarian_MLF_X21-96442^|x86
+echo it-it^|5f45192f5d0be7e94c29d106511e2d70a3c31eab^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_Italian_MLF_X21-96444^|x86
+echo ja-jp^|85acee2ce658f0feb78a708bc405684aca93a640^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_Japanese_MLF_X21-96446^|x86
+echo ko-kr^|0d7ef0c9c8fe9e5cb6aeba7b5ae8a271f006d4f3^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_Korean_MLF_X21-96448^|x86
+echo lt-lt^|60cc366536ad5cec1b5ec2212797cb1d68450ae3^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_Lithuanian_MLF_X21-96452^|x86
+echo lv-lv^|074e8948ca133eab977978029f8113077c1bd882^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_Latvian_MLF_X21-96450^|x86
+echo nb-no^|a43d90bc1dd397910717f300cbe46f91bcd02925^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_Norwegian_MLF_X21-96454^|x86
+echo nl-nl^|16198d94a452f9ed4abc274575eff71de0e267e9^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_Dutch_MLF_X21-96422^|x86
+echo pl-pl^|9d1db4e953f9bd6fefb735806d960647c4e447c2^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_Polish_MLF_X21-96456^|x86
+echo pt-br^|1546b818f5489a491c8123d38b0f3fa662a2cc1e^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_Brazilian_MLF_X21-96408^|x86
+echo pt-pt^|69e6356e27e02e0738ac0e5b181ae7219eb0f68f^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_Portuguese_MLF_X21-96458^|x86
+echo ro-ro^|a72b3a16d009d52994998fb3c7f12fd57b00ad1f^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_Romanian_MLF_X21-96460^|x86
+echo ru-ru^|5f73ce77c5bbb86cf7fda681737c14dc0e40e273^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_Russian_MLF_X21-96462^|x86
+echo sr-latn-rs^|8a8f5ad0757531bc5414214afdf584fcedb47e5a^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_Serbian_Latin_MLF_X21-96464^|x86
+echo sk-sk^|276579d42a8ca8b35c0f61ef3fa81190c6427306^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_Slovak_MLF_X21-96466^|x86
+echo sl-si^|4c43e6a1e58fe111c2d7d56945e3c8bcf2ded858^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_Slovenian_MLF_X21-96468^|x86
+echo sv-se^|80fae11c9c380ae79b8482e92d65ce59fff69da3^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_Swedish_MLF_X21-96474^|x86
+echo th-th^|6a1ae5df87a1a4ab5dd1e04cd4b416af01f17ec1^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_Thai_MLF_X21-96476^|x86
+echo tr-tr^|5b135b43af961858288d779107a813efab2be8c7^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_Turkish_MLF_X21-96478^|x86
+echo uk-ua^|fca7d4acf229e5c2343239d6b7394ac080073493^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_Ukrainian_MLF_X21-96480^|x86
+echo zh-cn^|fbfeabde20b6f49aa0c7f8fd62a5ba029505f36f^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_Chinese_Simplified_MLF_X21-96412^|x86
+echo zh-tw^|13aeaf4620b04d1bb88d355fb0410d79660943d3^|SW_DVD5_WIN_ENT_LTSC_2019_32-bit_Chinese_Traditional_MLF_X21-96414^|x86
+)
+goto:eof
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+::DBVLSC18092 STREAMLINED
+::===============================================================================================================
+::===============================================================================================================
+:DBVLSC18092
+>>database.vlsc.18092.smrt (
+echo ar-sa^|18bdb2b745d1dc6f9df9df751d6f97e51ad7932a^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_Arabic_MLF_X21-96483^|
+echo bg-bg^|f68b88a11d0df463fa3a36d18bb8feee8105d081^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_Bulgarian_MLF_X21-96487^|x64
+echo cs-cz^|f9548122a49d7b60d6f4c3f587102fdad538eb9b^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_Czech_MLF_X21-96495^|x64
+echo da-dk^|55d2a91684b53cc99511c9bd3a459074303ffdb0^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_Danish_MLF_X21-96497^|x64
+echo de-de^|ffdbc75521c38376c8ec406846d2e49da580779d^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_German_MLF_X21-96513^|x64
+echo el-gr^|2b522eaed13e6d9a07f3df5e131c232b4b29865a^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_Greek_MLF_X21-96515^|x64
+echo en-gb^|ac4506a86fa8013d59d5250949a8fc10490c0db6^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_English_International_MLF_X21-96503^|x64
+echo en-us^|6208b319de3aaf0d8ec5b8d0f710e2744f89d0b4^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_English_MLF_X21-96501^|x64
+echo es-es^|4c7b3b40ee04a89f267e5424a36b6b24d4ea1f5f^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_Spanish_MLF_X21-96547^|x64
+echo es-mx^|c1bfb4883b1b203f516bbb2c3ddca86b5328a14a^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_Spanish_Latam_MLF_X21-96549^|x64
+echo et-ee^|d13ace1ff48ad48ee35440dca7aa1e9c76650e48^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_Estonian_MLF_X21-96505^|x64
+echo fi-fi^|e2c987a109ea334d4cb54415d60c5e8017a59456^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_Finnish_MLF_X21-96507^|x64
+echo fr-ca^|cb8e9ba2f15862ff6f7bc9beba907e15684a4fdd^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_French_Canadian_MLF_X21-96511^|x64
+echo fr-fr^|1096ed046a68ed144c8d1603333fec661ef9589f^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_French_MLF_X21-96509^|x64
+echo he-il^|08020958a505d3ddc1f6854043f91b8565b74262^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_Hebrew_MLF_X21-96517^|x64
+echo hr-hr^|a8534d4706db3ebc69f9aeca897f1c938d372657^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_Croatian_MLF_X21-96493^|x64
+echo hu-hu^|b30f80805cf151274e1bd66a81d380d35d227630^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_Hungarian_MLF_X21-96519^|x64
+echo it-it^|48a950d35c6d4414ca8d84ce37d46fb9223d3fbd^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_Italian_MLF_X21-96521^|x64
+echo ja-jp^|d84a4c21b73ab661de886fa4c640a5ba28a4a244^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_Japanese_MLF_X21-96523^|x64
+echo ko-kr^|2b22370d43154ffcf3b1a5696a695edd9ea65a16^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_Korean_MLF_X21-96525^|x64
+echo lt-lt^|9ce78722e956551124a59c7060eb946b4b73a0de^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_Lithuanian_MLF_X21-96529^|x64
+echo lv-lv^|13c3369e848c76403c72442208ce360a13b99572^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_Latvian_MLF_X21-96527^|x64
+echo nb-no^|fe9c0729d2696f1e53e12bbc1a54d8a6d7070eec^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_Norwegian_MLF_X21-96531^|x64
+echo nl-nl^|f777b05e612788f76db29eee4525423c01d9b69b^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_Dutch_MLF_X21-96498^|x64
+echo pl-pl^|ce3c342373fee635498f87d084eafb3f504f3fb7^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_Polish_MLF_X21-96533^|x64
+echo pt-br^|8056be90e83c4ec580db211cca89277c7dd9a874^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_Brazilian_MLF_X21-96485^|x64
+echo pt-pt^|a5f5935b6b2d95f8e86cbf8dd8e512af45927280^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_Portuguese_MLF_X21-96535^|x64
+echo ro-ro^|eaf2b841fb418b2b918f42800efb7407bb9cda69^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_Romanian_MLF_X21-96537^|x64
+echo ru-ru^|58dbcd778038ce7bf9bb67e07bfdd937fea2ba6f^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_Russian_MLF_X21-96539^|x64
+echo sr-latn-rs^|224821e7cab82860b0143149bf37d3f41a7fac6c^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_Serbian_Latin_MLF_X21-96541^|x64
+echo sk-sk^|8b24b9fee6dcdf88152f82a8f5ae4b4970393164^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_Slovak_MLF_X21-96543^|x64
+echo sl-si^|cee76f4d168b29ebc9b2cf88247c2189828df38d^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_Slovenian_MLF_X21-96545^|x64
+echo sv-se^|092fe7b7046ba115c8201ee01a3517ce8743fd34^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_Swedish_MLF_X21-96551^|x64
+echo th-th^|027037457a8d12d8236e6ec2744f74da30db344d^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_Thai_MLF_X21-96553^|x64
+echo tr-tr^|28e1945ccd46f272fa85805cd4b5591355cfa1b7^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_Turkish_MLF_X21-96555^|x64
+echo uk-ua^|039cc17d4853a37b0e2addff8b8403428e2182e2^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_Ukrainian_MLF_X21-96557^|x64
+echo zh-cn^|50011551c0f006707282f0fc6e263f8781fc5f10^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_Chinese_Simplified_MLF_X21-96489^|x64
+echo zh-tw^|b1c83f074d44fe112709a4f839ee346237d43a51^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_64-bit_Chinese_Traditional_MLF_X21-96491^|x64
+echo ar-sa^|de82ecaeab48a9157d915fbc9865bbf559be09d7^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Arabic_MLF_X21-96482^|x86
+echo bg-bg^|4ebc54f93589bc32cae87c01653cb90d7535daba^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Bulgarian_MLF_X21-96486^|x86
+echo cs-cz^|9a990f1f05d2cb124ab924e7b1ecbd67b7ec2f81^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Czech_MLF_X21-96494^|x86
+echo da-dk^|007d1c54fda9297e128c121434ca4effbf5b4fee^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Danish_MLF_X21-96496^|x86
+echo de-de^|9f8bb1462e7ff0daf960724f6dcdd4d950eb8783^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_German_MLF_X21-96512^|x86
+echo el-gr^|68f1e0c0bcf2df6bf92758194db52262baeb672a^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Greek_MLF_X21-96514^|x86
+echo en-gb^|2bdcc9f823843d0e671851189e79299e17401460^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_English_International_MLF_X21-96502^|x86
+echo en-us^|bdeb8f7867cb8dc9bf14869d621ad9b94fa01e3c^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_English_MLF_X21-96500^|x86
+echo es-es^|95211d9f58a5e9d98ce181589823967c62c14b64^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Spanish_MLF_X21-96546^|x86
+echo es-mx^|4b343f6992f3d1924e8ff84f07a217b3f2a7f890^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Spanish_Latam_MLF_X21-96548^|x86
+echo et-ee^|cc460079e1ba0f451ac0171ed0beb04c05bd0f25^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Estonian_MLF_X21-96504^|x86
+echo fi-fi^|2a1f1962dfcfd8f662d4d42a4826a9acc3ae1b64^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Finnish_MLF_X21-96506^|x86
+echo fr-ca^|afc0691ab6317239c6085902d7691b8482757a97^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_French_Canadian_MLF_X21-96510^|x86
+echo fr-fr^|889405856de5969a78021d35eb044c53ee34c4d2^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_French_MLF_X21-96508^|x86
+echo he-il^|ad8f4025d3968a0e3315e6179796de75e7467115^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Hebrew_MLF_X21-96516^|x86
+echo hr-hr^|a04ceb35a114d11469db3e1f288010b44dbdaeb3^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Croatian_MLF_X21-96492^|x86
+echo hu-hu^|31b7cf4a74dd4a53aaee85eae801eecd08068b52^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Hungarian_MLF_X21-96518^|x86
+echo it-it^|11d713056e39c862fe856cda35d91cfaf9538182^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Italian_MLF_X21-96520^|x86
+echo ja-jp^|bb85f9017ce48f5ff2cdc7a6300e6da15e9cc73e^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Japanese_MLF_X21-96522^|x86
+echo ko-kr^|61b6b1ef4bb5b30b8bd3ead0f594ca49701302a6^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Korean_MLF_X21-96524^|x86
+echo lt-lt^|6f9bea56eb4c1e881cc04349decb59bb6516210e^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Lithuanian_MLF_X21-96528^|x86
+echo lv-lv^|a17993a0b23e6da3678158187e96cb78ef5b9902^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Latvian_MLF_X21-96526^|x86
+echo nb-no^|77f309c215d0cf21ba11eb1d951cc555ec3980f0^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Norwegian_MLF_X21-96530^|x86
+echo nl-nl^|292553aadf56e6303c78a915d434e9db256988d3^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Dutch_MLF_X21-96499^|x86
+echo pl-pl^|17edd9fa70a4375ce496cea45c0637b5ba2fb5e2^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Polish_MLF_X21-96532^|x86
+echo pt-br^|8ebadc2358905ae2475c46adbb6596538943549d^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Brazilian_MLF_X21-96484^|x86
+echo pt-pt^|084e43bcf9e279803672df12c26693b8837cf595^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Portuguese_MLF_X21-96534^|x86
+echo ro-ro^|1a6e94b66e0553c9099ea485efb0f8ba3c9f548c^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Romanian_MLF_X21-96536^|x86
+echo ru-ru^|8a13d66a0f254c7f8a7395000aa4f312f7fa2b42^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Russian_MLF_X21-96538^|x86
+echo sr-latn-rs^|f8c92f3fdfefdf2e922f5523c2a9fec37616aad6^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Serbian_Latin_MLF_X21-96540^|x86
+echo sk-sk^|197941e0c5580955e9076cc8e9d770b774999549^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Slovak_MLF_X21-96542^|x86
+echo sl-si^|dd80f7cac4fd185a86685fb91488dc498b9852d6^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Slovenian_MLF_X21-96544^|x86
+echo sv-se^|961f8b9cefbca07a95365f6d59ba95d6d8bb5da8^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Swedish_MLF_X21-96550^|x86
+echo th-th^|5c74a47b1ba41edf0557c2dd02e3f202ced5d611^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Thai_MLF_X21-96552^|x86
+echo tr-tr^|7a6171dd914a9506f3d4fffc1fb20cf418c86287^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Turkish_MLF_X21-96554^|x86
+echo uk-ua^|b352b938a9b4c7d253165c2fe91de7bfd4dab3ae^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Ukrainian_MLF_X21-96556^|x86
+echo zh-cn^|39e13bad06c89041d6053fef41616c6f68b9e27a^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Chinese_Simplified_MLF_X21-96488^|x86
+echo zh-tw^|e4807873342c04fc6cebe2c32417f139cf127869^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Chinese_Traditional_MLF_X21-96490^|x86
 )
 goto:eof
 :================================================================================================================
