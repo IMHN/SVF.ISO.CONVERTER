@@ -4,11 +4,13 @@
 ------------------------
 **CREDITS:**
 
-[mkuba50](https://forums.mydigitallife.net/members/mkuba50.317641/) for the file download script
+[mkuba50](https://forums.mydigitallife.net/members/mkuba50.317641/) for the SVF download script
+
+[mkuba50](https://forums.mydigitallife.net/members/mkuba50.317641/) for the Win 7 Source download/decryption
 
 [Enthousiast](https://forums.mydigitallife.net/members/enthousiast.104688/) for kindly providing the needed SVFs
 
-[BAU](https://forums.mydigitallife.net/members/bau.58504/) for kindly providing the Compress2Txt know-how
+[BAU](https://forums.mydigitallife.net/members/bau.58504/) for kindly providing the File2Batch (VBS) know-how
 
 
 **INFO:**
