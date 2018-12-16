@@ -1463,8 +1463,8 @@ if not exist "%fname%.iso" (
 		echo [ INFO ] Source ISO present.
 		call :ISOHashCheck "%siehash%", "%siename%"
 	)
-	if "%lang%"=="en-us" (
-		goto :USBreak
+	if "%lang%"=="en-us" if "%type%"=="ult" (
+		goto :USUltBreak
 	)
 	call :DownShStream
 	xcopy "files\busybox.exe" /s ".\" /Q /Y >nul 2>&1
@@ -1486,7 +1486,7 @@ if not exist "%fname%.iso" (
 	call :Footer
 )
 call :ISOHashCheck "%fhash%", "%fname%"
-:USBreak
+:USUltBreak
 if exist "*.txt" del /f /q "*.txt" >nul 2>&1
 if exist "*.exe" del /f /q "*.exe" >nul 2>&1
 if exist "*.SMRT" del /f /q "*.SMRT" >nul 2>&1
@@ -1882,12 +1882,12 @@ exit
 ::===============================================================================================================
 ::TITLE
 :TITLE
-title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.30.15
+title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.30.18
 goto:eof
 ::===============================================================================================================
 ::VERSION
 :VERSION
-set "svfisoconverter=v0.30.15"
+set "svfisoconverter=v0.30.18"
 goto:eof
 :================================================================================================================
 ::===============================================================================================================
