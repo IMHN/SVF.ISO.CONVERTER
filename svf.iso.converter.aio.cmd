@@ -24,6 +24,7 @@ for /f "tokens=2* delims= " %%a in ('reg query "HKLM\System\CurrentControlSet\Co
 ::===============================================================================================================
 set "database7ent=database.7ent.smrt"
 set "database7ult=database.7ult.smrt"
+set "database1809_3=database.1809.3.smrt"
 set "database1809_1=database.1809.1.smrt"
 set "database1803_1=database.1803.1.smrt"
 set "database1803_2=database.1803.2.smrt"
@@ -126,72 +127,79 @@ echo [CREDIT] mkuba50 for Win 7 Source decryption/download [forums.mydigitallife
 echo:
 call :MenuFooter
 echo:
-echo      [0] START 1809 PROCESS 1 [17763.1]
+echo      [0] START 1809 PROCESS 3 [17763.194]
 echo:
-echo      [1] START 1803 PROCESS 1 [17134.1]
+echo      [1] START 1809 PROCESS 1 [17763.1]
 echo:
-echo      [2] START 1803 PROCESS 2 [17134.228]
+echo      [2] START 1803 PROCESS 1 [17134.1]
 echo:
-echo      [3] START 1803 PROCESS 3 [17134.285]
+echo      [3] START 1803 PROCESS 2 [17134.228]
 echo:
-echo      [4] START 1709 PROCESS 1 [16299.15]
+echo      [4] START 1803 PROCESS 3 [17134.285]
 echo:
-echo      [5] START 1709 PROCESS 2 [16299.125]
+echo      [5] START 1709 PROCESS 1 [16299.15]
 echo:
-echo      [6] START LTSC 2019 PROCESS [17763.1]
+echo      [6] START 1709 PROCESS 2 [16299.125]
 echo:
-echo      [7] START LTSB 2016 PROCESS [14393.0]
+echo      [7] START LTSC 2019 PROCESS [17763.1]
 echo:
-echo      [8] START LTSB 2015 PROCESS [10240.0]
+echo      [8] START LTSB 2016 PROCESS [14393.0]
 echo:
-echo      [9] START SERVER 2016 PROCESS [14393.0]
+echo      [9] START LTSB 2015 PROCESS [10240.0]
 echo:
-echo      [A] START SERVER 2019 PROCESS 1 [17763.0]
+echo      [A] START SERVER 2016 PROCESS [14393.0]
 echo:
-echo      [C] START SERVER 2019 PROCESS 2 [17763.107]
+echo      [C] START SERVER 2019 PROCESS 1 [17763.0]
+echo:
+echo      [D] START SERVER 2019 PROCESS 2 [17763.107]
 call :Footer
 echo      [B] BACK
 echo:
 call :MenuFooter
 echo:
-CHOICE /C 0123456789ACB /N /M "[ USER ] YOUR CHOICE ?:"
+CHOICE /C 0123456789ACDB /N /M "[ USER ] YOUR CHOICE ?:"
 if %errorlevel%==1 (
+	set "show=1809"
+	set "build=17763.194"
+	goto:SVFISOProcess1809_3
+)
+if %errorlevel%==2 (
 	set "show=1809"
 	set "build=17763.1"
 	goto:SVFISOProcess1809
 )
-if %errorlevel%==2 (
+if %errorlevel%==3 (
 	set "show=1803"
 	set "build=17134.1"
 	goto:SVFISOProcess1803
 )
-if %errorlevel%==3 (
+if %errorlevel%==4 (
 	set "show=1803"
 	set "build=17134.228"
 	goto:SVFISOProcess1803
 )
-if %errorlevel%==4 (
+if %errorlevel%==5 (
 	set "show=1803"
 	set "build=17134.285"
 	goto:SVFISOProcess1803
 )
-if %errorlevel%==5 (
+if %errorlevel%==6 (
 	set "show=1709"
 	set "build=16299.15"
 	goto:SVFISOProcess1803
 )
-if %errorlevel%==6 (
+if %errorlevel%==7 (
 	set "show=1709"
 	set "build=16299.125"
 	goto:SVFISOProcess1803
 )
-if %errorlevel%==7 goto:SVFISOProcessLTSB19
-if %errorlevel%==8 goto:SVFISOProcessLTSB16
-if %errorlevel%==9 goto:SVFISOProcessLTSB15
-if %errorlevel%==10 goto:SVFISOProcessServer16
-if %errorlevel%==11 goto:SVFISOProcessServer19
-if %errorlevel%==12 goto:SVFISOProcessServer19Refresh
-if %errorlevel%==13 goto:SVFISOMainMenu
+if %errorlevel%==8 goto:SVFISOProcessLTSB19
+if %errorlevel%==9 goto:SVFISOProcessLTSB16
+if %errorlevel%==10 goto:SVFISOProcessLTSB15
+if %errorlevel%==11 goto:SVFISOProcessServer16
+if %errorlevel%==12 goto:SVFISOProcessServer19
+if %errorlevel%==13 goto:SVFISOProcessServer19Refresh
+if %errorlevel%==14 goto:SVFISOMainMenu
 goto:SVFISODownMenu
 :================================================================================================================
 ::===============================================================================================================
@@ -1348,6 +1356,156 @@ pause
 goto:SVFISODownMenu
 :================================================================================================================
 ::===============================================================================================================
+::1809 17763.194 PROCESS
+:SVFISOProcess1809_3
+pushd %~dp0
+::===============================================================================================================
+cls
+call :Header "[HEADER] %show% [%build%] SVF ISO CONVERSION"
+CHOICE /C 68 /N /M "[ USER ] x[6]4 or x[8]6 architecture ?:"
+if %errorlevel%==1 set "arch=x64"
+if %errorlevel%==2 set "arch=x86"
+call :Footer
+CHOICE /C CB /N /M "[ USER ] [C]onsumer or [B]usiness ?:"
+if %errorlevel%==1 set "type=consumer"
+if %errorlevel%==2 set "type=business"
+call :Footer
+call :LangChoice
+call :DB1809_3
+for /f "tokens=1,2,3,4* delims=|" %%a in ('type "%database1809_3%" ^| findstr /i "%lang%" ^| findstr /i "%arch%" ^| findstr /i "%type%"') do (
+	set "fshare=%%d"
+	set "fhash=%%b"
+	set "fname=%%c"
+)
+if "%arch%"=="x86" (
+	if "%type%"=="consumer" (
+		set "siename=en_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_dea9975f"
+		set "siehash=e9d786f42b7893936aa1f60bb7d64d1be9cb1630"
+		set "silink=Cons_enUS_x86_2_Cons_XX_x86"
+	)
+	if "%type%"=="business" (
+		set "siename=en_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_0f9f5302"
+		set "siehash=238e322a4e6915aa369d704998c56af683e7493f"
+		set "silink=Bus_enUS_x86_2_Bus_XX_x86"
+))
+if "%arch%"=="x64" (
+	if "%type%"=="consumer" (
+		set "siename=en_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_d7d23ac9"
+		set "siehash=cad7c3592fd976512324716598993c358b34877e"
+		set "silink=Cons_enUS_x64_2_Cons_XX_x64"
+	)
+	if "%type%"=="business" (
+		set "siename=en_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_f03937a3"
+		set "siehash=7153e3071366017a24c1fda22c0d1e486dbb0401"
+		set "silink=Bus_enUS_x64_2_Bus_XX_x64"
+))
+cls
+call :Header "[HEADER] %show% [%build%] SVF ISO CONVERSION"
+echo [ INFO ] Source: %siename%
+echo [ INFO ] Hash  : %siehash%
+call :Footer
+echo [ INFO ] Target: %fname%
+echo [ INFO ] Hash  : %fhash%
+call :Footer
+CHOICE /C SB /N /M "[ USER ] [S]tart or [B]ack ?:"
+if %errorlevel%==2 (
+	if exist "*.smrt" del /f /q "*.smrt" >nul 2>&1
+	goto:SVFISOMainMenu
+)
+::===============================================================================================================
+cls
+call :Header "[HEADER] %show% [%build%] SVF ISO CONVERSION"
+echo [ INFO ] Source: %siename%
+echo [ INFO ] Hash  : %siehash%
+call :Footer
+echo [ INFO ] Downloading Source ISO ^(if not already pesent^).
+call :Footer
+set "dhash="
+if not exist "%fname%.iso" (
+	if not exist "%siename%.iso" (
+		echo [ INFO ] Generating Link List.
+		call :Footer
+		if "%arch%"=="x64" (
+			if "%type%"=="consumer" (
+				call :EncryptedStream64_C1809_3
+				call :DownloadStream64_C1809_3
+			)
+			if "%type%"=="business" (
+				call :EncryptedStream64_B1809_3
+				call :DownloadStream64_B1809_3
+		))
+		if "%arch%"=="x86" (
+			if "%type%"=="consumer" (
+				call :EncryptedStream86_C1809_3
+				call :DownloadStream86_C1809_3
+			)
+			if "%type%"=="business" (
+				call :EncryptedStream86_B1809_3
+				call :DownloadStream86_B1809_3
+		))
+		call :GenerateList
+		call :Footer
+		echo [ INFO ] Downloading Source ISO.
+		call :Footer
+		if not exist "encrypted" md "encrypted" >nul 2>&1
+		"%aria2c%" -x16 -s16 -dencrypted -iaria2.txt -R -c
+		if not !errorlevel!==0 (
+			xcopy "files\busybox.exe" /s ".\" /Q /Y >nul 2>&1
+			busybox echo -e "\033[31;1m[ WARN ] Hash Mismatch!\033[0m"
+			echo [ INFO ] Hash  : !dhash!
+			call :Footer
+			echo [ INFO ] Please repeat the process.
+			call :Footer
+			if exist "*.txt" del /f /q "*.txt" >nul 2>&1
+			if exist "*.exe" del /f /q "*.exe" >nul 2>&1
+			pause
+			goto:SVFISOMainMenu
+		)
+		call :Footer
+		echo [ INFO ] Decrypting ISO file.
+		call :Footer
+		call :DecryptISO "%siename%.iso"
+		call :Footer
+		call :ISOHashCheck "%siehash%", "%siename%"
+		call :Footer
+	)
+	if exist "%siename%.iso" if not defined dhash (
+		echo [ INFO ] Source ISO present.
+		call :ISOHashCheck "%siehash%", "%siename%"
+	)
+	if "%lang%"=="en-us" (
+		goto :USBreak
+	)
+	call :DownShStream
+	xcopy "files\busybox.exe" /s ".\" /Q /Y >nul 2>&1
+	xcopy "files\smv.exe" /s ".\" /Q /Y >nul 2>&1
+	xcopy "files\CURL.exe" /s ".\" /Q /Y >nul 2>&1
+	if not exist "%fname%.svf" (
+		echo [ INFO ] Downloading Target ISO SVF.
+		echo [ INFO ] Name  : %fname%
+		call :Footer
+		call :Busybox "%fshare%", "%silink%/%fname%.svf"
+		call :Footer
+	)
+	echo [ INFO ] Creating Target ISO.
+	echo [ INFO ] Name  : %fname%
+	call :Footer
+::===============================================================================================================
+	smv x %fname%.svf -br .
+::===============================================================================================================
+	call :Footer
+)
+call :ISOHashCheck "%fhash%", "%fname%"
+:USBreak
+if exist "*.txt" del /f /q "*.txt" >nul 2>&1
+if exist "*.exe" del /f /q "*.exe" >nul 2>&1
+if exist "*.SMRT" del /f /q "*.SMRT" >nul 2>&1
+if exist "*.sh" del /f /q "*.sh" >nul 2>&1
+if exist "encrypted" rd /s /q "encrypted" >nul 2>&1
+pause
+goto:SVFISOMainMenu
+:================================================================================================================
+::===============================================================================================================
 ::WINDOWS 7 PROCESS
 :SVFISOProcessWin7
 pushd %~dp0
@@ -1882,12 +2040,12 @@ exit
 ::===============================================================================================================
 ::TITLE
 :TITLE
-title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.30.18
+title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.32.01
 goto:eof
 ::===============================================================================================================
 ::VERSION
 :VERSION
-set "svfisoconverter=v0.30.18"
+set "svfisoconverter=v0.32.01"
 goto:eof
 :================================================================================================================
 ::===============================================================================================================
@@ -2023,7 +2181,8 @@ if [%1] == [] goto :EOF
 if [%2] == [] goto :EOF
 if [%3] == [] goto :EOF
 echo Decrypting %1...
-"%~dp0files\openssl.exe" aes256 -d -K %2 -iv %3 -in "%1" >>%file%
+set "newFile=%file:\=\\%"
+"%~dp0files\openssl.exe" aes256 -d -K %2 -iv %3 -in "%1" | "%~dp0files\busybox" ash -c "cat >>"%newFile%""
 goto:eof
 :================================================================================================================
 ::===============================================================================================================
@@ -2718,6 +2877,170 @@ goto:eof
 	echo ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	echo:
     pause
+goto:eof
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+::DB1809_3 STREAMLINED
+::===============================================================================================================
+::===============================================================================================================
+:DB1809_3
+>>database.1809.3.smrt (
+echo ar-sa^|dc40cbaeae5e17a8cf2c4303cae863bcf89e5e1b^|ar_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_1764f1f9^|miwDOcZWSyMtADE
+echo bg-bg^|01926fa9bebd3d8957a05ca66c31eeebe2cea03b^|bg_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_2f0ec71a^|miwDOcZWSyMtADE
+echo cs-cz^|4b0da9c2c720b47163a7703cfd89bbb75583aa6d^|cs_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_84befb73^|miwDOcZWSyMtADE
+echo da-dk^|62f2086791312d109e9523223be5d81f1c715e29^|da_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_bc7c8d7a^|miwDOcZWSyMtADE
+echo de-de^|90807eea55b8fc9280a8815c6f8029ce6e30a79e^|de_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_07715163^|miwDOcZWSyMtADE
+echo el-gr^|b5a9b35eee8f649d6da827e63f247b3176251215^|el_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_f544696a^|miwDOcZWSyMtADE
+echo en-gb^|6a5e05fcdd3af18426fd6c3440f0cd2e32521f94^|en-gb_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_2c3a553a^|miwDOcZWSyMtADE
+echo en-us^|cad7c3592fd976512324716598993c358b34877e^|en_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_d7d23ac9^|miwDOcZWSyMtADE
+echo es-es^|0f2df0d15597aeece0ee86f85baa4d5320c53830^|es_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_79294616^|miwDOcZWSyMtADE
+echo es-mx^|83a15f0fe28f383f822837fc549b4b2814bf8dd5^|es-mx_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_46576c93^|miwDOcZWSyMtADE
+echo et-ee^|35f8727b0cefae94c2317607412c4903f573072b^|et_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_b4e0c1b8^|miwDOcZWSyMtADE
+echo fi-fi^|171e692ae0c1a73a5865d8db87e0f5dfabc67556^|fi_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_265c7997^|miwDOcZWSyMtADE
+echo fr-ca^|7662c0b423c6e7a9ec53e095fcd393c3f8e1cd14^|fr-ca_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_738a0e57^|miwDOcZWSyMtADE
+echo fr-fr^|e9d513db3da373fde1c29dc35d455c1bcb62b539^|fr_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_b7aca210^|miwDOcZWSyMtADE
+echo he-il^|2bdda5e80d7cb924d21bde715fb659bb396fb3ea^|he_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_772a9017^|miwDOcZWSyMtADE
+echo hr-hr^|616e6ddb406fcdade4d03a48edbf6030ef489764^|hr_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_0debcb51^|miwDOcZWSyMtADE
+echo hu-hu^|435b4fd1f6a684aaaa4da6bb2e2d934b4e41893c^|hu_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_cebed0a4^|miwDOcZWSyMtADE
+echo it-it^|9b0cbc8e9f463d51b2fdaa479c24432a3ccbd72a^|it_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_3f4239aa^|miwDOcZWSyMtADE
+echo ja-jp^|d23dd01142ad5c97f4b94c05ed4c7dff65b3259d^|ja_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_8b30ab2a^|miwDOcZWSyMtADE
+echo ko-kr^|e966b943a2dbd7f2f3e719dc9cbc1e684c234297^|ko_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_dd268dc9^|miwDOcZWSyMtADE
+echo lt-lt^|f8c39b4b20ae23feaf0bf4a59d7e2f6502e6337f^|lt_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_91182d40^|miwDOcZWSyMtADE
+echo lv-lv^|7c18a4a93a739e32f5c93b679f3826d536676859^|lv_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_d0520b27^|miwDOcZWSyMtADE
+echo nb-no^|8e4400abd04f43e6baa42f47d074649039c86524^|nb_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_e1537d09^|miwDOcZWSyMtADE
+echo nl-nl^|309ca0f965ffe4ed0a39ac20d3c97d85e791a11a^|nl_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_ba85957d^|miwDOcZWSyMtADE
+echo pl-pl^|8f103cdf34dc44973824ef90c4e8530e18a086bc^|pl_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_d5bce866^|miwDOcZWSyMtADE
+echo pt-br^|f88d86efec2d5f173d4411184aa091f479772722^|pt_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_e45aae16^|miwDOcZWSyMtADE
+echo pt-pt^|f0856e33b0f3459744f1af97a294d98c81a71f9f^|pp_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_d4adbaff^|miwDOcZWSyMtADE
+echo ro-ro^|ed1fe46354f5b44afd42a8292b71608d51a4fee6^|ro_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_bd67d861^|miwDOcZWSyMtADE
+echo ru-ru^|1f02841fbb51c01919bff0735e85ea0aadeb9356^|ru_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_5ea6111c^|miwDOcZWSyMtADE
+echo sr-latn-rs^|fe8052959e77d77b6223fee5940ffca606eb4383^|sr-latn_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_8dcede48^|miwDOcZWSyMtADE
+echo sk-sk^|15740d9b3afa74b5d38aee96923cf651165bcc19^|sk_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_ec7eae16^|miwDOcZWSyMtADE
+echo sl-si^|f6037bb18389f68963ecbab20ab32d57edd9b0fe^|sl_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_4265315c^|miwDOcZWSyMtADE
+echo sv-se^|90fa3fb264098e4733210e308fc040ed1a3aaa7a^|sv_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_dadc9cb5^|miwDOcZWSyMtADE
+echo th-th^|e8bd4fe9cc5b0cdd1955c4df2779945df06d77d3^|th_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_57ccd36f^|miwDOcZWSyMtADE
+echo tr-tr^|62b26a0dba7ca0d44db60d6afc024ca0cfcd7630^|tr_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_48a389d8^|miwDOcZWSyMtADE
+echo uk-ua^|0eac4ac0a4d8c9b6e7b21203c34d2e9cf2fb731b^|uk_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_79bff2d9^|miwDOcZWSyMtADE
+echo zh-cn^|054a61467c2ca11d021bcc46bc044672459c834d^|cn_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_51713eef^|miwDOcZWSyMtADE
+echo zh-tw^|7863883445bc55f6c59bfc791a0d26b777b77f99^|ct_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_52ae96a3^|miwDOcZWSyMtADE
+echo ar-sa^|a77274d9f9b68379cda9ee4cb6cfc05f08ab6019^|ar_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_eff04342^|miwDOcZWSyMtADE
+echo bg-bg^|f777702283ed17c77eddfd8353e627b628ef6be3^|bg_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_3b9c1f36^|miwDOcZWSyMtADE
+echo cs-cz^|29717f30bce1027185fb9e9e51d4d85406e5b35e^|cs_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_a1e3a95f^|miwDOcZWSyMtADE
+echo da-dk^|9ae80cf27ef883516023c8e2641ce7f6b06412e3^|da_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_f4912788^|miwDOcZWSyMtADE
+echo de-de^|cab9f1983d5b4c61d0d4015d836d6f6fd064b8f9^|de_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_839bd519^|miwDOcZWSyMtADE
+echo el-gr^|33e875dadff151acf9e27be14b1cdca36ef6f293^|el_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_695e1e09^|miwDOcZWSyMtADE
+echo en-gb^|ba47d74936e88acb54b727ad1d7aaba385654702^|en-gb_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_b50a3646^|miwDOcZWSyMtADE
+echo en-us^|e9d786f42b7893936aa1f60bb7d64d1be9cb1630^|en_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_dea9975f^|miwDOcZWSyMtADE
+echo es-es^|1adfbd64a25bb5a722399a8e440c86d60f96f475^|es_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_88fd59a4^|miwDOcZWSyMtADE
+echo es-mx^|811b6f5f6f1754e42fc7464a683e8c109723ea09^|es-mx_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_192be33f^|miwDOcZWSyMtADE
+echo et-ee^|9050f415df055363d37d3b623ae3baad292efe30^|et_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_43318791^|miwDOcZWSyMtADE
+echo fi-fi^|21746a3373090227c757c08004c803d1f64de291^|fi_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_e574e7fe^|miwDOcZWSyMtADE
+echo fr-ca^|8ec44ce5646fb80883e43b6b5d20bce9c63812f4^|fr-ca_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_ca33a270^|miwDOcZWSyMtADE
+echo fr-fr^|310dabac509a80e2e00badfd129ca37b2e0b1a79^|fr_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_270706f5^|miwDOcZWSyMtADE
+echo he-il^|e6972fb8f0d9f9a1049d037b9eee9195f2922eec^|he_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_efca97c2^|miwDOcZWSyMtADE
+echo hr-hr^|cad36d0c9d4c619de3d048ed1cbf8c57975db685^|hr_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_2fce2561^|miwDOcZWSyMtADE
+echo hu-hu^|50f5e8d56497a4317a579c21dec666ef3c283827^|hu_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_114b44ca^|miwDOcZWSyMtADE
+echo it-it^|5e2f4ea697939ec917ccc60e51c137f1ce303f27^|it_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_cb6a82f2^|miwDOcZWSyMtADE
+echo ja-jp^|34e0534a5888b6f22c436fb3275653b66e45ff8d^|ja_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_d00a17fa^|miwDOcZWSyMtADE
+echo ko-kr^|683ba5fd94d6927ea99b69f46ef557e442a7a06e^|ko_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_ac6f7c12^|miwDOcZWSyMtADE
+echo lt-lt^|e2700df28addf32f2b837fb6e7c16fb8d1e0b37c^|lt_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_883a555a^|miwDOcZWSyMtADE
+echo lv-lv^|6f7d7ae01c2a18d70b5dadf12fac681bb64809a6^|lv_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_29dc86ee^|miwDOcZWSyMtADE
+echo nb-no^|50c0f4a02b95c72b6c8df821b04b5926553154c4^|nb_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_83bcd420^|miwDOcZWSyMtADE
+echo nl-nl^|9a53a6400d75311fe02cb15c89e6112a81abbfb9^|nl_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_5b8b7485^|miwDOcZWSyMtADE
+echo pl-pl^|996a0793d41ece683832704b592136fb64169abb^|pl_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_095e0123^|miwDOcZWSyMtADE
+echo pt-br^|075953b0779e86dd48e5305b56d489c8e2271722^|pt_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_55c2ec46^|miwDOcZWSyMtADE
+echo pt-pt^|e4f6bcd3697936164485cb2105321c7176948db3^|pp_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_6b9bbeca^|miwDOcZWSyMtADE
+echo ro-ro^|506c2cd77998b4bc934c2b7ee6948298f8f64fa8^|ro_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_945611ae^|miwDOcZWSyMtADE
+echo ru-ru^|b54944ece4236b0fd4acb53becefe2375e8c5660^|ru_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_5dc5c500^|miwDOcZWSyMtADE
+echo sr-latn-rs^|c8153e48d842de1f3de58db50372de48cb382945^|sr-latn_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_34915869^|miwDOcZWSyMtADE
+echo sk-sk^|23c0361682b856e4f915d2f8cb95749e9186ec02^|sk_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_8500f03e^|miwDOcZWSyMtADE
+echo sl-si^|0548c5ca4db95b46cb926b0c45a589a8f5c19971^|sl_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_7dea4af3^|miwDOcZWSyMtADE
+echo sv-se^|8fca45ed47c8c0597b9eeed12cd120f8dd088d8c^|sv_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_91383319^|miwDOcZWSyMtADE
+echo th-th^|765ba8ed7439fbafc463673ef7a1a1bfd649b8c0^|th_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_74444343^|miwDOcZWSyMtADE
+echo tr-tr^|d966046e98e9ed7555a602770281896784caa6fd^|tr_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_b6efb778^|miwDOcZWSyMtADE
+echo uk-ua^|b933d3799380ebad86cbad5e963ed6138992a7b1^|uk_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_584d26e7^|miwDOcZWSyMtADE
+echo zh-cn^|b21a43789b25807f67a79207ba96c5bf74d00f89^|cn_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_6e2448ac^|miwDOcZWSyMtADE
+echo zh-tw^|390f24f3be9de6c555d1463a8dd07f8f13e17721^|ct_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_7917b649^|miwDOcZWSyMtADE
+echo ar-sa^|32f5036ed4f8e9726c138724ef90d9ba444d5432^|ar_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_fad78e4b^|miwDOcZWSyMtADE
+echo bg-bg^|ae145c3dfed53bc80fd8ec6ccbc648912e3b8a30^|bg_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_e469bb1e^|miwDOcZWSyMtADE
+echo cs-cz^|0ae723c13abe9943337b2d898c190aae5951193c^|cs_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_70d2f926^|miwDOcZWSyMtADE
+echo da-dk^|04b756231c72b2560294dd17ca57fd27547ec1f0^|da_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_cec21bf2^|miwDOcZWSyMtADE
+echo de-de^|272c29d6e8c10e69716ecd78f464b8ef689dfa7d^|de_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_977224f6^|miwDOcZWSyMtADE
+echo el-gr^|c3a5dbba75697f870ba6010927679e55b2ce524a^|el_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_85d4cc2d^|miwDOcZWSyMtADE
+echo en-gb^|d3701313888fb204ff9b31e7479386301a80d3a2^|en-gb_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_71601304^|miwDOcZWSyMtADE
+echo en-us^|7153e3071366017a24c1fda22c0d1e486dbb0401^|en_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_f03937a3^|miwDOcZWSyMtADE
+echo es-es^|f2e649b61929dd381773805a87d90d8a3257ffbc^|es_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_d4d4f657^|miwDOcZWSyMtADE
+echo es-mx^|d84ed5c8e48d2ea03c601c63dbbcc1bcbfdf4998^|es-mx_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_58f291fb^|miwDOcZWSyMtADE
+echo et-ee^|5888e6b3bbe91d92cd59301dad172d3ddb97ab61^|et_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_dc1a6039^|miwDOcZWSyMtADE
+echo fi-fi^|59d880024d5e8d69bc49f018a691f074614518e9^|fi_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_2d94f864^|miwDOcZWSyMtADE
+echo fr-ca^|e897c083b51a646b9dc1df63c2d8c0dcd78636d0^|fr-ca_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_539c3f48^|miwDOcZWSyMtADE
+echo fr-fr^|c8803895c564a6489247776fe6b2052c44423ea4^|fr_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_51347df3^|miwDOcZWSyMtADE
+echo he-il^|60d133ad52355fb780292f7c0df096acfb7b48b5^|he_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_06f14417^|miwDOcZWSyMtADE
+echo hr-hr^|3adb9349426f26894c585cc103c5930b7ff24e1d^|hr_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_dcf08be5^|miwDOcZWSyMtADE
+echo hu-hu^|775e0fe08ed34142a3c5dc5be3c23e75b795d619^|hu_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_64b00264^|miwDOcZWSyMtADE
+echo it-it^|4ca894e784e486009a65e5a1e33c148746d79f54^|it_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_1fdaacfa^|miwDOcZWSyMtADE
+echo ja-jp^|b8616030b6ddf32e2376a65c5a8a38e73f3d5fe8^|ja_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_03bfdecb^|miwDOcZWSyMtADE
+echo ko-kr^|a91c349c8c42e2cc3f2279ec917de5898f06aa0d^|ko_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_687c8402^|miwDOcZWSyMtADE
+echo lt-lt^|8d1a41d5a9874c0a70bf5fe1265cf387cdb901d5^|lt_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_dba40c13^|miwDOcZWSyMtADE
+echo lv-lv^|ff8a36995a7ef72b5a0c70389c03b5e055d51aed^|lv_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_98f6090e^|miwDOcZWSyMtADE
+echo nb-no^|78535e0c5d504f5a5cbdb271ff12559af3d309f1^|nb_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_dc907282^|miwDOcZWSyMtADE
+echo nl-nl^|ef63a5c40a81832d6438f153fb0e354a8c947815^|nl_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_ed307d41^|miwDOcZWSyMtADE
+echo pl-pl^|f00c840e7fd795450ca0b011b8a0a4f6aac0155a^|pl_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_b8a884d0^|miwDOcZWSyMtADE
+echo pt-br^|1e8cfbe506963ba9f810087666bdfee326de645f^|pt_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_ec7dee8f^|miwDOcZWSyMtADE
+echo pt-pt^|f89701fd9ebc4783897e402c9a3f8d03cbbde24b^|pp_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_761b558c^|miwDOcZWSyMtADE
+echo ro-ro^|7b96d8ede3d74c4050fc9e7af2680b46f09aa96f^|ro_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_96aa745e^|miwDOcZWSyMtADE
+echo ru-ru^|4e42b1ee276237ef5d315edf2a5f414b6b8cbe08^|ru_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_a29be6ec^|miwDOcZWSyMtADE
+echo sr-latn-rs^|8b7012e3c9688aadce321064d7fbe54c59736e78^|sr-latn_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_65e344ab^|miwDOcZWSyMtADE
+echo sk-sk^|c140bf05461ba6d373c7aad0aaac826c0516fa0c^|sk_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_db96306a^|miwDOcZWSyMtADE
+echo sl-si^|0472fbfd4e4709c4ccf0402372a8ee22ef7cf704^|sl_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_35ceea36^|miwDOcZWSyMtADE
+echo sv-se^|1eb26e3f323bf27b8150eab269c7bdc1af9cb882^|sv_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_8da1d5fc^|miwDOcZWSyMtADE
+echo th-th^|8b910a018133ae9b3385fb2eb44856aea44d207c^|th_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_995d184d^|miwDOcZWSyMtADE
+echo tr-tr^|451c7c018db71c9a4058d061a46069ac38118a72^|tr_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_33b47f1b^|miwDOcZWSyMtADE
+echo uk-ua^|3b9f18b1eda43083bce7e40d51e7ef0b15ddf862^|uk_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_33eac4ba^|miwDOcZWSyMtADE
+echo zh-cn^|e67d8aaeb8e64c611e66e12c030039d4a37fd347^|cn_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_f5563b4e^|miwDOcZWSyMtADE
+echo zh-tw^|d3986ed41f5b64fff431909921028d4e3cb6023f^|ct_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_722303be^|miwDOcZWSyMtADE
+echo ar-sa^|fe4447effc46632486f5b60d711611cc0ee97e9c^|ar_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_a4269483^|miwDOcZWSyMtADE
+echo bg-bg^|4fbe65fca21c06b7eabfa2fce7cae1803acfc914^|bg_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_a02d1bc2^|miwDOcZWSyMtADE
+echo cs-cz^|742d7130b35fbf86c8d9db69954e5f04df549810^|cs_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_ff0b5c95^|miwDOcZWSyMtADE
+echo da-dk^|4a85cc52107a63a1db4505ffdcf691ed50a69ca0^|da_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_63590235^|miwDOcZWSyMtADE
+echo de-de^|adeb2fd76e64866fabc06084939c71a947f202b0^|de_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_559393fa^|miwDOcZWSyMtADE
+echo el-gr^|e97700da5900ed064b9c497c484c22613c7d2a4f^|el_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_60148c55^|miwDOcZWSyMtADE
+echo en-gb^|f818347e7401d473ed01f9025d2b65b77cef3470^|en-gb_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_260511ff^|miwDOcZWSyMtADE
+echo en-us^|238e322a4e6915aa369d704998c56af683e7493f^|en_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_0f9f5302^|miwDOcZWSyMtADE
+echo es-es^|b9ebf9dfbcdb048885b81a6b6718c9364df77b56^|es_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_b2be2106^|miwDOcZWSyMtADE
+echo es-mx^|c5c74d050525fec9655868c1cfad4d2e77b617fa^|es-mx_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_ed637129^|miwDOcZWSyMtADE
+echo et-ee^|04054e98201c24923f2ff3e8bd7e60264d2c97cc^|et_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_71849d89^|miwDOcZWSyMtADE
+echo fi-fi^|95adce622abc7bd0e6f667fa07213b4912e48807^|fi_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_acf0b141^|miwDOcZWSyMtADE
+echo fr-ca^|b0bc69b132b6a40a413c34e847718b3a866eaea6^|fr-ca_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_9a81615e^|miwDOcZWSyMtADE
+echo fr-fr^|6546c41cdae514d0b522e9785469208ab53fb638^|fr_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_25684694^|miwDOcZWSyMtADE
+echo he-il^|a8721983c3ff729deb1abe7210386cf36c64ed7c^|he_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_906b20c8^|miwDOcZWSyMtADE
+echo hr-hr^|d4ef1395d5309057d23985999a3e395526bbb934^|hr_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_8111dff8^|miwDOcZWSyMtADE
+echo hu-hu^|fbacd6932a069287792924ac575495e1946794e7^|hu_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_36a661a9^|miwDOcZWSyMtADE
+echo it-it^|137ef1f6a8a67ab1b126ce949a05bdca2116ca1d^|it_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_81c1c01e^|miwDOcZWSyMtADE
+echo ja-jp^|7f25d713a4441f73758fdc89579d3c6aca7ac5b3^|ja_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_25bf7753^|miwDOcZWSyMtADE
+echo ko-kr^|bedbaa93e25a70108dc6c3fcde0f88784fe84424^|ko_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_d6e8086c^|miwDOcZWSyMtADE
+echo lt-lt^|864b46954590417363026336627c3c70145f2a4e^|lt_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_483eb75b^|miwDOcZWSyMtADE
+echo lv-lv^|90838a5cc7bb68d062b88cdfd09bc763578dfd95^|lv_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_38607fa5^|miwDOcZWSyMtADE
+echo nb-no^|ad551d308505bbe77fbf11ea06dc9d4dbf17cb5c^|nb_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_bcc64183^|miwDOcZWSyMtADE
+echo nl-nl^|0eead969650156f3badd18f1d7a5149633335657^|nl_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_df69e558^|miwDOcZWSyMtADE
+echo pl-pl^|d1a2a3faa691d9d3a732719eaeff33f31679d4a0^|pl_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_b78e0bd2^|miwDOcZWSyMtADE
+echo pt-br^|60d3e2e9101756ed338052264d3e18c92b63b13c^|pt_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_f2352be8^|miwDOcZWSyMtADE
+echo pt-pt^|10abf7a661a80b0c20a2425f4fc0fc0b2a327be4^|pp_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_a927dad1^|miwDOcZWSyMtADE
+echo ro-ro^|55cd826149584d25ab4bb2d492d29eb1a7d63fd4^|ro_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_d28ea378^|miwDOcZWSyMtADE
+echo ru-ru^|6856693a7f121832338e9c84fcade8ce68e059cc^|ru_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_5f04c8aa^|miwDOcZWSyMtADE
+echo sr-latn-rs^|89360d7191b88a47983534c49d6b237d0172208a^|sr-latn_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_0c649d76^|miwDOcZWSyMtADE
+echo sk-sk^|5d3482721181c3cfbd5ce91be4aaa1eb5db57c33^|sk_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_4fa27dde^|miwDOcZWSyMtADE
+echo sl-si^|6a46dd4a6ceddbb58a3b1d53ff980be0b979673c^|sl_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_b24ef506^|miwDOcZWSyMtADE
+echo sv-se^|c7383bf5057b462ab1ae054874a43eb3be8fa12c^|sv_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_1f22ccba^|miwDOcZWSyMtADE
+echo th-th^|84cb511a907d54e873449e08e840beac2c2d211a^|th_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_4b9cf98a^|miwDOcZWSyMtADE
+echo tr-tr^|29a6ad41b3f36589c248205c71dc507963644c0d^|tr_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_ab91a26f^|miwDOcZWSyMtADE
+echo uk-ua^|01f626201a69bf52ba9d2f3eb5f18aeb0df4578a^|uk_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_f20e0cae^|miwDOcZWSyMtADE
+echo zh-cn^|0f37d998da71a5b44fb4c7131ce9fce2432c9ca4^|cn_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_08603f34^|miwDOcZWSyMtADE
+echo zh-tw^|2fbb0139c6825b6e4e13627f88a42ba239c4bf26^|ct_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_15e33ec4^|miwDOcZWSyMtADE
+)
 goto:eof
 :================================================================================================================
 :================================================================================================================
@@ -4927,6 +5250,490 @@ echo tr-tr^|7a6171dd914a9506f3d4fffc1fb20cf418c86287^|SW_DVD9_Win_Pro_Ent_Edu_N_
 echo uk-ua^|b352b938a9b4c7d253165c2fe91de7bfd4dab3ae^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Ukrainian_MLF_X21-96556^|x86
 echo zh-cn^|39e13bad06c89041d6053fef41616c6f68b9e27a^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Chinese_Simplified_MLF_X21-96488^|x86
 echo zh-tw^|e4807873342c04fc6cebe2c32417f139cf127869^|SW_DVD9_Win_Pro_Ent_Edu_N_10_1809_32-bit_Chinese_Traditional_MLF_X21-96490^|x86
+)
+goto:eof
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+::Encrypted64_B1809_3 STREAMLINED
+::===============================================================================================================
+::===============================================================================================================
+:EncryptedStream64_B1809_3
+>>encrypted.txt (
+echo 5ea6653705fb204ec0555d5702f767d6^|4274407f6f5cd421380c23e64d71f4faf8e7a537c2217500015bcd0bc2e985eb^|452998c66be5dfcec8d02ea11f6165d9
+echo 858ec1cae004680ea9a083e30faeb272^|d9df899b57aaee043549f363aa0d7c206aaeb1cedc63d7e1a48f08042d1207f2^|13e49e1ddcd0840d066955d10ff1f76a
+echo a16ef942237ef8b9a3193aa5b4ba95ed^|52ce522c0462115e70e80833871b7d5af9c7b86099de4a209b91d25759042449^|255374f11d43db6fa7861495c4f1ae44
+echo c4096025ecbb80ae2bd91602a166ac5b^|3054fe361da0464dab850a02b05c302eec0a8cabc4d6bd4a519436cb4ae95f3f^|54ed23cbb6df29c349372ded32fdf1e9
+echo 0631340bf5c3f0271d124948a9d5310a^|2f6fe2b0f3d2eb0193c628c73561bfdfdba5febfc93455bb4fd502b61e5f3ff4^|f02860922dbbf220a98939b9d50a8731
+echo 2192d8c267fb974456788b20f6e234c1^|f3d038e6e1305de61f1134249e3d4e6a7693561d1c600f0a23f334c6fed10510^|0f2567f2d0e5eff728a7b1e9dba3248e
+echo c3776ba94b9453b8e59236cdd670a4f2^|4a85292e0f2a7db2998e5f0a570d9a2f8b5cc299c8f6d40238d4bbed43bf7a1f^|e917b2aa226c0b2260e672df3fb096b6
+echo 80cd9aa8ffb9cb39b37d5580466e2921^|c631d74fef34eb999d9a0e177f353010643661f9ea0d4788caf8de92b312b02e^|9a1fa725b8a8210ceb49c9cab175b2ba
+echo 0dd80e4360b9368785dd487fc5ee1c89^|f6dc5473969a3a8e4fa4cdd5c0c86ebc804a8eec9406d1fa214526a0dd48b7a1^|abf29565c2438d078fc8e9c47d4c8ba8
+echo 89e21d2806bd2decfc82a5cddbc83e45^|722baaf36c7176ba4f685f4dc8aaf31f5196b2631a252bf8ec1556958a1034b6^|0098aa8b618029ccbc7e4585cf4f8b3c
+echo 9d04815556a66608bccbf45f28843bfe^|d00261f89afcee9f655af1282f29a0587c956a34c283ba5cfe5d5c3c73a9c653^|9d235e612e7310732bbc5708ad41d842
+echo d6ec07e9c4f830392b35b9adf5fcc98c^|fe0df1485bc2fef5786c6870e427d2bac68af3e7e77fee331017bf491aae9128^|fcf501e345faf4033f4e635661f566e7
+echo e0a8afbfc8effa0ab319504117035718^|d50bc4fb7f333c8cf1775aff660441bd9bf9734410c55ab80aacf257a9e23efe^|d6a567cdd904eae6ffa878e30d3e11da
+echo 2fc535ceff420b51cfd0b4efcd3caabe^|1ae2c71ff32283fe65184fff8c61b0e4d5e1b188b132c14f5f4f54cb97fabc30^|a6500f5410efa5c1fd8eaea480fba97a
+echo 0b7e16f5c728b32cead4158d4ead2e1f^|910993b624937aa2006edf4512e6743fbbca115a6c4d3f6773e76d7529a64a0d^|3c46720a175f145682102c62f2bb1482
+echo dfb7f053de308982ca774ba1b350959d^|44ecdbd5dedba34e63a2075389f012a8f973c356fbeca56615c21826e53806be^|205e870b81f0c429c5577648e2558cba
+echo 4be5033d4e18b51233ca5a97b53cf819^|7ac840917baf8c14273d57aea48c3a070f4691c1f8dbe6b2218f9d4db65b610f^|7b4996c99d1d7c406477e991956a3544
+echo 5319482d4c9da627a5970d6cfdb245d5^|4bbc04ada04dff901c74cba6b4032e2e6f4fc879db959bf02a01f2926bb889a1^|8e366d799f6f83af0fe2a78e0ef9dbe4
+echo 13a8336c8b284bc0266546f1e0f1c610^|ade9cfc8d0a502b415b05ea732f77154d306849b10d2f18c55cbf2ffb2c4f922^|67e808e60dc31909b01384c07f7e3526
+echo 8bfce449c6e31499a3ea7075a460ea96^|b0018390e5baa405fbbc8e7fbebbaef767103f47c790d1010de17db5f48cbb68^|769045c0d430a7929bdfd8b549cfeae8
+echo 08ff1337e20f327c51a946e1ae99d99f^|cc499978cc5f5a088fc0824ef23cada1742be4878a6565ccc269a216b9eb01f2^|e156e1b067f1ab93f97a646ec5a51b5e
+echo 6fcf01fd8986ce79ad3a24b8a892d534^|f6a4da0625941db70b1087439ade1858a702405d308b8468c6af93f09bb4307a^|f84374884452283e9eacb2e999ea0ffb
+echo 6b16585ab19fb6e3a8ad62cd6add9009^|521ebf488fddb0eab955a1c37a671b7467fea43bb76843c5f628000e6a59b30e^|32151f14ace872c856edb81e38b744e6
+echo 8da54b35471a1bd9f5a57e625b660dba^|6ec87b80a2a21bcde5679d5de5efd551e2e2e25ef1e2663f26a3a6dffce3b100^|47ef9761b869322eb2508b75644e2f94
+echo e3149d5a7c2c789a77dc7a6001697103^|3fadfb04018e9f70b36d97fa72e16863c8c53c356c386ccff8c03fc7d3022767^|799f395697794f801fa9fb2755f6f436
+echo f32c4c467b4ecf8e2e6cb71d2ecb59c9^|083c26baccb95d0f90b2afcbdf7e6616880bb596bb9d7b3a28bb374ff5be1f58^|cc68480998175b512f364b66cc26e659
+echo e1bdcc0e5c3e45532da24d9400438bd6^|76ce2a50109b3c0ded67d52bc5c553d198e545c8c39246a6db82495c2a8856f0^|1d4d26557baf8c8b9b76d8635085f304
+echo 23258f404f8c80f60c582ab384988258^|41274ae0a2130c06228c5cc02dae48383bf785dca4a50889fde9dcd0eee41006^|69b54ba626be95cd1c3df9715824309a
+echo 3a2f8cca39f6e9dd72446dab773e70c9^|15baada25d01ea96f40e949847c5464ad3bed613c96a66e824694d5ee7595d00^|e31212021b3c66d64e648cdf85de079e
+echo 4ddb2c655f29565e56b3d16b3a15d78a^|f4b2de60a03cf1f4cd59104b276dbb74e5eae24d2b6798911d7caed52591dfc5^|cedc40d657b7d2ddd4b000e61c2f49d2
+echo e789cee74aabd05bcc44130824923e93^|8ebce813f6c8d173e32894b06c175cdd72b2ec10f61e2d2f90eccf44b64fcf9e^|696568c2e8bfabf3b0d255dbc43682f5
+echo af9627ada2f858232c2494fbb146eb01^|c957f9b75aa76ed964c38ba7332198d6cedd60e745d4ea086b4c838d419a9702^|bc1fb280866911e2cf0e3ab2a1771bd6
+echo 1638c898d56d21651779622d0e4b7a4f^|88f2c5052d08f2b63ac3c684e716d6305606465b4d881ca996f968cc74a20ae4^|1ddcf28843d7ea95471e153861b59da8
+echo 5a4c11823d54647c96eee557f9735195^|5b72b3ef4e823fe371717bea4fd7c20f9c3154f66add90a5ffa60ffddd2b6312^|792599c14eb9145c94b0c0dd11713c6a
+echo 495aaec2b8546e319dc374366804d915^|97f72e0b5a2ea19cbbf9adcf587b8a09fc874c85be212f42691263db725eaf5b^|c13aaff00bded86586dd4d0de142b85d
+echo 2ace3e5e623cef955594d4c6b6973eeb^|0c72b0997568f7168a987f18526f89a188bd9b5f4137a2a644a92740909b2eaa^|af1f46a2bc9b4b7340cdab2c22ecdda5
+echo f9c0c5d7ae4dfd5158ec5de908e5a85f^|846f5886dd1640b8902493f55f642f8576f669e19f51cdd64da77fdb51acc4b5^|e7102781512ba601483a9587f33d1b16
+echo 3f90fd1b0de1f766adc3d6b49605e23b^|94e12e4388d7f5cffb31788043ed8a8f995f9b9fbb91bcc04482a94ca8610892^|17c9c1cc790e2e0657efe3ff2474a76c
+echo ac86da8309084aacb5ed8bd4b3b04123^|11c76d03e234f72a69e2376adac3f0c1dfec19a8504b894c2f2366db715796fc^|3d0fe299ad0ab6e76c0808374f19beaf
+echo 05fdba69f8111e705c4ebd22e7a493a1^|93c563015d381edabab9952fe933181bc02b68ccb8550512623ea96cabb413c0^|d815de334750336b1a8d672c17dde800
+echo 1b0aa95b1e65d8a41ee3600708a228c6^|84763b3908f380638891b75819726eab3a6c4cca531c86a5694c34294f8e87b2^|d9373c6b255259eae239a0b35218ef20
+echo 6aa3257cdb617796723e3e96f95d1856^|345b372566943f76aca4582c72e89927ccc87fde53695027cbb7ff9d4bc5b00f^|e199881fd8d24e381be1279b6df77bb5
+echo e6ce25819aad7dc7df4c02204b577149^|61532c589b504b7699edd87d8b7d98668c91eee3206c553641f0fad56254f9a2^|873005e11218bef5799607f975f423a5
+echo 41933012de156f9d84c09a04dc5b9874^|05fc37e3429ca829a9704db891b15b2ba179a86f91d128e376f24edcd91392b6^|a178eeb1f84a771c8d65baa773441c83
+echo f5a8dc878774cefce487943b423ab713^|0a6b6f7367d86cd68b988955069d832a94e9c2132652010bf064be0411fb1c85^|ac3976e074418e09247d10d35d710d46
+echo dd21f317348636e5392f7ae5cc4445a3^|8527d0049fc8e23539eb8b99c522f000a7f6a258f93406c976369dd1ba3bc8ff^|ea47dde8f0d2293dd1316ac0368481d0
+echo 0ad4deb83f23d252f6f3da3d579644dd^|7cbc776932cda2a05fc6bac4adf6260eabd1cdda76e9a4d577739809a77a30ff^|783e3b7f79453af04d314827f248ef74
+echo 79cfc9373a27680f7318410d9f07740c^|53ea6ddbdb8ff19f85599522419172b4db0e72bbb8edc21d2009f29fe8b7cdbd^|747214c79bc453e2b8c335a22aa19bd7
+echo 7eb0d70262220e4c0031bf2859f79e2d^|c941d08cc03d7f94ed694e8ab2e4effe5f8ec18243fec4c2bfeea618bbf6eb2e^|a1d695b721cc9ae222786ea8425ad446
+echo ff895045faf47f58a0a06e3c150aa0ad^|0261a68e763a4fd1fbe40b1b4aef26400df0184141bb12bf4c64a6c404e75644^|e8da2b0cf2651098e3ab82e871d1508d
+echo bb1b6caf8eae4d1bce8ff8933f0002ee^|eeb0c95a41a78ebf30d0dac1312bdbfcd04f9e6c139470275d1b282e2a045b94^|157f11fa9b2ddeed614db507c5f4d996
+echo be81d51f2bf7cab487f34795f2f238a8^|01398dd945bbd556caf38a6b59f455b90bb3378a4c33c077cb3d5b0c46e0182b^|dd10ca5b7e98ac1d4c3d1944c69c30df
+echo cd72f509db7d0693c48bd6bb7e08b07d^|4026a0ffb4daef1e090402f818f8be587e67dc30b50be120407e8c11e4c87b20^|81e04d2ca474c643f4fef9a324d3dbe9
+echo a6c15a8d8f416dfe037f11e49b56bb23^|127f87528315a3dfb2328e413dc84a5e030bd7b1eba5d0c26e8856cc81c9cd84^|3dd32ebcd6fd9bedab39c2230fd9fa87
+echo b3c60c63ef5eb4863e49c35877a2a23d^|80a647351f39f847d8d81ffa3e286d42c277a68713216b7c42b08f679c772a2e^|bab2b2bbbf46f4f3d742fb5bab51c050
+echo 8f5790ba4e075ba5381c3b95e553303e^|f7f078456d65a2f50efdb0eed0175ce43e75c46b7e4f9d4d10da821b7ef03390^|befda7d222f2b816bdd6dfd8cc97a6db
+)
+goto:eof
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+::Encrypted64_C1809_3 STREAMLINED
+::===============================================================================================================
+::===============================================================================================================
+:EncryptedStream64_C1809_3
+>>encrypted.txt (
+echo 4c17d7c60dbe9793dad4358de2cd5b90^|431d9a2777db53503a5a3424f29e61928ce6d3d7996bd142976cdf42c42d6221^|93e01fe4f52799a989874bb35352bf30
+echo 25c11ef0d774ce3a9bf526929c193c52^|2eca1ccdea1689b2ac580bbddd38ccf4f6ac8a682fa07b1936a449049fe837d9^|369ddb844748dac3cc7efe31ecae062f
+echo 836632ec4ee9ee7d216b3f64089cdb76^|c56d142cc50c84e49c3bc4164f514117b1abbf9506c3e2a03f296526258e1f78^|e5a66354d6ac197013007a8203945cf7
+echo 69b03dacdbed43b954e44fa80ad725fd^|7df63646507baa538c9c91be2ae7fb0295ad85d05338918ab9df425758aed1c9^|36f7d487054561b2eaafc5e0bcea3c5f
+echo 6dc2ce03f0ee608fa86a1d07f168080f^|1fd2c1bd39ed10e5305b28652004db0009db6da0c89e0602c7173467cdc32671^|350a3233154d26597a33a12787db9240
+echo fdf63b13807c948a8b6760892393ef67^|24ea4d0cec341e1cf9182a3d73d9b908fd6e1c26473598601eebb30625e56420^|3c581d0754ffe9b61e4818e7e4be4d74
+echo 21f7551e62d6cf9d01fe606260ab2af1^|b53b0682be8e89e359de5cd6dbb00904b8215a2b204a25c5af1e0e9e4a0df4b5^|0cb5b00811c534e642c5b53349441365
+echo eb5d937e9cb02d446f95eeae22c3d7a4^|1a35db6ad91a52f0d4e649c354d1fa15159e8f63f87f43ff474aba485adb2776^|beb05da0f23fbb1f6526b00cbb33bd2b
+echo c3308f6ba6d95315b809258892a30225^|d850526db5774ab21f39b5af0de07d4b085be83f3dc1b1fd0de77ff395bbe127^|03a60c178539842631c787bea3b3771a
+echo be177f24d4eef1a89e39088eca0e1b88^|a6796fbfe5cda3215e0997dc30816f618aa26184c0402f762ea6e41ea9db194e^|2cd0e2dfb726f18ac51b70f5d3d884f7
+echo 746535b880004384382d67c39cd0ce9d^|c546c3d47e119c1ee5cdaab8afe76ff74c4b5d5ad50b7fcf514a1d6e975be45b^|2451efa4a0de69179de40a2610d36d88
+echo 0153302df5a747b336acbf568b9c951c^|4ce323167649f6b16e92cbff84d16597deaabea7385b0c08c89728835ec21eed^|28b5ec088f5477ed41595c09d4036905
+echo 84a67ca8c9da0d976189429f720945b0^|e0b1b11660025a3376ade9f10e400ef41c1e070447a6f6a450457490a7d2c58a^|590a2e1024cdcd5dd20e6e83351e39d0
+echo c936639068852244aff3da6ac4e2f6b1^|9c5d426c8eeaad1bd067c332fb68f2f877b668bfbf8f2eac8530dd46806b87d0^|86dcb3d2be8abc99fd4c66834e69ab1e
+echo 8ddbadf54aa13c6cdb9a8293c29284aa^|164e0b1c8cb14091e7b42cc6c7012469ad88099b1c40596b82541ad257ace790^|d7eed2073e6199d9b1d29e98fa137941
+echo 32a73ac1d4824e66943f9eb978bd4f43^|afefb54966f7472da8f16620444756dd9ee188cda8221147970994831942d3e5^|b5b4c7a093c16eb324508697f8551a97
+echo 66a100f6bad94b8e76f9cd4b02944a2f^|ece844d741720ed68a595eb27d626968883f66eb4aec34979a2721021b3164e9^|77b891256ab76b91e1953c5b831ea88d
+echo bb303ee4ed8ce961f56514b0d798489e^|4789932a887d13deb4595001a6893ec727d0bf10a908d28c951630e6bb9d1af0^|c4a9e01b05869dd44e7190aa1b28a388
+echo 15b63c4d271b96aab3e9da9c7330ea2a^|0435f9c358773610829955768e2b196c6928894d5fd577fff07c11dae231ef78^|fd1c11e68a67a35c4f69252ebff793b3
+echo 7220ab60c08e9f58cda0a4cb48c9d61b^|18d9e3e91c17c1e0df06fb0aa8cdbb8fd5d6a654144d81da41ddc811687e812f^|e34787b2aaa9c926ea07f8e087aa4ab0
+echo 7bc13c31f5ba6011cbe76373353ed925^|e7ccabaac5713b7cc1887b2e83e1e01be2dbc4cf70ffc9267b8773dd074a971c^|4882a4a6574b637ab25ebb1811276574
+echo 1e862dc3527a8428451881cddcb024a6^|fc992f3252c81152fb9c162f9d884efa22aa48449c3f853108571a45290456a7^|6f2caf4bad6ee9f2e72467612bc58126
+echo 120df7c7a66e3c4580f7ec715f6b416b^|ae6c5d8595eae47d6c70d5f06bfb197cc5ba2bced6673cdbde052fc3b2dd84ae^|747eaeefd3bded3c9cde99434f0ebdc2
+echo 9c3b19249a15689de91bec3a7926741f^|9128bf9556167067a0cab0713cbe419ee90cd9ccdbaac5080fe6894063bc5962^|e61b4663476da79c78ba300716a319b0
+echo dd7940efa60b2397defce4ba38ee7b61^|5516e3c2218e00a8903056f9fd15fcbcbd8af77e413e26277d21123640155343^|7d878f79868e60c6c797eb6feab64b45
+echo 3ac6abb937d8085666f610fa412e5375^|bc0ae3e36d218c22bf4bce21824e8a815b70d64bf9c4618e87a21514666d5007^|0675eef3e4c4f519ad30ab2e7e174f11
+echo 698c27d8d710ae7224e087ee9493066b^|af5bc4fdc52655ad1284d73961429e05770e31c12f765618117dd9db816e7c88^|619074e2147549edb1a29a91529a4648
+echo 2f6e2516ea620aa4d08a67bb3736ff89^|d1778c0282d3d5303f580fac37f4e2980fa488aa6381abfc285b86507c8ecee7^|87a1eeb6817b1291d5c6d8218d080fbb
+echo 282450a12fe53ec20f75ae23bd916220^|88e466aba53404e03eeafd2e6daa20f835e23adef424bb6cf50f52650b9a1431^|eb50756f233bebf572b20fd43fcbc9ae
+echo 31ed6d748a7e2be39fa491a461fb17f7^|45177338b95de6cfa39130243a34522325ecc27f87aa82fd0c04e0e9b8751f13^|61cd9cc272cbd6744cbc59728751f278
+echo 767a3c308bca9dbfadd3c62cb6519919^|4d78458db0cdd01fcbe32107e7524f4bb48a9b8dca0fc002e05b446066d49761^|bb0627159a9e6bd812ab8e7a8e2799c3
+echo 0133fb233876eb5ca7d2fe86db6cf819^|56aceda095c0eacf443140d152eaef93339fc70effa119038143122bf2798770^|037c3c1ef81cd69add5ec9aed280d450
+echo 0e5407f1890f68086a641e19a5e7e8f9^|01eb2c34babb37c8329320461f3a2e11f6fcf7bd79fa82fa6ae13d5c9f01ce75^|b1c624ab166345c3d302187cee3aabae
+echo 875dfb465671a5790961febcd0d1dc52^|0dc6651354cc9e905c8440a0a768905ccf68542ce20ec72967f9bf6def6cdf52^|6b63d3c75a65485d41a5a3d6804decd3
+echo 5c6fce2af346104b135f25c1e3e1118a^|027b23f67316b276a1aa020b1073e7c7832080094534b9b16f1d30bc2b5f674d^|9f645e2c22b2e356497295c1420aee21
+echo 9cc216e3059bc14b824907606880efd4^|1861e778673bf8cedbd59ae56f65cf12c1de3bcd848c8979da367a2f61f181c6^|942500ee6aded48d14f1b7785d9c928a
+echo 48d35a99b6b311b215a14d261d1451c1^|bdecff5910c07310504a1965e12aea4bf40291239c315d892ec50153298153a1^|8dbc1c0c05f9a1868c5c6379978d5f50
+echo 5a5645b31b63d07962ce3bacc4633300^|21f3a6fd54216a13f5f05e2fd03656c73559aff4f1ce41cc20b463b9fdb0cef5^|947d96b4c5c2865f9ebd0328971698f4
+echo a48c681f2b5c84a3b75760be2dc14b56^|e98b4e7946064df098b7b808915db5f52042e07df5fb10c36db5c0dee95d2e90^|75ca4af98f9a70bb9384d0248bd9b1ff
+echo d0a440298114abf41fc7abdfc097faaf^|fc910aa47cb08867a17c65b7bf455fb5499d697c1fcbf15f4f67d3046dd78c10^|1016eda9ad872e5f33c128e8df8411a9
+echo 8cb5fc545a113f43103cc2439db4650c^|6ee7ed3bcf82a9a7c22ad42a24bae8022543095edd22118f5af3a0d31e03f1ef^|0b447cdcf10a2931023b9df1e83685fe
+echo 2ca065a28bbfbaeef6b71e7d38c8a41f^|ccef1f874bab62f086d03f41e8d8d53f4920b261165fa2ee6b9d8ae684b55705^|ad61c488537c914cf7101b879f4ef390
+echo 093fa92dccab99349332dcfff9c3924b^|7964b6ff37cc2280f7af209dea057d4890155dfcf64070e1a5e5bc572f3b5136^|355b8356bd49ffb1b9b700f676716d11
+echo 11b192a65f21efd686bb038e3b2d5f65^|da0d978f9be743adf06da44ee1c8755a8e22ff047b2ffabf3fb955bfc7975120^|4b59843133d1f739a9fb5983080abe6c
+echo 61ee484e6303204a2dfa28f45abfa992^|a393761299c9a22bb95c936c2e854eb3d04970c465c63f6dbbe47188ee92ba12^|3b65c14e68a6aa67d37c9ecbfa765534
+echo 2c97689a20c041f6bd61fdf146074b3d^|9ea9d9de75918a131879e33ce537b793607f48598ae78a9e7a68477246708521^|4b5c724827e1ec3a35d275a9d2835c34
+echo 005f2fb61f88b03193f5e2d6a0364c23^|d1f20326b4528a1a97a80224a1663f57f84b0ee2b1f00c657e32417481ee448c^|bc09744755b9ce0fffe749acc4b515f1
+echo 11acce6631375f4b7c39b6ba69677f88^|253c2705f59e16bff63998f6dfcd344d9e8f663d49ed6a2348d8d7a8395ab2ac^|0161a835ee494b294a607d1c76afc1f9
+echo d0a7bb97ca2273b75842dbb41f89a2d9^|defb5740cb750a4080bb02b49d36f15e1bc4df834bf311ac921e811a1096b9c6^|528c4f89af11a8ab03811726c8f12f18
+echo 11a92e7d32fac187ac323c071110d635^|3b57518da39e2c079e3ff9eb2b0a30507f2df6021842428afea50c5dc11a5931^|123a77427b3a4afc5839cb8e5ff20b02
+echo d696261a0adfcded697501bb4639b7d1^|057e0220ad49d40a5e94751e3d8a46e6a2c7d2750801ffa149745de051ecc210^|d81cd36d5abb89e6b1534db363ae9bd0
+echo c0eea838a37284000358f6afd29eaf3d^|f093982475dc54de874f9d2f961f3852022dd899f01d557aa027412b7b6a656d^|3b95582c09f89c9877980c4cf77b26d3
+echo 19fb6f010f204855e281476a8fa36690^|2542374e0947e7b6b9721ae93d284487bf4666808b82ff17d95260a102df465d^|ebb8815b14aebed0b0b341f6a02c57ef
+echo 8294eee41c6bbeef1e61f7072a116a0a^|76031d745b895885cd04b966125953ac94985635349bad738a612ed631e87f3c^|2c02ad8490b460d86b97ace8aac1f51a
+echo f1df1dbcb206f3004acc921fcbbb4d4c^|319d1c1aa0dde184bdb96e45c88c122b8dbb69c6e50a505c38a3720e9d87fc34^|804632792db6ee748f2fb69835246170
+echo 6a604729370c9b95b0663d5b5ee07ea7^|d642f17e406e0abe63febe3d2cb7aebd28bc95c4a5c97e4f7ed8d84ec186c80f^|358c75a2b29552e1f073e672ac7ee33c
+echo c994d116160e6e7190ab2d481571c7ed^|2750c610d4480fa5307a18c4a0ea600bb17edcd3cb15c5d97b7c467375bbcf12^|e7d021e0829709ff8e66b8db5dfbad5d
+)
+goto:eof
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+::Encrypted86_B1809_3 STREAMLINED
+::===============================================================================================================
+::===============================================================================================================
+:EncryptedStream86_B1809_3
+>>encrypted.txt (
+echo 2e34a9ba381c2d8cf6eb1d6948481af4^|6141ad3a8eead0ca5aa553114926a9247bce840641c0d357539910b0252904c9^|7b16a9f8269a1aae2ce0a68e25a8bb62
+echo fa1d0e8292367de93ad7d54723b30fb1^|d8545b5f8936091c46298107154b7175d69a2bc9603758ffb3c602bb08e17a74^|a1fae2f9ed56b8c626c16b09a4cdb40a
+echo c95932bd63a58b72523683d9e683282b^|9a4a789479b18e62f75a380cc8106f3fdbc62840176df0f1b6e6c68de31c8f50^|a4a8ba17d89df1283d4ed07d17264547
+echo 317ea982076f92874a99dbfa833949d6^|9e9bdec8d6060d838afdf157a22c0b62132636612cbeef43c74a58702228e363^|98c0ebdbd6ce0459a9777d9a75fe6145
+echo 739eb444c602acb8a9c24a89e2303390^|4228e2c6db3bb4e39952fc02b291c1a289e7ecbd5361d0e072ec8e8178fe7a33^|815966a4801186ac5dd3940466b7669d
+echo 3ae9ebfe946fc56468f836d47af254eb^|c4933b12f60682bd9275309e0b8aa2dec5dfb4710eaf7ec409aa95699156a4ea^|e88bf92de4bdf0e99ec4d9935b034fc4
+echo a4ec6b459307cfcd246c0dd556d9d438^|f6b600661bb13108fa471b862e93973933b6eaa1ae11c1cdf03a0aa023743c73^|8ef2f3483e018d99bad86948a37f06ac
+echo 772ef66430cdc6fc5ace9f0a637126ff^|21ab62f2dea510ede87106a1f82bfacee157b58be6df9436ba79d8e8bbbb7701^|6ffa474048d7a9dc982bd8fcc21d5ee5
+echo 497388995bacf884ee8647be2ec85cc8^|a50de4eba12f3e1281cbf53f6bf8384c214e31b13267aa6fef1db0a72bfc707c^|66ca2823795c34df68fc655d3d787bda
+echo fe8cb932c0bf40c354c065c354508939^|ff0a8ed5f227c9a6d5dd25a3ce32f85e3aceb631c458e421103afaf03ea94313^|56d805ac972a2e0a12ca9ab33a653a84
+echo 523f75cd62b5c3de6bed78fde11178e7^|45a1008938658a4fcb24a1de9d75efc1bf14abaf6bd53f617fe2ecce1fd5f582^|a83eed2a0eddd1dd2c795b267390989f
+echo 406b9ae207baac5103da31b58f5012e2^|385b968c75fd5315121e29c170e3229a13f6bbb15c24588e0a7a509648a29e44^|1cef9f8c1f53bdad2088a84251c6c93b
+echo 5329a1ea45647a456344183e05af84be^|b76fab9906d5ccba8bcc47b15a793cf80735d0c810273ccd35712ef44a9f365a^|efc38f1498d9acd520ec9f1d4f455285
+echo f70c1d8d256be58c4eb850c4a3a23a0c^|d6fb7992d34f5644bc1d0c95c79a391cc7b917f355e25f9ad8c1d8edf3d928c3^|ca53f1867d8d9c4138d7f8a25f955454
+echo 2806e9b60dba485d73665d9dc41487ae^|3f2c142534e50fc2f2e161e5862d7b4ad9608de8b83a2bf5dbc1a55633dba710^|272ed9e2f2230d08e9c881e8fc562fa4
+echo ca8ac66278f14736e647fda7435144b8^|ebe2e6351d40cb56cb51eafcd286ed3c1610517f177b424fe9b6f5467e6d6fa1^|df9c85ca2a82b327bc3229626c4294df
+echo 28c020d0e753edadcd5c9827b2996cf4^|a63009e9a78b0ae2a110caf749534a8e14c1ea58077d63a5778195c7bc4bdf75^|4578bf1c43351380e9ec8e8a7c8fa6d6
+echo db9d5b7666a5bad76cd64b6e625c8d5d^|8b8f15ce6fec42c2c779022ae3c05c9be2782ad02fc1ad3908e9017857b1568a^|27cb6cb09c52414964b6f97b022eb9f3
+echo ed6a18a0404f7eb7d46a24f8e3ec1a89^|4cd6b3753a910baf7b1c74448e82f627ef470e6603779a4f2627a9e1ab3690e9^|d212efec1e27241a81d2301e01e44b89
+echo c3a2b7341daa31000cd884b0d49d3618^|6e136cf53311d432d1858af02e12ff480d592b39b933d6f1514d9811d9a930ff^|2c054b100d409986b2074957a21d0266
+echo 60c577736cf94c1be0a03b4d0a87e554^|c4706851e89fb12e7a5ba56efee0ef9fbbed93c85b95f7c37c57352689e0a449^|9bcf0aead94ab4575dfb37a16e5a99d8
+echo 460b2efee339e77171ad7b98efcb1108^|e12f117dccc772fed32f8090c142972fa54ec847e45b7a7c1208e7f62f417dfe^|c17b795355ed71c6851cbdaec73395a7
+echo bb2452faab29735a8aa4537e141c4afd^|d0dac371b3f7f8d06418cb0d5acd8de95c7db5e91ec43479b5bc6ab2fd697232^|cd1d3d1e277a49afc5dfcde910b022a7
+echo c28163f41b0bec9963ac4239d0230b64^|b31a724024f34fa8cbe6929fce542e3aff99b3fc038529e719d670ce492f175c^|af746e5155ca2d6c0dab00583ad03f7c
+echo 558eaff421659d7f6b151418cbaa5683^|96dd0a96292e6ec8f41aa3a258e7bf1b685e123b2c80e2b42d8ef270022df046^|e677cd655a16919b7ba22d10d803ca69
+echo 52a3a0c0daac33d1b44b62eed92b760e^|fba2d37f048fbab5899e5da38dfb32d1cc6c84fc02702f32f38b2b8ebd57dda8^|596ac2a9b1feee973de71962882a4d49
+echo 6cdb13a06dc2c05b24bdab37761d2ae3^|d43416972d79658a547d9ae5da85478bd2aa1d988de45082331f83782cadb7c5^|ad31a8afb4f73d6fd28dff2307064528
+echo 64c0ac3afd5de95b5aec10463f851d92^|b191f5e3abf264ec21a412391514748a8711991c5cf03feb47e4a88ce2c33e7d^|600d67b2ea76844de7d24c4e99c10ab8
+echo ca6ec55b63bffc858d61e379f0472279^|c0ce4f14be4a7e89d4a40be06ac30475428f3248afab048fdaa076f1659dca7d^|40b789dd3e6231dfe33e262e1cd3ef90
+echo 3c37122234a8acfaa09115e006be4991^|c16eb40a19960f0e3d8bb3960865f89db89db2c0b654c79195a60444e8c5c106^|9d56a0733ae2adbcc706263a77b3171d
+echo 59a6ad1f28bc557ed9b667d68229f0d4^|3a21996b9e0746d0294080a9f493d87d022193de3ca05b89c35b0c5af82f8e84^|0d06724d7743c81276f44ea227d195a6
+echo e659828305e2d164c2d814db125ab873^|247073de224c419faa1f8731336d0c96650a79f2c5e2110e0ac55a3f9182f9bc^|c21266e5f849d95e1237906c9bd1a430
+echo ae8b06c1fd5a3048183a015ed16de228^|94e3162e8cbd030f9f0ed2025ba3900b6dc50b88ebc79d456c6310732b9be010^|d916b3f0e783139db6e92ce0d3d21a5e
+echo 5ea4cebbabc7d67e5ef96aa97664763b^|075088f0be1bff41565480565b1e963a1883e9462efb16fd30d8edd8a855e1ea^|5dfcccd29c13a8f1c11738c197a15d0d
+echo 26879fb5b26712be1854e4c656debb41^|e5facdf7d04bc73e1dcc53a81a76a7117dd00b12ef19a4efeac7db5f810d96fb^|941ca56acdf4d0f53fe27382b625edd2
+echo 538aaf9017066aa2bedd9fb89c1c316d^|c09c4236452b69361f8d613509cb1e01c7abed9771848526c6b9f8ee57f22280^|2c68a61a9a55bba0795f4f9e47a31a51
+echo ba59b26b30d9ff9aa6f6e812cc4fccb4^|18f60d8faa50f2f4d34f35da910894ec85ce2ffdfff2094e5dfb2474b751fbb8^|8c2cdea6b62086ac67862a766e63b2c7
+echo a936536789dffaf2ca78e0c676c96326^|436bf693201f3bf8cd325ab9dd6e7776a5d2d5501d3ce778c497236808af90e4^|e6bc6c73b60be95cb6d58a0f25c370e1
+echo f4f9d054225005a1f26b3dad57898188^|7aa91197fc221f24a227ff321f12742c37f3eddc62ebb918c5b95701822c1aaa^|90a68e7f01cdb20ca47997e12c1329e9
+echo 61375977415328bc8c4f8d08beb1e044^|395f00b4e1a7db7fa23b4c8109c95d7e33196e5a34b7ebb3633d6c0cc2d32c47^|fdcc9771f2c14aefcbbda5c57ad43a2f
+)
+goto:eof
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+::Encrypted86_C1809_3 STREAMLINED
+::===============================================================================================================
+::===============================================================================================================
+:EncryptedStream86_C1809_3
+>>encrypted.txt (
+echo 07ffc255f899a9d56f8181b85903be2e^|ee02613ffd41f240c9788e022376cd8bde7039a1fbeb851bcc3d4eb86ac53c6e^|e5d572d0b88803393c2f0b7bcd89ef04
+echo d8e1df5751b9345ddf9fc7fcc934a7fa^|430c4bdf2fe9e854c09ceaae269d87c0e6adcadf21e9e4ac70905a98ee253d8d^|38726bbe4a433cc4fdd216c3b4b15d9f
+echo 666c2de3b8d1e89dfe93c64e919c99ce^|bd6a435aadcb8c10d2f355d3b43ef609d4e4d19e55384a44e471a233153cf8e1^|03e0dacd32f0dae79137674400d59785
+echo 2d426a4aba22fa743f687a5ad7add8b1^|0267fd14ff7e90cbb74771806cfe105ed99446711e8c975e05814ec4da98c70c^|4b753ee98dae58292ea3bfb250cbdfea
+echo 2045d2ea69030cd1f74266fae9d18549^|bf417fdb05df903e575759e659fb13eb499ca95464cc6063a50e835d26bb2262^|982bfed76cc30e02b74974f3647ff4d9
+echo a0b99bed92d8147c0c41853689d1a902^|e3545c1a77fea649c3027213a3138858930dedbbea82ff4e10b0b51777b9d660^|7b4f2eecc9989f34de8c81683a8f1437
+echo 285841090dccf3c131b9e1060e30fc0f^|7c027d1b81ae67404fd0ea6d1d9f6548f1a14f3abccb422c424e06d62f7869d8^|eb86336b6bcd3f627e11cb5f1301bcce
+echo 1c07e5cbbe38651e828faa504bc5f092^|02a347478d9a406bfffa0a883e1232e19f6d335a24559858e56b6610db0a951a^|d34c2bb1d24fe4a0bf6a7858e0436f4d
+echo 721fdd33295c06e37bbd90ae26154ba3^|d3254a4e196c2f0444a38a195f49380ac16f481181aba8851d5cb9d74904fd48^|b9de6393b3788d1738cca6abed243d27
+echo cf61437bbccf420062150e861a89df4f^|742e2652d2e37545d718e288ed2235a39c85b74e06b83ec754c2bf27a136274b^|722ecb296fe1bc950d2ab125defb4707
+echo 050bf795fd8e5df0fb88b3f2f9240638^|3b591288a78562620c11003b5366e6c5f9ff8cba01fd1dd525f22193962214ca^|d87f88dae92ad5f3dcea5dadb9a7e447
+echo cda2fb9be70dc8fb7362503c4d184971^|eab9b1dfe44f42f027731c30285dada0ae255a8d4de9e0c17b8f7d3ec950de2b^|356625661924c6dff44103c99be5f8ad
+echo 3f6b228b2c15287c2c618fc234532594^|394a1630f5a9dc59011544417a902a669b1363ce78154d62af16e18e27b7635c^|44b5211a5cb3a0dca87af301dc2d6217
+echo ec78c8a4b47922411558a88134f0a10f^|71afd070ed7b0b4b28a334f3b1008983bc375bd1c0f3855ea63153838475315c^|5c9e101ee529ba396f6986ae8323320f
+echo c7d74dbcefb6b4b4bb8a7ded7986a700^|c35c4a5a387ff5c82da601338c7c1c41c1b31f76e7588051a4d2e8c2d11ce5c7^|b933957af406f036f8027df8266bd5c3
+echo b4221a08d4bfdaa96acec70cc1f930f0^|0782aad489a621cd78486deaf679d9c41a5849f74e98e9d828afad4e83d0d26a^|6e722a4f775c6dafa3a440d50dd8040c
+echo 07b1e4cb6b8f9b7da72572b25e6a47b6^|c99ac434ebd3bca5ba5b1021afbb09cf64cce4aeee7d673043f1d0d99b232bb8^|e85b84482bb616c4dd4be9020fc33418
+echo 05ae521715e8dbbc2f82da1410384fd8^|eddd5fe691542a3140b966aa4acf5299d0c6a96be26e5c1727b89a46613f321d^|1b7ccf48bc4e491ac84c59dc527d1000
+echo effc7f26994401f42765d1d17cc50239^|17470889f90df9f588f94cfa81db9881376df9f9fc538db6c3ab0af6cc13684e^|f8f404ad2fdac134bf8246e7842d39c8
+echo a88ba0628c38a0ec769c44e6f1b8032a^|32f38b9f3347ae7162844135a8bd887cc9a501345962be329f118017fa0119a8^|65aff80f9c911b5e2187739592b84ff6
+echo 6285af03d02ecc8103015c6362563c37^|8a23acad991526e3940670a0f789a3afff8318fb1142a7ba7ae538b80cb15c0e^|090a138462bdb2efe3952b2111672059
+echo 2d0bec21a4203921b4f84f25d54fdf01^|5e842b8a23be04e0d85381772ef5546b852f48dba74f7bfc9b8f3037498663a8^|e662b540ed3e61cc1bee91b2d0c4d2c6
+echo 164475adbf6d71380b38b8266c08904c^|1f6527f7d07965d2517b7c4c8bba16f964f119362bf497499a9d81ae12373fb0^|dc0643225d86a78ed072ca8f31541ee4
+echo fa6b3a352fe796ab362162ba858438cf^|b0775db1bfc2896394eba062ae59eeb102c2b020548cbdb5659a36577430d98e^|fa3273f03e33c790dc1f200ebae74205
+echo ac881c74d2164adea31a8400b0bc1699^|ef823318b9a2ca4a4195c1e91a65e4896b651aaa46b195d96a112fcb6260172c^|66b9c5572fa5a34ecc85aac903b029ec
+echo 6c297c5e0af8657438086affc96effe4^|fcc862b0058c27b8f0adb16d4b6f701b3a69ac865c3daafa8e8596d70cd10732^|3546c0c0b10b2809d822917c31fd042a
+echo 1293089f7c94e04092fe91a5039f50b9^|475e4121ffb017e0ac99843327890c29758c3521f099ecbcdbc5424d10444875^|9e53e6b164369d62e9047a01069572d5
+echo a5e756b1acde0180d8123b817ccfb381^|9029a44f02eee541305252d735cbf32e882849cee8e0d74801316ada8b7e7159^|c813ff5fb03e33d5ee7dd8742c32a090
+echo f48adec81c16cd6ca0a97fab08e74f70^|0539573ab403313be9f1acf82de78d6525b8732047dadf3918d4e9a5a3bc685f^|7696b20b125fc37cfc2159d6266a9730
+echo 836921fe75207fac1dadbb1f915d245b^|e63f013cac2a7caecb6fe9d90ff226a72b81cb6fe2c7aab354bf2d2561ebec52^|3a79e8c5db90b3270340e98875894d5a
+echo 69747e3596e33df2a1067d78e61d2dbd^|282b3ddb34192953afb6e7de85aa94f462a2add543d0046860274f54a53d8f6d^|11f1859a9aaa849109445094df70d653
+echo cf5f7203ea3d558d4ea1693e00a8856a^|83536b022a1e326707eb0c40e64aa4fabda4f494ab8c4bacb3f927bc37764fad^|a2f74b78eac9fd04297a03dc51bc97c5
+echo 30db5820ec1296099728e706b2a44c47^|2f5e661d69287ebd8ffa3aeca17172d8b707d1c5aaafb9906ef2d0ab9b44498c^|064b8031f207ee01fc9357df770f7392
+echo 1f082434552a2e7420c393771f426e54^|42a71668a8a8b526c9c7e374cb8dd7bc011cd7f69f099166b3f61eea4eb99faf^|4a3210fe03fcea6591a7b1d52bed5f37
+echo 42da03a31e3aa5c930a3b8fa8c027698^|c71a8e02b3588df52568bcc570e6b53eb76e646793d1dd857bbdb1114a301129^|63b45d486d7043312f8e881608081ec7
+echo 2a8a5a49b5da018811d87428fcff7c2d^|5d3b168a559b8b8bffa08fe39f89c60e0dbadc3972c116057f6ec47d1cdf1906^|25e7446920a8913401c76bc09b50e1fa
+echo 19effbb2fa503c6155f94e6ec77d0819^|0a1876628a5f2e38672b47bf6cb24265e9b3dd0412baac7a5ca5f8945d8b82e2^|82db1d5483ef39d681e530e8b0828830
+echo 3092567b216a272f1e5e11515970042c^|63dc7c9b3b591cc671320dd76893737d1a2588ee63e9f7a46f244b7f478348e5^|7fbf90c91b13399bf29111c373ef43b9
+echo 4cd3e29cf84f0f0fd72241cef1d8e512^|0aff83e1e46753d4f00be91f1930eb8090df554a989cb5dc371fc467ab738d9a^|c26a1afc4d94514c33a83ffea40f747b
+echo 40b825c01bf7f5583a34817ba8e41d31^|c5f76524eae82483ba2f8a751d20f9564a13f46ce041ad9e34744f1a51df8dee^|e090cada9fa2914998925ef7e752c837
+echo 4db22f9c7b1f3c4315c21268272d551e^|80bd1c0178ce05a9848af42b82990a409220f65c8ec7856040dc270f9fe9c830^|57f9815fdda97e225f448f8b0798e34f
+)
+goto:eof
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+::DownloadStream64_B1809_3 STREAMLINED
+::===============================================================================================================
+::===============================================================================================================
+:DownloadStream64_B1809_3
+>>download.txt (
+echo 5ea6653705fb204ec0555d5702f767d6^|07868264895a044392f7abf3c87f6379d2f07bcb^|https://0x0.st/s5yb.bin
+echo 858ec1cae004680ea9a083e30faeb272^|86c590ad862688395e8c7f745652b376b971c2d2^|https://0x0.st/s5yc.bin
+echo a16ef942237ef8b9a3193aa5b4ba95ed^|e0fb54339bb2e71d98bc78ccc337ed46b061cb19^|https://0x0.st/s5yT.bin
+echo c4096025ecbb80ae2bd91602a166ac5b^|d7511920b6a64273207ac5f2dd5f4de34982aaf2^|https://0x0.st/s5yA.bin
+echo 0631340bf5c3f0271d124948a9d5310a^|657d26573050a0e7a30a07c003d5ab3157510e5f^|https://0x0.st/s5ym.bin
+echo 2192d8c267fb974456788b20f6e234c1^|3d21c984a61bf3b7dcc2d2c7a65d4876d7218042^|https://0x0.st/s5ya.bin
+echo c3776ba94b9453b8e59236cdd670a4f2^|87b8274f20487da673ac2e8888b30fd4e02b7028^|https://0x0.st/s5yB.bin
+echo 80cd9aa8ffb9cb39b37d5580466e2921^|96b97c38e0f3c0aa599aed88a208ca746303c06e^|https://0x0.st/s5yM.bin
+echo 0dd80e4360b9368785dd487fc5ee1c89^|d3e84e95c8db5bf4fb2c0469fda6454f47268e98^|https://0x0.st/s5yu.bin
+echo 89e21d2806bd2decfc82a5cddbc83e45^|aec058c22d56d137dcea9b37ea0fa5f1c94b0eca^|https://0x0.st/s5yS.bin
+echo 9d04815556a66608bccbf45f28843bfe^|e81a2faf2e129ae23ab0906f061cb87a8d705dd4^|https://0x0.st/s5yQ.bin
+echo d6ec07e9c4f830392b35b9adf5fcc98c^|b65953863306b01f1514c1179afb93de6424d3f0^|https://0x0.st/s5y1.bin
+echo e0a8afbfc8effa0ab319504117035718^|c3037eb140a888a724d1e22f78c8eb080db9f832^|https://0x0.st/s5yj.bin
+echo 2fc535ceff420b51cfd0b4efcd3caabe^|b0e9f9af78270d8c87671c026097528f0f1d2cbd^|https://0x0.st/s5ye.bin
+echo 0b7e16f5c728b32cead4158d4ead2e1f^|282ef06c0f6438524a0322d689c7fc5a8f45b973^|https://0x0.st/s5y2.bin
+echo dfb7f053de308982ca774ba1b350959d^|2a950fb8f5f3a487b6d74445e58857f3e4c43fa1^|https://0x0.st/s5y_.bin
+echo 4be5033d4e18b51233ca5a97b53cf819^|d4dfc996d3712383014cb2bdc0ab27a73e38de37^|https://0x0.st/s5yL.bin
+echo 5319482d4c9da627a5970d6cfdb245d5^|77023c580242757eded0711db678f9e4e1148d05^|https://0x0.st/s5y9.bin
+echo 13a8336c8b284bc0266546f1e0f1c610^|a34bd8c25a8a03f140c09495443fb664919a8b53^|https://0x0.st/s5yp.bin
+echo 8bfce449c6e31499a3ea7075a460ea96^|7e36efb99b5b434070f0903c7862b2c85f1b61d9^|https://0x0.st/s5yf.bin
+echo 08ff1337e20f327c51a946e1ae99d99f^|29691b334df987db1636f7c6a57cbbb95cfef7d0^|https://0x0.st/s5yO.bin
+echo 6fcf01fd8986ce79ad3a24b8a892d534^|727f9d8cfc6be99dd1d01807bfc5da50ed7943a2^|https://0x0.st/s5yV.bin
+echo 6b16585ab19fb6e3a8ad62cd6add9009^|155ac8d0a166e2695978c2392c9385978d89b26a^|https://0x0.st/s5yW.bin
+echo 8da54b35471a1bd9f5a57e625b660dba^|34cd18817a2febacdcca82f749b876cc9397851f^|https://0x0.st/s5y4.bin
+echo e3149d5a7c2c789a77dc7a6001697103^|2c2b9e3f0aac7fdfb088c0322ce1be1b644725c5^|https://0x0.st/s5yJ.bin
+echo f32c4c467b4ecf8e2e6cb71d2ecb59c9^|0bac83ae531af116b05ab1dbc2c422f2553cbc04^|https://0x0.st/s5yy.bin
+echo e1bdcc0e5c3e45532da24d9400438bd6^|ceb92a7b70c2ab652cb0826677624de130984396^|https://0x0.st/s5yw.bin
+echo 23258f404f8c80f60c582ab384988258^|c6b6103874ca3cd1c400b1e666f48f1b2741a6a6^|https://0x0.st/s5yx.bin
+echo 3a2f8cca39f6e9dd72446dab773e70c9^|d5a26731523a37f359ea91b42621143005f6fcd8^|https://0x0.st/s5yU.bin
+echo 4ddb2c655f29565e56b3d16b3a15d78a^|d1cc470e2e1536f2b32c1a104da2a7a41f200b19^|https://0x0.st/s5tb.bin
+echo e789cee74aabd05bcc44130824923e93^|a1eb44e3df6299bbad868273bab38e32f260fa18^|https://0x0.st/s5tc.bin
+echo af9627ada2f858232c2494fbb146eb01^|48d6cbc660921c8f7ff275307c50166800c68b9c^|https://0x0.st/s5tT.bin
+echo 1638c898d56d21651779622d0e4b7a4f^|07e60a670bd5fe73083d5a37b5d7cd997e214628^|https://0x0.st/s5tA.bin
+echo 5a4c11823d54647c96eee557f9735195^|9191c53a8ee3b1f4c707b3bdf16a55e536f84df4^|https://0x0.st/s5tm.bin
+echo 495aaec2b8546e319dc374366804d915^|f6b0d301a4faf1f8fbfc65b378efcd6ded778945^|https://0x0.st/s5ta.bin
+echo 2ace3e5e623cef955594d4c6b6973eeb^|fa08d42098f0a9dad4846ede539a5360b146a41d^|https://0x0.st/s5tB.bin
+echo f9c0c5d7ae4dfd5158ec5de908e5a85f^|77cc0a9d9e9853b32ce88a41a5bcc6b5f2d4b938^|https://0x0.st/s5tM.bin
+echo 3f90fd1b0de1f766adc3d6b49605e23b^|27f04ded8c769e9963c63abbbe073d44659c8925^|https://0x0.st/s5tu.bin
+echo ac86da8309084aacb5ed8bd4b3b04123^|b6acc82a66b28399bd71a8d364aaf1b118e80f23^|https://0x0.st/s5tS.bin
+echo 05fdba69f8111e705c4ebd22e7a493a1^|fc57669447ed4c456c2e36a836f815dcec907252^|https://0x0.st/s5tQ.bin
+echo 1b0aa95b1e65d8a41ee3600708a228c6^|382ad563542d8fe2176fefdf086c3bbe3e6c54c8^|https://0x0.st/s5t1.bin
+echo 6aa3257cdb617796723e3e96f95d1856^|de5fc829ce9a69ad40c843df58f978f63f14eca7^|https://0x0.st/s5tj.bin
+echo e6ce25819aad7dc7df4c02204b577149^|97c678f0f9ba808bd60c6e787164d9cbc59fb953^|https://0x0.st/s5te.bin
+echo 41933012de156f9d84c09a04dc5b9874^|a38aecb709d61340a77d0524fda2a85e97077527^|https://0x0.st/s5t_.bin
+echo f5a8dc878774cefce487943b423ab713^|cc4453ebe43756e13325aa835e347dbbbd6a65a7^|https://0x0.st/s5tL.bin
+echo dd21f317348636e5392f7ae5cc4445a3^|b23caf3a832671109930e90a413dbf927d1692ac^|https://0x0.st/s5t9.bin
+echo 0ad4deb83f23d252f6f3da3d579644dd^|3681f11bdf32b24a7229517da8226747be4915da^|https://0x0.st/s5tp.bin
+echo 79cfc9373a27680f7318410d9f07740c^|1a54c4f53d7421636fd5b6ec2575b6fd2f17596a^|https://0x0.st/s5tf.bin
+echo 7eb0d70262220e4c0031bf2859f79e2d^|2dd50ef0a348430c1a82176b333577a23160a462^|https://0x0.st/s5tO.bin
+echo ff895045faf47f58a0a06e3c150aa0ad^|94cf8000286100b3b94c66e8e5142aa5ddf05c48^|https://0x0.st/s5tV.bin
+echo bb1b6caf8eae4d1bce8ff8933f0002ee^|b7b3aa68b9a02e1973e8ffada2d74273452bf425^|https://0x0.st/s5tW.bin
+echo be81d51f2bf7cab487f34795f2f238a8^|392181c25b6bed6d81ca9738672d84c64e59697b^|https://0x0.st/s5t4.bin
+echo cd72f509db7d0693c48bd6bb7e08b07d^|fdf94655b0a034812036a73462f14b1671a3f042^|https://0x0.st/s5tJ.bin
+echo a6c15a8d8f416dfe037f11e49b56bb23^|ee91d2432acbf025c6cc6c63849cbf293af1e6f0^|https://0x0.st/s5ty.bin
+echo b3c60c63ef5eb4863e49c35877a2a23d^|9d30b50a599279237af081fc4bdaec7b78bd1618^|https://0x0.st/s5tt.bin
+echo 8f5790ba4e075ba5381c3b95e553303e^|31618863145983ea46b01eae764e595f79a2973b^|https://0x0.st/s5tv.bin
+)
+goto:eof
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+::DownloadStream64_C1809_3 STREAMLINED
+::===============================================================================================================
+::===============================================================================================================
+:DownloadStream64_C1809_3
+>>download.txt (
+echo 4c17d7c60dbe9793dad4358de2cd5b90^|37dccd76e11c4786c0f61467a1bbc4e065ba7def^|https://0x0.st/s5GS.bin
+echo 25c11ef0d774ce3a9bf526929c193c52^|df579099a72c11df25ba63922c4cb89c08458231^|https://0x0.st/s5GQ.bin
+echo 836632ec4ee9ee7d216b3f64089cdb76^|0c408db481fff41bcf1215b7608efc230d0e1f75^|https://0x0.st/s5G1.bin
+echo 69b03dacdbed43b954e44fa80ad725fd^|2322b681028656f00977bb113f400f9ecdf672f3^|https://0x0.st/s5Gj.bin
+echo 6dc2ce03f0ee608fa86a1d07f168080f^|ab24373ddd8996b6943bff9c1557833b968aca06^|https://0x0.st/s5Ge.bin
+echo fdf63b13807c948a8b6760892393ef67^|c52549e26a0af9478d07c1a1a5f052c4e567fbd8^|https://0x0.st/s5G2.bin
+echo 21f7551e62d6cf9d01fe606260ab2af1^|8019f1a4fe45a99e688212783dedebc5269cf5cf^|https://0x0.st/s5G_.bin
+echo eb5d937e9cb02d446f95eeae22c3d7a4^|04f785b783b9f292decdddfc9b7c1c6c269974b6^|https://0x0.st/s5GL.bin
+echo c3308f6ba6d95315b809258892a30225^|dcb22ef1c3c6e4bf1ab939eb7edb0201ff40f843^|https://0x0.st/s5G9.bin
+echo be177f24d4eef1a89e39088eca0e1b88^|d8a889c0c2d2b602ffbbdcb209e444123c3ff9df^|https://0x0.st/s5Gp.bin
+echo 746535b880004384382d67c39cd0ce9d^|20162c8866ef1c0eba459a166758cba1ee4bc682^|https://0x0.st/s5Gf.bin
+echo 0153302df5a747b336acbf568b9c951c^|b84bdb768c78a3a9ec8492e52dace043a0b72951^|https://0x0.st/s5GO.bin
+echo 84a67ca8c9da0d976189429f720945b0^|b6486c69b67c1df6513b1c44486590added7f103^|https://0x0.st/s5GV.bin
+echo c936639068852244aff3da6ac4e2f6b1^|4053440a1b0b2d47b43d4bda4d7e47bf01407885^|https://0x0.st/s5GW.bin
+echo 8ddbadf54aa13c6cdb9a8293c29284aa^|641a3f50c3f9567c514c4169bd2ee6630db358e7^|https://0x0.st/s5G4.bin
+echo 32a73ac1d4824e66943f9eb978bd4f43^|5084d099be7cc849ee9e8776beece1446fe80a87^|https://0x0.st/s5GJ.bin
+echo 66a100f6bad94b8e76f9cd4b02944a2f^|64fdcead1f37d1ffbe0210f05bac0b06c979f426^|https://0x0.st/s5Gy.bin
+echo bb303ee4ed8ce961f56514b0d798489e^|96e0b05451f9588b831843e531202dcb801e7f33^|https://0x0.st/s5Gt.bin
+echo 15b63c4d271b96aab3e9da9c7330ea2a^|231a18aaa973beeb808170a13e3b4167e93d8673^|https://0x0.st/s5Gv.bin
+echo 7220ab60c08e9f58cda0a4cb48c9d61b^|b674de119733bc606ecee5a54431b2bbd91d01c1^|https://0x0.st/s5Gw.bin
+echo 7bc13c31f5ba6011cbe76373353ed925^|515d70646a445dcfdce8539d758c26968fb36c2e^|https://0x0.st/s5Gx.bin
+echo 1e862dc3527a8428451881cddcb024a6^|1194066d6df7f670b2346a1fe57cf4a1f6b9f346^|https://0x0.st/s5G3.bin
+echo 120df7c7a66e3c4580f7ec715f6b416b^|eae42d2074ccd022762065a49c03c452e1383035^|https://0x0.st/s5GY.bin
+echo 9c3b19249a15689de91bec3a7926741f^|0b02271a2d318406e64db97639446fa77975f00f^|https://0x0.st/s5Gg.bin
+echo dd7940efa60b2397defce4ba38ee7b61^|78a5b9d2fcd417290f73f8fafed8b803f1468dbb^|https://0x0.st/s5GE.bin
+echo 3ac6abb937d8085666f610fa412e5375^|133c4caa1c996f77dd1703c548ce8f341bf4b589^|https://0x0.st/s5G6.bin
+echo 698c27d8d710ae7224e087ee9493066b^|51c7b059ec44c31200bc6b68b6f1a1ac01c47b8e^|https://0x0.st/s5GI.bin
+echo 2f6e2516ea620aa4d08a67bb3736ff89^|779c12537ca0c75e8b2e6cb39856c33cf6fde3d9^|https://0x0.st/s5GU.bin
+echo 282450a12fe53ec20f75ae23bd916220^|e40dbfc30301a92aa8eef600d3bc0ae4d2ecf94b^|https://0x0.st/s5G0.bin
+echo 31ed6d748a7e2be39fa491a461fb17f7^|b53c1c3808504625cf671522a0cb115944e2de42^|https://0x0.st/s5GG.bin
+echo 767a3c308bca9dbfadd3c62cb6519919^|11ad39b596b1276a4267345868d3f3753b12f6a9^|https://0x0.st/s5GD.bin
+echo 0133fb233876eb5ca7d2fe86db6cf819^|94662290203b6f995e4ce72c92d1c247cc7bb2c0^|https://0x0.st/s5Gk.bin
+echo 0e5407f1890f68086a641e19a5e7e8f9^|144b9c0fa9cf1fb7e7110aeb31f77841d95e6831^|https://0x0.st/s5Gd.bin
+echo 875dfb465671a5790961febcd0d1dc52^|1264358a7e16aee988770857418c9381c39ae599^|https://0x0.st/s5Gn.bin
+echo 5c6fce2af346104b135f25c1e3e1118a^|887463d55ce5b98df1d1392083beca2d9b677956^|https://0x0.st/s5G5.bin
+echo 9cc216e3059bc14b824907606880efd4^|df83f63dae44b868bfdfda65035fea22decad677^|https://0x0.st/s5GR.bin
+echo 48d35a99b6b311b215a14d261d1451c1^|42db33e70a6b0a476cd7b60464b69a7dffbbff2d^|https://0x0.st/s5G7.bin
+echo 5a5645b31b63d07962ce3bacc4633300^|c2bc5feb483095f5754142212e4cf80d2e8b1440^|https://0x0.st/s5Gh.bin
+echo a48c681f2b5c84a3b75760be2dc14b56^|1315edacd7507bcdda501228172c8c7a5e7e6890^|https://0x0.st/s5GF.bin
+echo d0a440298114abf41fc7abdfc097faaf^|e81eed4ced4ed6fc9700e86879ac0f4ecdc72b39^|https://0x0.st/s5GC.bin
+echo 8cb5fc545a113f43103cc2439db4650c^|5859d2566efaa2b8691a70f3bc0263b66099988e^|https://0x0.st/s5Dr.bin
+echo 2ca065a28bbfbaeef6b71e7d38c8a41f^|240c674bd989a306a7271584378edc4d09dc1ed8^|https://0x0.st/s5Ds.bin
+echo 093fa92dccab99349332dcfff9c3924b^|d44ab200edfc5082a5cf3938540c7090f3485cb9^|https://0x0.st/s5Dz.bin
+echo 11b192a65f21efd686bb038e3b2d5f65^|673b06eb57ce347341b356f3f3dd5ccbdeef310c^|https://0x0.st/s5Di.bin
+echo 61ee484e6303204a2dfa28f45abfa992^|b4e49451b11d1f0622cd9d54ab656fae9af36254^|https://0x0.st/s5D-.bin
+echo 2c97689a20c041f6bd61fdf146074b3d^|37bac596480432a77137170f24f2656cd09ef9b8^|https://0x0.st/s5Do.bin
+echo 005f2fb61f88b03193f5e2d6a0364c23^|0bb9f08d4c04dddf6f36e55f83c4048acf19c307^|https://0x0.st/s5DH.bin
+echo 11acce6631375f4b7c39b6ba69677f88^|ad9c9c191d2e1678ce7d01136ae9a40d82df081d^|https://0x0.st/s5DX.bin
+echo d0a7bb97ca2273b75842dbb41f89a2d9^|15babf485aef7800140f35fe94c67fb3fef113cb^|https://0x0.st/s5D8.bin
+echo 11a92e7d32fac187ac323c071110d635^|596d1c76911c6ac69666c0f1281e26cc9534e9fa^|https://0x0.st/s5DK.bin
+echo d696261a0adfcded697501bb4639b7d1^|1094d8064d40ee917bf41f020efece5f65e252aa^|https://0x0.st/s5DP.bin
+echo c0eea838a37284000358f6afd29eaf3d^|57e9d6cac70442ccd4ed824249511996516c839a^|https://0x0.st/s5DZ.bin
+echo 19fb6f010f204855e281476a8fa36690^|c771201e919afd84eea9562a3bf3f69a7dff9fa5^|https://0x0.st/s5DN.bin
+echo 8294eee41c6bbeef1e61f7072a116a0a^|9f4c47bb066aefc05adab5992bcdfca94284b801^|https://0x0.st/s5Dq.bin
+echo f1df1dbcb206f3004acc921fcbbb4d4c^|6c158005b67f5aa4aa900d8818a098453b242138^|https://0x0.st/s5Db.bin
+echo 6a604729370c9b95b0663d5b5ee07ea7^|4e9b1d04d7dfeb948fb89d9764cc1121a846eff7^|https://0x0.st/s5Dc.bin
+echo c994d116160e6e7190ab2d481571c7ed^|6afb9efff8d0adc08419bb929df18f98915d1b69^|https://0x0.st/s5DT.bin
+)
+goto:eof
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+::DownloadStream86_B1809_3 STREAMLINED
+::===============================================================================================================
+::===============================================================================================================
+:DownloadStream86_B1809_3
+>>download.txt (
+echo 2e34a9ba381c2d8cf6eb1d6948481af4^|b36efce2794ddd988548c17206ea09fe17712c6a^|https://0x0.st/s5gy.bin
+echo fa1d0e8292367de93ad7d54723b30fb1^|457237882292493718c5062e3c6303f3263be3fa^|https://0x0.st/s5gt.bin
+echo c95932bd63a58b72523683d9e683282b^|a1ce20e2e56fed6a0ad51757ff55720037f9316f^|https://0x0.st/s5gv.bin
+echo 317ea982076f92874a99dbfa833949d6^|a979267a5dfa5d1adfd9e759dff9ad2e06eca989^|https://0x0.st/s5gw.bin
+echo 739eb444c602acb8a9c24a89e2303390^|ba435a6e928812211fd8c7eb0d28fb496b673268^|https://0x0.st/s5gx.bin
+echo 3ae9ebfe946fc56468f836d47af254eb^|b35730307df761886ba43dca31eb0f2c0cc8b905^|https://0x0.st/s5g3.bin
+echo a4ec6b459307cfcd246c0dd556d9d438^|40d783123cd3e32cd7231f9667c8f0860224ba39^|https://0x0.st/s5gY.bin
+echo 772ef66430cdc6fc5ace9f0a637126ff^|a9b13223c8924fdef7a10853af9a4317858188a0^|https://0x0.st/s5gg.bin
+echo 497388995bacf884ee8647be2ec85cc8^|345996a07d07307cfbc75d4320e1095b18785ef9^|https://0x0.st/s5gE.bin
+echo fe8cb932c0bf40c354c065c354508939^|7e1721229d22c6033cdbd91a8cc98ad96900f009^|https://0x0.st/s5g6.bin
+echo 523f75cd62b5c3de6bed78fde11178e7^|75b83b7ca63bbfc2c1cd417ef9f454901cef66b1^|https://0x0.st/s5gI.bin
+echo 406b9ae207baac5103da31b58f5012e2^|28ba9e14c8bf35c002df6ee5bef84b25a01c2960^|https://0x0.st/s5gU.bin
+echo 5329a1ea45647a456344183e05af84be^|62b2096bce44349595d145d62487c016e457839c^|https://0x0.st/s5g0.bin
+echo f70c1d8d256be58c4eb850c4a3a23a0c^|9c086b134573d08617deef1a79f18330d3ce8cb5^|https://0x0.st/s5gG.bin
+echo 2806e9b60dba485d73665d9dc41487ae^|1488ed130563dc3ed9a9273d6669673a8180866a^|https://0x0.st/s5gD.bin
+echo ca8ac66278f14736e647fda7435144b8^|b8ab2fe50fc8a0fd739a4a5a230cd2f173492f44^|https://0x0.st/s5gk.bin
+echo 28c020d0e753edadcd5c9827b2996cf4^|ceaa53c2f21791ce6cbacbe37c9aa2cca4f3762a^|https://0x0.st/s5gd.bin
+echo db9d5b7666a5bad76cd64b6e625c8d5d^|199fb5ad70ef3432d60d77b551c9b74c35ef647b^|https://0x0.st/s5gn.bin
+echo ed6a18a0404f7eb7d46a24f8e3ec1a89^|67b3aac9cd033a735bb8d13df1fc2860800b9abf^|https://0x0.st/s5g5.bin
+echo c3a2b7341daa31000cd884b0d49d3618^|d2b8a0387e572aed2ea3264a48d6646bcfdb7fc2^|https://0x0.st/s5g7.bin
+echo 60c577736cf94c1be0a03b4d0a87e554^|930931d46bb4bd462a6339f3359f920bba1dcdab^|https://0x0.st/s5gh.bin
+echo 460b2efee339e77171ad7b98efcb1108^|01f34271da94f150d00b1dc178628ef58c2c2878^|https://0x0.st/s5gF.bin
+echo bb2452faab29735a8aa4537e141c4afd^|aa5b5587840ff5574a684fc3c339a15ad699fc83^|https://0x0.st/s5gC.bin
+echo c28163f41b0bec9963ac4239d0230b64^|2ac726891564473b8f53d13fe74269a1ac6a6a40^|https://0x0.st/s5Er.bin
+echo 558eaff421659d7f6b151418cbaa5683^|26f66db2e9b03680509c3394b792804546b14cc4^|https://0x0.st/s5Es.bin
+echo 52a3a0c0daac33d1b44b62eed92b760e^|e138e03620b63345994af980e95b9ea2e26386c6^|https://0x0.st/s5Ez.bin
+echo 6cdb13a06dc2c05b24bdab37761d2ae3^|89f70dfce07a6f72431a81526972f2dd43c2b3c8^|https://0x0.st/s5Ei.bin
+echo 64c0ac3afd5de95b5aec10463f851d92^|6e845852117b119a4cd9f352959a4c1dcb3e2757^|https://0x0.st/s5E-.bin
+echo ca6ec55b63bffc858d61e379f0472279^|5c87e79ebffdb6e642e06eb4d4f9a978b1bd7bc1^|https://0x0.st/s5Eo.bin
+echo 3c37122234a8acfaa09115e006be4991^|cf571e484f20b1c5bb41ce009151a3709bb40457^|https://0x0.st/s5EH.bin
+echo 59a6ad1f28bc557ed9b667d68229f0d4^|e90e00910a8b99d0e65ec534adae7d3b0505985c^|https://0x0.st/s5EX.bin
+echo e659828305e2d164c2d814db125ab873^|f8c226698243990d0ba54c2c676d9fc417cd388e^|https://0x0.st/s5E8.bin
+echo ae8b06c1fd5a3048183a015ed16de228^|498993e36d208c70451a67bc47b444e723ef58c3^|https://0x0.st/s5EK.bin
+echo 5ea4cebbabc7d67e5ef96aa97664763b^|f164d5a46b3b8496dfa1ebb4b5b8b4ffa91ccbf3^|https://0x0.st/s5EP.bin
+echo 26879fb5b26712be1854e4c656debb41^|dc23b7589147bc0d394c53728ba5ce453e27bd79^|https://0x0.st/s5EZ.bin
+echo 538aaf9017066aa2bedd9fb89c1c316d^|e33be8d5c45f69bfbba74ff8102e9df0bacb5e94^|https://0x0.st/s5EN.bin
+echo ba59b26b30d9ff9aa6f6e812cc4fccb4^|9ab65ebe28feb9f2f8fb7229514551fe072d4047^|https://0x0.st/s5Eq.bin
+echo a936536789dffaf2ca78e0c676c96326^|f65e1f14fb36d48ea89b5e122fd6ee035d8664c1^|https://0x0.st/s5Ec.bin
+echo f4f9d054225005a1f26b3dad57898188^|e38e463d92e182ab2e084e4812acde1419067f7a^|https://0x0.st/s5ET.bin
+echo 61375977415328bc8c4f8d08beb1e044^|e3f56a8d172e323abdb16c6f32bf7dc9f26e9074^|https://0x0.st/s5EA.bin
+)
+goto:eof
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+::DownloadStream86_C1809_3 STREAMLINED
+::===============================================================================================================
+::===============================================================================================================
+:DownloadStream86_C1809_3
+>>download.txt (
+echo 07ffc255f899a9d56f8181b85903be2e^|8525f05df4102607c74125529ffd5b31267ed918^|https://0x0.st/s5Ev.bin
+echo d8e1df5751b9345ddf9fc7fcc934a7fa^|2b03c22c401cac30f30b371d77ef504c5974a280^|https://0x0.st/s5Ew.bin
+echo 666c2de3b8d1e89dfe93c64e919c99ce^|e961952a0a28a4d69a864f03a95da7a4845678d5^|https://0x0.st/s5Ex.bin
+echo 2d426a4aba22fa743f687a5ad7add8b1^|ad517f7aa05fa2aff714b9abfa26d4beecc3c905^|https://0x0.st/s5E3.bin
+echo 2045d2ea69030cd1f74266fae9d18549^|7470d31dc0f3cde014cb82ae7e18dd7d59cf04d6^|https://0x0.st/s5EY.bin
+echo a0b99bed92d8147c0c41853689d1a902^|5cea2e8d7c5eac88b67dd2e53c474a7320bdaa3f^|https://0x0.st/s5Eg.bin
+echo 285841090dccf3c131b9e1060e30fc0f^|5da8cf581fe1471deb2888a5979671b592ee5465^|https://0x0.st/s5E6.bin
+echo 1c07e5cbbe38651e828faa504bc5f092^|2d5e5b126641a6365d866fdccf28f51259a4739d^|https://0x0.st/s5EI.bin
+echo 721fdd33295c06e37bbd90ae26154ba3^|a727ebaa7b41dc8d9f754ea399513fe37da9bf41^|https://0x0.st/s5El.bin
+echo cf61437bbccf420062150e861a89df4f^|ddf0850d7295df6f053f134940dd98853c6e47e0^|https://0x0.st/s5EU.bin
+echo 050bf795fd8e5df0fb88b3f2f9240638^|0693af446bd41f31c41aeccc26f2a9d75d16e1dc^|https://0x0.st/s5E0.bin
+echo cda2fb9be70dc8fb7362503c4d184971^|a6fc3e99e126edb552008d8122a1433cb5f4b6fc^|https://0x0.st/s5EG.bin
+echo 3f6b228b2c15287c2c618fc234532594^|9f23aa07825bbe10a2d399175e599a82cd2bb2d0^|https://0x0.st/s5ED.bin
+echo ec78c8a4b47922411558a88134f0a10f^|08eda7e9122bfc9f8ee6b680ac3cf8f3fa99f9e5^|https://0x0.st/s5Ek.bin
+echo c7d74dbcefb6b4b4bb8a7ded7986a700^|1a8f77d456ac4a0cf30b8382248056914765ff94^|https://0x0.st/s5Ed.bin
+echo b4221a08d4bfdaa96acec70cc1f930f0^|62a2f26e30a3ed1c029fc645f7bf59d1d3fb9426^|https://0x0.st/s5En.bin
+echo 07b1e4cb6b8f9b7da72572b25e6a47b6^|1825756b173ac70070dd5845420b2ea2e9e01081^|https://0x0.st/s5E5.bin
+echo 05ae521715e8dbbc2f82da1410384fd8^|ff4b588788ff86076bfba086a230a50d9de6a0b5^|https://0x0.st/s5ER.bin
+echo effc7f26994401f42765d1d17cc50239^|5ccf8aa01f6f8f5eef342479cf74d260d3890ed7^|https://0x0.st/s5E7.bin
+echo a88ba0628c38a0ec769c44e6f1b8032a^|2fbd7458db59de7490f894b18307aeec65ecae28^|https://0x0.st/s5Eh.bin
+echo 6285af03d02ecc8103015c6362563c37^|05536caf182e0b8ee06be77a05d9e393c5eac1c8^|https://0x0.st/s5EF.bin
+echo 2d0bec21a4203921b4f84f25d54fdf01^|85e639e05753936d6206c0d91219b4cf5399cecf^|https://0x0.st/s5EC.bin
+echo 164475adbf6d71380b38b8266c08904c^|44a47518fdadfccc4fd0e60371d367d9f4133a0c^|https://0x0.st/s56r.bin
+echo fa6b3a352fe796ab362162ba858438cf^|ed51b575bca18ea5c59870dbe2692d7cac74dd8f^|https://0x0.st/s56s.bin
+echo ac881c74d2164adea31a8400b0bc1699^|3948c45ea0cea8d658a6b45f8f7c007b59f8a3c9^|https://0x0.st/s56z.bin
+echo 6c297c5e0af8657438086affc96effe4^|915eca368d12210e67cb04f1b47d643e6cd47d82^|https://0x0.st/s56i.bin
+echo 1293089f7c94e04092fe91a5039f50b9^|a665023bde0d913e1a9324876a950f3e05934a19^|https://0x0.st/s56-.bin
+echo a5e756b1acde0180d8123b817ccfb381^|3e68df3a925f37efd6447c06e3c7a0f9f5abb178^|https://0x0.st/s56o.bin
+echo f48adec81c16cd6ca0a97fab08e74f70^|2d1280cb67082b4209bae8857cb914802138efd9^|https://0x0.st/s56H.bin
+echo 836921fe75207fac1dadbb1f915d245b^|9b078b03fe9f4be79c197857e0616e666ae9894b^|https://0x0.st/s56X.bin
+echo 69747e3596e33df2a1067d78e61d2dbd^|d2cc53453a22f1577c0ab23d184af5eed8c26a73^|https://0x0.st/s568.bin
+echo cf5f7203ea3d558d4ea1693e00a8856a^|5be360fc7a6a492ed579caf9766ea3c523bd0633^|https://0x0.st/s56K.bin
+echo 30db5820ec1296099728e706b2a44c47^|c98187c2dadd2cc249004a099d463b5c2f3209be^|https://0x0.st/s56P.bin
+echo 1f082434552a2e7420c393771f426e54^|dfade10111bddbd96e2e89cf3b3da7cb90eb882a^|https://0x0.st/s56N.bin
+echo 42da03a31e3aa5c930a3b8fa8c027698^|fdb17aad829709ee1c5ef920c0292c0bdfcdd842^|https://0x0.st/s56q.bin
+echo 2a8a5a49b5da018811d87428fcff7c2d^|4dc7d1d649cdb25831c1c3368f8c452ce3a583e7^|https://0x0.st/s56b.bin
+echo 19effbb2fa503c6155f94e6ec77d0819^|7c5da34721ec5ecb1155a7cd10e1def7805df87a^|https://0x0.st/s56c.bin
+echo 3092567b216a272f1e5e11515970042c^|cf83facb9fce2b7cc1684069bb727f8274977ebd^|https://0x0.st/s56T.bin
+echo 4cd3e29cf84f0f0fd72241cef1d8e512^|32d2ed08cf40f070bb2522921c0f7718afdec5e6^|https://0x0.st/s56A.bin
+echo 40b825c01bf7f5583a34817ba8e41d31^|27e0d9ae1990f5e001900900fd001999de7b78fc^|https://0x0.st/s56m.bin
+echo 4db22f9c7b1f3c4315c21268272d551e^|874a1c8a5f8166bd6916842647559927ece3737c^|https://0x0.st/s56a.bin
 )
 goto:eof
 :================================================================================================================
