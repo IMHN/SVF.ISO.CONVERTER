@@ -1,8 +1,8 @@
 :================================================================================================================
 ::===============================================================================================================
 :: Code by s1ave77 [frontend script] // [forums.mydigitallife.info]
-:: Bash script for File download by mkuba50 // [forums.mydigitallife.info]
-:: Win 7 source ISO decryption and download by mkuba50 // [forums.mydigitallife.info]
+:: Bash scripts for File download by mkuba50 // [forums.mydigitallife.info]
+:: Win 7/10 source ISO decryption and download by mkuba50 // [forums.mydigitallife.info]
 :: SVF Provider Enthousiast // [forums.mydigitallife.info]
 :================================================================================================================
 ::===============================================================================================================
@@ -24,6 +24,7 @@ for /f "tokens=2* delims= " %%a in ('reg query "HKLM\System\CurrentControlSet\Co
 ::===============================================================================================================
 set "database7ent=database.7ent.smrt"
 set "database7ult=database.7ult.smrt"
+set "database1809_4=database.1809.4.smrt"
 set "database1809_3=database.1809.3.smrt"
 set "database1809_1=database.1809.1.smrt"
 set "database1803_1=database.1803.1.smrt"
@@ -127,79 +128,86 @@ echo [CREDIT] mkuba50 for Win 7 Source decryption/download [forums.mydigitallife
 echo:
 call :MenuFooter
 echo:
-echo      [0] START 1809 PROCESS 3 [17763.194]
+echo      [0] START 1809 PROCESS 4 [17763.253]
 echo:
-echo      [1] START 1809 PROCESS 1 [17763.1]
+echo      [1] START 1809 PROCESS 3 [17763.194]
 echo:
-echo      [2] START 1803 PROCESS 1 [17134.1]
+echo      [2] START 1809 PROCESS 1 [17763.1]
 echo:
-echo      [3] START 1803 PROCESS 2 [17134.228]
+echo      [3] START 1803 PROCESS 1 [17134.1]
 echo:
-echo      [4] START 1803 PROCESS 3 [17134.285]
+echo      [4] START 1803 PROCESS 2 [17134.228]
 echo:
-echo      [5] START 1709 PROCESS 1 [16299.15]
+echo      [5] START 1803 PROCESS 3 [17134.285]
 echo:
-echo      [6] START 1709 PROCESS 2 [16299.125]
+echo      [6] START 1709 PROCESS 1 [16299.15]
 echo:
-echo      [7] START LTSC 2019 PROCESS [17763.1]
+echo      [7] START 1709 PROCESS 2 [16299.125]
 echo:
-echo      [8] START LTSB 2016 PROCESS [14393.0]
+echo      [8] START LTSC 2019 PROCESS [17763.1]
 echo:
-echo      [9] START LTSB 2015 PROCESS [10240.0]
+echo      [9] START LTSB 2016 PROCESS [14393.0]
 echo:
-echo      [A] START SERVER 2016 PROCESS [14393.0]
+echo      [A] START LTSB 2015 PROCESS [10240.0]
 echo:
-echo      [C] START SERVER 2019 PROCESS 1 [17763.0]
+echo      [C] START SERVER 2016 PROCESS [14393.0]
 echo:
-echo      [D] START SERVER 2019 PROCESS 2 [17763.107]
+echo      [D] START SERVER 2019 PROCESS 1 [17763.0]
+echo:
+echo      [E] START SERVER 2019 PROCESS 2 [17763.107]
 call :Footer
 echo      [B] BACK
 echo:
 call :MenuFooter
 echo:
-CHOICE /C 0123456789ACDB /N /M "[ USER ] YOUR CHOICE ?:"
+CHOICE /C 0123456789ACDEB /N /M "[ USER ] YOUR CHOICE ?:"
 if %errorlevel%==1 (
 	set "show=1809"
-	set "build=17763.194"
+	set "build=17763.253"
 	goto:SVFISOProcess1809_3
 )
 if %errorlevel%==2 (
 	set "show=1809"
+	set "build=17763.194"
+	goto:SVFISOProcess1809_3
+)
+if %errorlevel%==3 (
+	set "show=1809"
 	set "build=17763.1"
 	goto:SVFISOProcess1809
 )
-if %errorlevel%==3 (
+if %errorlevel%==4 (
 	set "show=1803"
 	set "build=17134.1"
 	goto:SVFISOProcess1803
 )
-if %errorlevel%==4 (
+if %errorlevel%==5 (
 	set "show=1803"
 	set "build=17134.228"
 	goto:SVFISOProcess1803
 )
-if %errorlevel%==5 (
+if %errorlevel%==6 (
 	set "show=1803"
 	set "build=17134.285"
 	goto:SVFISOProcess1803
 )
-if %errorlevel%==6 (
+if %errorlevel%==7 (
 	set "show=1709"
 	set "build=16299.15"
 	goto:SVFISOProcess1803
 )
-if %errorlevel%==7 (
+if %errorlevel%==8 (
 	set "show=1709"
 	set "build=16299.125"
 	goto:SVFISOProcess1803
 )
-if %errorlevel%==8 goto:SVFISOProcessLTSB19
-if %errorlevel%==9 goto:SVFISOProcessLTSB16
-if %errorlevel%==10 goto:SVFISOProcessLTSB15
-if %errorlevel%==11 goto:SVFISOProcessServer16
-if %errorlevel%==12 goto:SVFISOProcessServer19
-if %errorlevel%==13 goto:SVFISOProcessServer19Refresh
-if %errorlevel%==14 goto:SVFISOMainMenu
+if %errorlevel%==9 goto:SVFISOProcessLTSB19
+if %errorlevel%==10 goto:SVFISOProcessLTSB16
+if %errorlevel%==11 goto:SVFISOProcessLTSB15
+if %errorlevel%==12 goto:SVFISOProcessServer16
+if %errorlevel%==13 goto:SVFISOProcessServer19
+if %errorlevel%==14 goto:SVFISOProcessServer19Refresh
+if %errorlevel%==15 goto:SVFISOMainMenu
 goto:SVFISODownMenu
 :================================================================================================================
 ::===============================================================================================================
@@ -1356,7 +1364,7 @@ pause
 goto:SVFISODownMenu
 :================================================================================================================
 ::===============================================================================================================
-::1809 17763.194 PROCESS
+::1809 17763.194/253 PROCESS
 :SVFISOProcess1809_3
 pushd %~dp0
 ::===============================================================================================================
@@ -1371,34 +1379,64 @@ if %errorlevel%==1 set "type=consumer"
 if %errorlevel%==2 set "type=business"
 call :Footer
 call :LangChoice
-call :DB1809_3
-for /f "tokens=1,2,3,4* delims=|" %%a in ('type "%database1809_3%" ^| findstr /i "%lang%" ^| findstr /i "%arch%" ^| findstr /i "%type%"') do (
-	set "fshare=%%d"
-	set "fhash=%%b"
-	set "fname=%%c"
-)
-if "%arch%"=="x86" (
-	if "%type%"=="consumer" (
-		set "siename=en_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_dea9975f"
-		set "siehash=e9d786f42b7893936aa1f60bb7d64d1be9cb1630"
-		set "silink=Cons_enUS_x86_2_Cons_XX_x86"
+if "%build%"=="17763.194" (
+	call :DB1809_3
+	for /f "tokens=1,2,3,4* delims=|" %%a in ('type "%database1809_3%" ^| findstr /i "%lang%" ^| findstr /i "%arch%" ^| findstr /i "%type%"') do (
+		set "fshare=%%d"
+		set "fhash=%%b"
+		set "fname=%%c"
 	)
-	if "%type%"=="business" (
-		set "siename=en_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_0f9f5302"
-		set "siehash=238e322a4e6915aa369d704998c56af683e7493f"
-		set "silink=Bus_enUS_x86_2_Bus_XX_x86"
-))
-if "%arch%"=="x64" (
-	if "%type%"=="consumer" (
-		set "siename=en_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_d7d23ac9"
-		set "siehash=cad7c3592fd976512324716598993c358b34877e"
-		set "silink=Cons_enUS_x64_2_Cons_XX_x64"
+	if "%arch%"=="x86" (
+		if "%type%"=="consumer" (
+			set "siename=en_windows_10_consumer_editions_version_1809_updated_dec_2018_x86_dvd_dea9975f"
+			set "siehash=e9d786f42b7893936aa1f60bb7d64d1be9cb1630"
+			set "silink=Cons_enUS_x86_2_Cons_XX_x86"
+		)
+		if "%type%"=="business" (
+			set "siename=en_windows_10_business_editions_version_1809_updated_dec_2018_x86_dvd_0f9f5302"
+			set "siehash=238e322a4e6915aa369d704998c56af683e7493f"
+			set "silink=Bus_enUS_x86_2_Bus_XX_x86"
+	))
+	if "%arch%"=="x64" (
+		if "%type%"=="consumer" (
+			set "siename=en_windows_10_consumer_editions_version_1809_updated_dec_2018_x64_dvd_d7d23ac9"
+			set "siehash=cad7c3592fd976512324716598993c358b34877e"
+			set "silink=Cons_enUS_x64_2_Cons_XX_x64"
+		)
+		if "%type%"=="business" (
+			set "siename=en_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_f03937a3"
+			set "siehash=7153e3071366017a24c1fda22c0d1e486dbb0401"
+			set "silink=Bus_enUS_x64_2_Bus_XX_x64"
+)))
+if "%build%"=="17763.253" (
+	call :DB1809_4
+	for /f "tokens=1,2,3,4* delims=|" %%a in ('type "%database1809_4%" ^| findstr /i "%lang%" ^| findstr /i "%arch%" ^| findstr /i "%type%"') do (
+		set "fshare=%%d"
+		set "fhash=%%b"
+		set "fname=%%c"
 	)
-	if "%type%"=="business" (
-		set "siename=en_windows_10_business_editions_version_1809_updated_dec_2018_x64_dvd_f03937a3"
-		set "siehash=7153e3071366017a24c1fda22c0d1e486dbb0401"
-		set "silink=Bus_enUS_x64_2_Bus_XX_x64"
-))
+	if "%arch%"=="x86" (
+		if "%type%"=="consumer" (
+			set "siename=en_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_c7dea8ea"
+			set "siehash=4901c33ec21954b5812c3e1a69b101679636c5e2"
+			set "silink=Cons_enUS_x86_2_Cons_XX_x86"
+		)
+		if "%type%"=="business" (
+			set "siename=en_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_450c57c2"
+			set "siehash=b9d8d8cd3e59e76b128342689ab3d10cbf58fb8e"
+			set "silink=Bus_enUS_x86_2_Bus_XX_x86"
+	))
+	if "%arch%"=="x64" (
+		if "%type%"=="consumer" (
+			set "siename=en_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_e2200b79"
+			set "siehash=e955971e3bf398b9859332b484cf868ec27bdb8e"
+			set "silink=Cons_enUS_x64_2_Cons_XX_x64"
+		)
+		if "%type%"=="business" (
+			set "siename=en_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_72a665f1"
+			set "siehash=d56c035ed790620cbef1971139e75707741e6716"
+			set "silink=Bus_enUS_x64_2_Bus_XX_x64"
+)))
 cls
 call :Header "[HEADER] %show% [%build%] SVF ISO CONVERSION"
 echo [ INFO ] Source: %siename%
@@ -1425,24 +1463,44 @@ if not exist "%fname%.iso" (
 	if not exist "%siename%.iso" (
 		echo [ INFO ] Generating Link List.
 		call :Footer
-		if "%arch%"=="x64" (
-			if "%type%"=="consumer" (
-				call :EncryptedStream64_C1809_3
-				call :DownloadStream64_C1809_3
-			)
-			if "%type%"=="business" (
-				call :EncryptedStream64_B1809_3
-				call :DownloadStream64_B1809_3
-		))
-		if "%arch%"=="x86" (
-			if "%type%"=="consumer" (
-				call :EncryptedStream86_C1809_3
-				call :DownloadStream86_C1809_3
-			)
-			if "%type%"=="business" (
-				call :EncryptedStream86_B1809_3
-				call :DownloadStream86_B1809_3
-		))
+		if "%build%"=="17763.194" (			
+			if "%arch%"=="x64" (
+				if "%type%"=="consumer" (
+					call :EncryptedStream64_C1809_3
+					call :DownloadStream64_C1809_3
+				)
+				if "%type%"=="business" (
+					call :EncryptedStream64_B1809_3
+					call :DownloadStream64_B1809_3
+			))
+			if "%arch%"=="x86" (
+				if "%type%"=="consumer" (
+					call :EncryptedStream86_C1809_3
+					call :DownloadStream86_C1809_3
+				)
+				if "%type%"=="business" (
+					call :EncryptedStream86_B1809_3
+					call :DownloadStream86_B1809_3
+		)))
+		if "%build%"=="17763.253" (			
+			if "%arch%"=="x64" (
+				if "%type%"=="consumer" (
+					call :EncryptedStream64_C1809_4
+					call :DownloadStream64_C1809_4
+				)
+				if "%type%"=="business" (
+					call :EncryptedStream64_B1809_4
+					call :DownloadStream64_B1809_4
+			))
+			if "%arch%"=="x86" (
+				if "%type%"=="consumer" (
+					call :EncryptedStream86_C1809_4
+					call :DownloadStream86_C1809_4
+				)
+				if "%type%"=="business" (
+					call :EncryptedStream86_B1809_4
+					call :DownloadStream86_B1809_4
+		)))
 		call :GenerateList
 		call :Footer
 		echo [ INFO ] Downloading Source ISO.
@@ -1464,7 +1522,8 @@ if not exist "%fname%.iso" (
 		call :Footer
 		echo [ INFO ] Decrypting ISO file.
 		call :Footer
-		call :DecryptISO "%siename%.iso"
+		if "%build%"=="17763.194" call :DecryptISO "%siename%.iso"
+		if "%build%"=="17763.253" call :DecryptISONew "%siename%.iso"
 		call :Footer
 		call :ISOHashCheck "%siehash%", "%siename%"
 		call :Footer
@@ -2040,12 +2099,12 @@ exit
 ::===============================================================================================================
 ::TITLE
 :TITLE
-title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.32.01
+title s1ave77s þ S-M-R-T SVF ISO CONVERTER þ v0.34.01
 goto:eof
 ::===============================================================================================================
 ::VERSION
 :VERSION
-set "svfisoconverter=v0.32.01"
+set "svfisoconverter=v0.34.01"
 goto:eof
 :================================================================================================================
 ::===============================================================================================================
@@ -2183,6 +2242,49 @@ if [%3] == [] goto :EOF
 echo Decrypting %1...
 set "newFile=%file:\=\\%"
 "%~dp0files\openssl.exe" aes256 -d -K %2 -iv %3 -in "%1" | "%~dp0files\busybox" ash -c "cat >>"%newFile%""
+goto:eof
+:================================================================================================================
+::===============================================================================================================
+:: DECRYPT ISO NEW
+:DecryptISONew
+if [%1] == [] echo No name of file provided && goto :EOF
+set "file=%1"
+if exist %file% echo %file% exists && goto :EOF
+set "OPENSSL_CONF=%~dp0files\openssl.conf"
+set "HOME=%~dp0"
+pushd %~dp0
+if not exist encrypted echo Directory "encrypted" does not exist && goto :EOF
+if not exist datainfo.txt echo datainfo.txt does not exist && goto :EOF
+set "sha1="
+set "computedSha1="
+for /F "tokens=* delims=" %%i in (datainfo.txt) do set "%%i"
+echo Preparing files...
+for %%i in (encrypted\%name%.*.obf) do (
+    echo Preparing %%~nxi...
+rem #For some arbitrary reason known only by Microsoft the variable does not
+rem #want to load here, so I had to work around this shit this way.
+    call :GET_DATA_FOR_FILE "%%i"
+    if "[!FILE_DATA_RESPONSE!]" == "[]" echo An error has occurred & exit /b 1
+    echo !FILE_DATA_RESPONSE! | "%~dp0files\busybox.exe" base64 -d | "%~dp0files\busybox.exe" dd of="%%i" bs=64 count=1 conv=notrunc 2>NUL
+    if %errorlevel% NEQ 0 echo An error has occurred & exit /b 1
+    rename "%%i" "%%~ni" >NUL
+)
+::We have to test the archive before unpacking, to see if it is correct,
+::because pipes do not give errorlevel sent by 7-Zip on fail.
+echo.
+echo Testing archive...
+"%~dp0files\7za.exe" -p%pass% t encrypted\%name%.001
+if %errorlevel% NEQ 0 echo An error has occurred & exit /b 1
+echo.
+echo Unpacking and decrypting data...
+"%~dp0files\7za.exe" -p%pass% -bso2 -bsp2 -so e encrypted\%name%.001 %name% | "%~dp0files\openssl.exe" camellia256 -d -K %key% -iv %iv% -out "%file%"
+echo.
+goto:eof
+::===============================================================================================================
+::===============================================================================================================
+:GET_DATA_FOR_FILE
+if "[%1]" == "[]" goto :EOF
+set "FILE_DATA_RESPONSE=!file_%~n1!"
 goto:eof
 :================================================================================================================
 ::===============================================================================================================
@@ -2877,6 +2979,170 @@ goto:eof
 	echo ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	echo:
     pause
+goto:eof
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+::DB1809_4 STREAMLINED
+::===============================================================================================================
+::===============================================================================================================
+:DB1809_4
+>>database.1809.4.smrt (
+echo ar-sa^|735165d5f49819ae260398d4ef482528287c5a3e^|ar_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_1ab55427^|idFerQyU8irC4dy
+echo ar-sa^|8bf3294129dd1ebb8ac06a410adf4718a39d6db3^|ar_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_7d7a0ea5^|idFerQyU8irC4dy
+echo ar-sa^|0ec937d5e9444d7eacdde827d809d7811b7c4b74^|ar_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_53c808e8^|idFerQyU8irC4dy
+echo ar-sa^|08b8b5a4d9aeb30c9afaa48e12daaf779df6dc2a^|ar_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_a8016a56^|idFerQyU8irC4dy
+echo bg-bg^|8f97506dd1d0ba8fd5685e8742c63281f115c1e5^|bg_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_0d1da817^|idFerQyU8irC4dy
+echo bg-bg^|aa157ff90ed3ab3ccc7e8e4e5b7212d510c8e767^|bg_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_7a9bcf88^|idFerQyU8irC4dy
+echo bg-bg^|7b6eb02cac99f811a2659073c2c13540231f48c8^|bg_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_5e5927b0^|idFerQyU8irC4dy
+echo bg-bg^|4fd42b5ed0b4b018ab0d73cd7744c42c4384c984^|bg_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_10f23d3a^|idFerQyU8irC4dy
+echo cs-cz^|a2e2d969b68660b293803983548c33a8ef99626b^|cs_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_747c0499^|idFerQyU8irC4dy
+echo cs-cz^|e7340d601706166cc2ec436a3a16801160c157e1^|cs_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_8612a069^|idFerQyU8irC4dy
+echo cs-cz^|1a96645011780651db0750f13f2595c9b3034ea4^|cs_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_e12c559b^|idFerQyU8irC4dy
+echo cs-cz^|382394fe76bb9e663d368958e4fa0f8a3229f6f0^|cs_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_2349dd46^|idFerQyU8irC4dy
+echo da-dk^|09e242d8066a5857c3e2bece43338e7142241daa^|da_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_d330e7e6^|idFerQyU8irC4dy
+echo da-dk^|4507178f1b49864eeb2f01f999340a61fa352581^|da_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_5d9e7507^|idFerQyU8irC4dy
+echo da-dk^|5bda94e4327c65b896a57204ae73eb9dda38aead^|da_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_53a589da^|idFerQyU8irC4dy
+echo da-dk^|560d245c45c3165723934c47d27c3b61b351ac63^|da_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_46837af7^|idFerQyU8irC4dy
+echo de-de^|6ca82f98f73b365039746e18b7152753ad6531fa^|de_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_9232d5b1^|idFerQyU8irC4dy
+echo de-de^|cf7fbcdadbd3523b00465a62333a5b5ed0985c27^|de_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_7315ddd8^|idFerQyU8irC4dy
+echo de-de^|b994bb544132a61b706f881a1d04c404d6ba28ef^|de_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_0b2351c1^|idFerQyU8irC4dy
+echo de-de^|8fabdc1050badbd632a95bde5a659f65e22b4b6e^|de_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_f8ab9b1a^|idFerQyU8irC4dy
+echo el-gr^|bac6890a09dcc1bf38f53bfb6034419085898279^|el_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_6fe62116^|idFerQyU8irC4dy
+echo el-gr^|2ad9dc4fe292114379fa92755f67540c4f002db9^|el_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_6f37e01d^|idFerQyU8irC4dy
+echo el-gr^|d06cc8d64707fdbe84492f34ee8af751b82ee22e^|el_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_13add29a^|idFerQyU8irC4dy
+echo el-gr^|905029e1e7262fd515819c5264894e682951b862^|el_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_2e8cad62^|idFerQyU8irC4dy
+echo en-us^|4901c33ec21954b5812c3e1a69b101679636c5e2^|en_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_c7dea8ea^|idFerQyU8irC4dy
+echo en-us^|e955971e3bf398b9859332b484cf868ec27bdb8e^|en_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_e2200b79^|idFerQyU8irC4dy
+echo en-us^|b9d8d8cd3e59e76b128342689ab3d10cbf58fb8e^|en_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_450c57c2^|idFerQyU8irC4dy
+echo en-us^|d56c035ed790620cbef1971139e75707741e6716^|en_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_72a665f1^|idFerQyU8irC4dy
+echo es-es^|a4b59eec3a44eb0cc280f03b9f6536ca7f50bae2^|es_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_731bb2a1^|idFerQyU8irC4dy
+echo es-es^|323f8d0e45557ed5a80066205841fd943238bd83^|es_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_9deaab60^|idFerQyU8irC4dy
+echo es-es^|8558028207dcc630c622731f5b0881b4fd7967f5^|es_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_2048e258^|idFerQyU8irC4dy
+echo es-es^|9a8c4dd0aeb21b7ca55ac447c30f97ff35170c3e^|es_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_db500d7f^|idFerQyU8irC4dy
+echo es-mx^|e398b0ff11fe4c98ba82498d4964ef05804cbe48^|es-mx_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_b03255e6^|idFerQyU8irC4dy
+echo es-mx^|83beb5e9b0b17218feefeacb0cb3338eacc30f08^|es-mx_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_a7c36b2f^|idFerQyU8irC4dy
+echo es-mx^|539ab387db7e651b3c3af7864e01a68449604908^|es-mx_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_30e56c4c^|idFerQyU8irC4dy
+echo es-mx^|ebb6c8d3dbd65224fdc2fa96398ad20baff22de6^|es-mx_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_ab56d89c^|idFerQyU8irC4dy
+echo et-ee^|6e881b4b181c41d03c83abcf2ca1a42295b87e4a^|et_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_3a681426^|idFerQyU8irC4dy
+echo et-ee^|e290c6088b2a9428316e1f7522bb3512af7a640f^|et_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_7aff5dd6^|idFerQyU8irC4dy
+echo et-ee^|41f0fc92a661af04135624ba9575cfefbf7f2ead^|et_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_1b0b5c51^|idFerQyU8irC4dy
+echo et-ee^|0de6daf5825fd4f69e7be23aa934745c4d15675d^|et_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_307ed5ba^|idFerQyU8irC4dy
+echo fi-fi^|de4d03a77dad8ce9ecaa8d81eee942eb6bba92d4^|fi_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_8b1ba0b0^|idFerQyU8irC4dy
+echo fi-fi^|a38ac6b0efaed6b9d12bd2691886f5b6c8d78ea8^|fi_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_02e8405e^|idFerQyU8irC4dy
+echo fi-fi^|762b76e20f4b8ba73b40fd35f29cb5ecd30dc705^|fi_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_adccf726^|idFerQyU8irC4dy
+echo fi-fi^|e53aaea145754b1d092ce667529ea1d0b5d8e042^|fi_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_06f5c30b^|idFerQyU8irC4dy
+echo fr-ca^|aa03f71ce4ebbfe6f4c4177a7963a6c350be6a66^|fr-ca_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_ebf78180^|idFerQyU8irC4dy
+echo fr-ca^|b08214979efdca0c16a292bff4b107d8cfa2377f^|fr-ca_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_cf45e6b6^|idFerQyU8irC4dy
+echo fr-ca^|c505892e7867de396518657cd06f58d637cc4f88^|fr-ca_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_eac8f37d^|idFerQyU8irC4dy
+echo fr-ca^|cd298efcf171874a3c362a63557e958872839015^|fr-ca_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_afa5c798^|idFerQyU8irC4dy
+echo fr-fr^|b9ab13268d7d094cfa9076b10d7f3bbea8736338^|fr_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_8a2e2aa3^|idFerQyU8irC4dy
+echo fr-fr^|a17e208bcd65f00a07c8241fc13bed5d099b2b3c^|fr_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_13fce75e^|idFerQyU8irC4dy
+echo fr-fr^|36d91f1fe437fee415f03744d1ca021abf4c93f9^|fr_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_7591dd1e^|idFerQyU8irC4dy
+echo fr-fr^|6b7a78f0b2ebb79b4389803a23f1d87d9ba7da03^|fr_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_6d24dd8b^|idFerQyU8irC4dy
+echo he-il^|93c2257cd1bd7f8023e2cc2d9805a482271b07e4^|he_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_58264a32^|idFerQyU8irC4dy
+echo he-il^|d8566037e100c1929789ff10fe3c5c7ba316aeb4^|he_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_45f5abcd^|idFerQyU8irC4dy
+echo he-il^|76495fd53dfc5eafe7ac0364496b10d76553c744^|he_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_e9eee835^|idFerQyU8irC4dy
+echo he-il^|f4b9821a64d2aa85319958a0dc2dce95eb75169c^|he_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_e403fa16^|idFerQyU8irC4dy
+echo hr-hr^|ed1ad9cc422b8bec83c55d674bccc4bf67aa6dee^|hr_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_a5fa6b33^|idFerQyU8irC4dy
+echo hr-hr^|99991c512e6b9c5595b351cea23aeb4ed3164a0a^|hr_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_5d32ebbe^|idFerQyU8irC4dy
+echo hr-hr^|469dc9ecb7448ad73983f9d764e6e7c12340d7ee^|hr_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_b0b51f6f^|idFerQyU8irC4dy
+echo hr-hr^|3ae1c1be2b267da9af1e82bda6212cbad42034af^|hr_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_bf2849a4^|idFerQyU8irC4dy
+echo hu-hu^|d6b51ee4eccf875eea603ac3687eda2ac3bc37b4^|hu_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_cfff3f58^|idFerQyU8irC4dy
+echo hu-hu^|cc6fe25565c5ac04840b9f1623e97ca196649703^|hu_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_e6631a29^|idFerQyU8irC4dy
+echo hu-hu^|f2369b30683171f592cd84eb331f6a3bfd3d9838^|hu_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_2ebb5454^|idFerQyU8irC4dy
+echo hu-hu^|e33da2bf4ddb97bc7b40f5163099ad8a9073826e^|hu_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_9bf47aa2^|idFerQyU8irC4dy
+echo it-it^|eaec053fb1fc8d06612d5d0ca0ebbb0f4adc2e34^|it_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_cbc5826e^|idFerQyU8irC4dy
+echo it-it^|57797dc834f9477e4b3bc9f8c3cb69a4799beba3^|it_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_eafdb015^|idFerQyU8irC4dy
+echo it-it^|e43209fd9b766c8ca1f49c6ea67ae34012f9090e^|it_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_718699c8^|idFerQyU8irC4dy
+echo it-it^|c2c4452afbca4f196b041f832fbc66e12aab0332^|it_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_6828a1ef^|idFerQyU8irC4dy
+echo ja-jp^|221f628e0c61da20b8f332b0c851df2944ccd34a^|ja_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_f7f9ff28^|idFerQyU8irC4dy
+echo ja-jp^|0bda119f07f1e6816b3fff7c235da7ae23f106ec^|ja_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_f93d4d5a^|idFerQyU8irC4dy
+echo ja-jp^|5055378b656e8a8fd0cc95e1be6ee9e18d3d5f2b^|ja_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_0bf7cd79^|idFerQyU8irC4dy
+echo ja-jp^|b04853c81fc50c6a983cf32a8aea8c0a80bda6f5^|ja_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_1737acf2^|idFerQyU8irC4dy
+echo ko-kr^|700a2135d0d539af79afc60db3a024a7e1e8cf15^|ko_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_7948fdb3^|idFerQyU8irC4dy
+echo ko-kr^|1f5fced08ea6274d75002ca2d718043b2c3425e0^|ko_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_3c8f6ce4^|idFerQyU8irC4dy
+echo ko-kr^|d2d8613caaa59c0beca489c3bf2a1eaa71ee8c32^|ko_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_31e0ae63^|idFerQyU8irC4dy
+echo ko-kr^|95d7e3f1fb792553c35c15a24bc8d768cb6d78f1^|ko_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_33c7429e^|idFerQyU8irC4dy
+echo lt-lt^|3de4dc30890cdf3fc6633e432d5e03705081f667^|lt_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_bcee39a3^|idFerQyU8irC4dy
+echo lt-lt^|0433a906b8180b0607771fcbf651c186fcc1e714^|lt_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_ebd57ac1^|idFerQyU8irC4dy
+echo lt-lt^|7a784114c83ba6751629309b104a1832d51654f9^|lt_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_fd036756^|idFerQyU8irC4dy
+echo lt-lt^|7d47cc158f6c2912b6533f5fbe3863ae9453856e^|lt_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_d4430eb4^|idFerQyU8irC4dy
+echo lv-lv^|f010dcc66b8ec9b924b2377d7ec86e24f2825d8e^|lv_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_b4905023^|idFerQyU8irC4dy
+echo lv-lv^|e893bcca5e234b4c8210f70386029f0b78b6e9fc^|lv_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_6974cde1^|idFerQyU8irC4dy
+echo lv-lv^|fdf872edbb2f6e21a46ebd05b19d022a931ed5a5^|lv_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_e6698e85^|idFerQyU8irC4dy
+echo lv-lv^|82342416365233e41090172456663e4f7d8f064e^|lv_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_6ad87909^|idFerQyU8irC4dy
+echo nb-no^|7313ffda651d017443e042cc0104a0d22c3b9acc^|nb_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_15da7d1f^|idFerQyU8irC4dy
+echo nb-no^|5f2695a7ca680c25da1de867203240dfef32ebc6^|nb_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_eac779d7^|idFerQyU8irC4dy
+echo nb-no^|2953ec8709894cc589813b24aba9198e3e5505e5^|nb_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_b8679adc^|idFerQyU8irC4dy
+echo nb-no^|5c12072ee1fb16c239f22d3fc6208527c98729b8^|nb_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_bcbb8cb8^|idFerQyU8irC4dy
+echo nl-nl^|b0665dba92538946047d83ede1cb292f8d5705f5^|nl_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_5a34d5a0^|idFerQyU8irC4dy
+echo nl-nl^|be4031b551719109f11e853128f9f37736c33b6c^|nl_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_798f498f^|idFerQyU8irC4dy
+echo nl-nl^|1824070e319d88e0444852ec964b732101a3147f^|nl_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_dacf39fe^|idFerQyU8irC4dy
+echo nl-nl^|0fbad11563fd5b1a5c8e0ef92e91223458a1385a^|nl_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_d242fc80^|idFerQyU8irC4dy
+echo pl-pl^|fe70e352fa2865acc8da3ce94c291499f6484d11^|pl_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_9423c872^|idFerQyU8irC4dy
+echo pl-pl^|9b532c542f67d3cf6dff0716c75c077b10655e23^|pl_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_38c61c97^|idFerQyU8irC4dy
+echo pl-pl^|4a09c0d9f50da6d035758c34fe42b8fc9154603d^|pl_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_2a4feefb^|idFerQyU8irC4dy
+echo pl-pl^|870c74a6884510c9744f214c0cac81a6f511f7d7^|pl_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_0421435a^|idFerQyU8irC4dy
+echo pt-br^|f79e604a4fbc6ec4c2b78eef1ee37e2e101694e3^|pt_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_c37c1411^|idFerQyU8irC4dy
+echo pt-br^|92f42d6ce2ce717273354871456159e39bc33525^|pt_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_990351b7^|idFerQyU8irC4dy
+echo pt-br^|1e23d154fae21115c0e2867d53f0cfca50b84702^|pt_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_fec22148^|idFerQyU8irC4dy
+echo pt-br^|dc1448e739b043a11e1e034dffd326824eb31db6^|pt_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_b3350013^|idFerQyU8irC4dy
+echo pt-pt^|437216531729a9c2695ae35c8b4cf87e416f60fe^|pp_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_a54befb6^|idFerQyU8irC4dy
+echo pt-pt^|8ac77bdee79d1b0d8bf619fb3243153a61969406^|pp_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_d41f0feb^|idFerQyU8irC4dy
+echo pt-pt^|c94155c824e51f53250447297ce1d1feeb6382d3^|pp_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_a9637c03^|idFerQyU8irC4dy
+echo pt-pt^|f0797e2a48020381932a8088c20d20d37c8adac4^|pp_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_77a54f6e^|idFerQyU8irC4dy
+echo ro-ro^|b4c57f13f18f6bac76a7f3efc6b3ce8ac6dd4004^|ro_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_d5a67c9a^|idFerQyU8irC4dy
+echo ro-ro^|104b537b4135989842ba80204ad9f13dc083c686^|ro_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_43b59055^|idFerQyU8irC4dy
+echo ro-ro^|0727fe8d675bfe9454570a27b379b5092ad5bb05^|ro_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_f4a790d8^|idFerQyU8irC4dy
+echo ro-ro^|044392053f6ac316a9f7c01400e42e96b1265dbe^|ro_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_72e74add^|idFerQyU8irC4dy
+echo ru-ru^|4df651fe5d7924275d03d651b488a2fe7fa1df05^|ru_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_ce109568^|idFerQyU8irC4dy
+echo ru-ru^|551a09d41eea7ca2a02089372ab6e6622615ab97^|ru_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_b0988fe0^|idFerQyU8irC4dy
+echo ru-ru^|788036b0865a45d07edc19e6a4c366d2c2da4f12^|ru_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_5ebcf81a^|idFerQyU8irC4dy
+echo ru-ru^|d9a3e80084529e21681040e7bae56dc445c27e80^|ru_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_d6feced7^|idFerQyU8irC4dy
+echo sr-latn-rs^|63e31f4d87819688ce8dfcc28941a7abb1656d03^|sr-latn_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_6c4fff44^|idFerQyU8irC4dy
+echo sr-latn-rs^|91cf2a0a64147d10b2498234311a9cc915d916e0^|sr-latn_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_2a1df351^|idFerQyU8irC4dy
+echo sr-latn-rs^|0ff797dc19f9cef5359c942a70d31a09882face6^|sr-latn_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_350272bc^|idFerQyU8irC4dy
+echo sr-latn-rs^|52d7252c31c3ba83149dac04f09f6ac2a894d3ae^|sr-latn_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_5a090024^|idFerQyU8irC4dy
+echo sk-sk^|e3d42aa16f6c0ee68d756db8156fafb170da86c8^|sk_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_83fdb60a^|idFerQyU8irC4dy
+echo sk-sk^|6fbb5b289bb48533edaeb49c2148d194f6aafa4f^|sk_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_c64a43e2^|idFerQyU8irC4dy
+echo sk-sk^|b1fa38d271b4e4befa2a8dae06e1ec17aed66efe^|sk_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_dc12af54^|idFerQyU8irC4dy
+echo sk-sk^|a31d038a92d31911ed896fd7ab38f702de493157^|sk_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_bb2dca05^|idFerQyU8irC4dy
+echo sl-si^|805d1358439eb4bfcb0830ed9440b230415215c2^|sl_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_b88fa52b^|idFerQyU8irC4dy
+echo sl-si^|098f56f814272375f4b03a41ae72b513e6e6af29^|sl_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_51e6fdee^|idFerQyU8irC4dy
+echo sl-si^|785e32abf33e9e3e638d90accd30b02b0f1ff7cb^|sl_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_b3bb6dca^|idFerQyU8irC4dy
+echo sl-si^|005129f908eedd892e11f7b2ceef0d0a79ad7618^|sl_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_10a12931^|idFerQyU8irC4dy
+echo sv-se^|ad1b33cb43b59b950e3d66b8329c81f5307f03ea^|sv_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_25360859^|idFerQyU8irC4dy
+echo sv-se^|934f3648f26ab8118a873ecf09a6fd0fa39c821e^|sv_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_9bfa697a^|idFerQyU8irC4dy
+echo sv-se^|16001d0c709adf3b797c3bcace9dfdedaaf3feae^|sv_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_4d30f2b0^|idFerQyU8irC4dy
+echo sv-se^|e3f77b13703e2af42542eaa6a25ec33a8ce929dc^|sv_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_9d617519^|idFerQyU8irC4dy
+echo th-th^|fdbd22473b7fb336d96e51677b29dcb62b7eabdd^|th_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_78794111^|idFerQyU8irC4dy
+echo th-th^|5ce5e9876e5eab5a41b019d0b8704ce260917464^|th_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_1787f6d2^|idFerQyU8irC4dy
+echo th-th^|604ebb4711b8612070f10cd0aa8b6080b7b64274^|th_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_6def2c0f^|idFerQyU8irC4dy
+echo th-th^|c8ffb2aea8322836760fa10001f47c127f373a59^|th_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_9f953eea^|idFerQyU8irC4dy
+echo tr-tr^|9d95e78f688782d0725ca1a8ea52533cd68c7637^|tr_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_0df1e5eb^|idFerQyU8irC4dy
+echo tr-tr^|2b58361e8c7634fde44932f648b2fff46a62ed28^|tr_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_49b0c078^|idFerQyU8irC4dy
+echo tr-tr^|6a2ca3779fb02ae3f033d14938ad6649e60b764c^|tr_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_a989930a^|idFerQyU8irC4dy
+echo tr-tr^|660081b0f52521bb3422e7d848e3468e074fd786^|tr_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_7ce5c0a4^|idFerQyU8irC4dy
+echo uk-ua^|73d9db306e46abe6de2796f047f665da2b9e7406^|en-uk_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_ab7247a3^|idFerQyU8irC4dy
+echo uk-ua^|8ca457c4e1e8e24c866a4a33c20c895fe4c11f5f^|uk_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_0309bdc3^|idFerQyU8irC4dy
+echo uk-ua^|a4fd006b6471a0313b9d8b9c6a3e9496610705ab^|en-uk_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_e762a65f^|idFerQyU8irC4dy
+echo uk-ua^|eb35abaaaa96e070cefe7669224208332972d88d^|uk_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_97549fa1^|idFerQyU8irC4dy
+echo uk-ua^|30fa86d97198d515d33247d8537c46e50be78783^|en-uk_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_464411b9^|idFerQyU8irC4dy
+echo uk-ua^|f4cd9fa03365bf002908410c84f60487f4c4e432^|uk_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_b57384cf^|idFerQyU8irC4dy
+echo uk-ua^|eb51c0e97e310b40e2f7c5efaaa5ec874ce35474^|en-uk_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_d13c4e6a^|idFerQyU8irC4dy
+echo uk-ua^|cfa008589da750364e31213453f878af2e21c916^|uk_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_b96f939b^|idFerQyU8irC4dy
+echo zh-cn^|cf8e348895c6d825d1c4465a948e8b4682624eec^|cn_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_d97f5d4a^|idFerQyU8irC4dy
+echo zh-cn^|61c07b037574454b88bcac7f5a571c042304c884^|cn_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_34b4d4fb^|idFerQyU8irC4dy
+echo zh-cn^|9ac1ceb0bfed62bc44d382392d4b75380b38cf4a^|cn_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_ca12be12^|idFerQyU8irC4dy
+echo zh-cn^|427d065d73774fb97228804dde3cb07e70eb5d41^|cn_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_ee4a2f95^|idFerQyU8irC4dy
+echo zh-tw^|939aeb3bc8a902fa7f3bb6dfb061f16f909b3d6e^|ct_windows_10_consumer_editions_version_1809_updated_jan_2019_x86_dvd_57a086b5^|idFerQyU8irC4dy
+echo zh-tw^|10a5c0f0820b4f5016f316580175440c88435d18^|ct_windows_10_consumer_editions_version_1809_updated_jan_2019_x64_dvd_c33e672a^|idFerQyU8irC4dy
+echo zh-tw^|e77519640a38508375f9e8eaa1070da677d6c578^|ct_windows_10_business_editions_version_1809_updated_jan_2019_x86_dvd_86780c5f^|idFerQyU8irC4dy
+echo zh-tw^|1309542e9fea189eafbbaf50cdf158cd4a75cf3c^|ct_windows_10_business_editions_version_1809_updated_jan_2019_x64_dvd_98c6b3c8^|idFerQyU8irC4dy
+)
 goto:eof
 :================================================================================================================
 :================================================================================================================
@@ -5499,6 +5765,264 @@ goto:eof
 :================================================================================================================
 :================================================================================================================
 :================================================================================================================
+::Encrypted86_C1809_4 STREAMLINED
+::===============================================================================================================
+::===============================================================================================================
+:EncryptedStream86_C1809_4
+>>datainfo.txt (
+echo name=884ae6619f3ed2eb3916ee43572bb974
+echo sha1=4901c33ec21954b5812c3e1a69b101679636c5e2
+echo pass=ea07a33f5d262561ff5828fbedf7047b6ba7d8567ff22127b3e31234986d513e
+echo key=2cd52c0e9725aa46ffb4d5a93a94341cf3e4deebdab10fe93c6246f9b54475b3
+echo iv=e85c169a4129575b8340549e29a88b8e
+echo file_884ae6619f3ed2eb3916ee43572bb974.001=N3q8ryccAAQjYdrjwNAx3gAAAAAsAAAAAAAAALB5JNGxCQYPdHAFaIjFDFGfLbY9/lJ3wrMKX9SufhH8IIDBcA==
+echo file_884ae6619f3ed2eb3916ee43572bb974.002=+8DHAmufszmDbucBe015IQ2Ej9vgV9eVMPaY77pmGZrzJ3Z062xW1Toz3fQvuuJlUP6Uaoc+arNQ4B5219g4/g==
+echo file_884ae6619f3ed2eb3916ee43572bb974.003=6h0vEPwV32UPmWjV86ugJJGTWZmKxmWQwusqZUfx2qAVmTAjvH+FRodTDpCT7WG3IuJFjEYZap9n+l4dIJAC6Q==
+echo file_884ae6619f3ed2eb3916ee43572bb974.004=EHqdiLXIgAyBvYmkuqudk8Oh6uE5Oo2n77DHYTjYOpdU/djhhbTHwjSxYb0mGRgbAmgujif52BwXxvFiIvfAIA==
+echo file_884ae6619f3ed2eb3916ee43572bb974.005=Ny/r055ZgL7GJoN31YCSN8tDIZR7ULg8m0muMg7GWaDyLUmf+TGeiHWGNJX4BJZYM3URRzYGE5QEeFaluajolA==
+echo file_884ae6619f3ed2eb3916ee43572bb974.006=Xx/Dp9SvtrI9srKuRAe/PsN4Bnu2Dn6dXsMFWJ49VJPWiV5eFKs71/ezOUI4Q8bXCUdIHf1OrNtjDAcuReahQw==
+echo file_884ae6619f3ed2eb3916ee43572bb974.007=3HjXagUWO9OTZYD2WUd2se9B1fZl8mUANDKdPfXudC58efPToOSn0DTvrnSPmVhiv3l9zu9EF1ZTuh61SOmR3w==
+echo file_884ae6619f3ed2eb3916ee43572bb974.008=VOCall6ePAZLH29eTCSXjzJlcqF1lJgC7jG8pD0gQZzulkspfLeKTr5FDsbKEKdrMUgi5r43Bbql0cN0jVAlng==
+echo file_884ae6619f3ed2eb3916ee43572bb974.009=cHa1qFNwA+7aCczb/qi+2D52atbpoaDGB0ZcC8JcjqvxreEtO2a9G5RiAiN+ztS2YFurAeRIG+Jq0R2khB67OA==
+echo file_884ae6619f3ed2eb3916ee43572bb974.010=aT9nKPr4TtHVW1Jt589Vw44RZXsHk6AFBlXY13CUKwhDfarYxYgoxBJ9HHQgaPCVdGIKxnP5dlxQT4NXKGrADw==
+echo file_884ae6619f3ed2eb3916ee43572bb974.011=KKgNUMoebiLf/Ihas9syd37JtnbPN0B8/p/b0osRdOSm5tHP8+AXWmGN2q7jUI1zxVN+nFI/j2ecDqlZsy0lWg==
+echo file_884ae6619f3ed2eb3916ee43572bb974.012=akB7h2by/wbBzD1dhpAZHwwWDLkVjxMq2zY69seLp/dSZWLkeTOBE9KEZjVyavyfE9SN9SWBehYeQxhZNkht4w==
+echo file_884ae6619f3ed2eb3916ee43572bb974.013=zKtek93d0iA1jeWK4T9fZpCa480fjjsXNqBRQc/cEIaDqb17aSSumirJSOwBQBPaTDToHCL1OlO1+MUN5nlvkg==
+echo file_884ae6619f3ed2eb3916ee43572bb974.014=iioYgz5IT6jQSl60wW2aoiO/Z/Sd/UWeacmIGQKgVbAV9DF8/af/3bjrg6MhwbHVYLx9imKiZzkgXsoO0+eH0w==
+echo file_884ae6619f3ed2eb3916ee43572bb974.015=s23gqhZ863noKQmUvtko/+3+KosDgA1MeJSJJB2XfgGy3+RAfqwwiQxt5mrfsJ19YM7T66Kk6jP0GU2400Vnpw==
+echo file_884ae6619f3ed2eb3916ee43572bb974.016=9UJ8ZPEn5xEoxJkIz1Ho44usgYWYMUkb8loHZ79CFbE7CTRgUwxut9S0nguisw7ROeqYg7pW+mKQLhqA+DI9ZQ==
+echo file_884ae6619f3ed2eb3916ee43572bb974.017=9Q+MrTu4TEAQIBPfEVqZWKhvrf2G+TBzbHaOc6VO7fl16i5D26s1/LQftE7xf8hJPW9EUq7bm4mC3eRgYh7XdA==
+echo file_884ae6619f3ed2eb3916ee43572bb974.018=SAr4NwlvElEIoeMe8dOkCre7VnHqBZFkPhxJeQBMaMpZ3WAIaFw6M18OghE+AFSLd4T1iwoQqxLM0WSb/LWXZA==
+echo file_884ae6619f3ed2eb3916ee43572bb974.019=3Gvx1Mq6t4ACtS68lTmkm0a5w4x8DSgD9w0rGZ6BHTHVxyv8Nr5bA2XsSwBtI3u9JowXPF9ovV22Ykk8QRkhyQ==
+echo file_884ae6619f3ed2eb3916ee43572bb974.020=GZskmlL29kCRXRVTWBL1ZFZyF17rPzBAcY/54IVmB6eCmgnrZjjNcK5BjGdXulfLI7lSOmpgiPEJV63Lok5ziA==
+echo file_884ae6619f3ed2eb3916ee43572bb974.021=gXZ4qOLF5Ulh8Lqem4APaijti+ddIzkQbb0E3MS786qwzeB3lFQ2FTG32O0s/aw2JzX8nRQqHq2RvtXAhNLhKw==
+echo file_884ae6619f3ed2eb3916ee43572bb974.022=cfQ5s3Mk7CvR3/tu+FbWFAl4wlkdoiyM9pxY5gjV0L30Efutz4pi8rNQeVeE0FGvQdhNQDPc8Apsw9MJgyBYWQ==
+echo file_884ae6619f3ed2eb3916ee43572bb974.023=816srG8St2v+qNDocqdN23/n6nyqh3FkK1q6Y/sOPfHKkYOdSVYCOGeoelo8hwwml3OQ7ffNMeSVArPO1gemqQ==
+echo file_884ae6619f3ed2eb3916ee43572bb974.024=6nWPN747Y2w00mF9diNiD3qp4igKaMSVpPF7ezxzQ664Sx2RBoBF3P2DnZz0I//IaydchIZhdT+zZlgy6HE60w==
+echo file_884ae6619f3ed2eb3916ee43572bb974.025=CLkp4V0pv3MUB9AoOltGxEznVzNaesyUbr2PX2asgdnD1LITRdaTebTAInZ8cOQCjZlmNu7OSdvjA0s1m/wWDA==
+echo file_884ae6619f3ed2eb3916ee43572bb974.026=agG62rx69eKSMoQRIsgd6g29MiNRcoJHBa1RMr3Q/FVrXYItJP31ldfkr694qta1LXcInBfIu0jaxl2sp5+2cw==
+echo file_884ae6619f3ed2eb3916ee43572bb974.027=nSm/UA16AAHnKaUgYH0pJS2n4uH4MJMxYYmjgTnqOfNYwSrrGYmiCMNA85E74R9IL2MDau4qTc4DO+yDFBxkQQ==
+echo file_884ae6619f3ed2eb3916ee43572bb974.028=toiQcB1TN+CxELh5srAQF7D3LZL9ACCglDx9DlWaYUEYgaB/QMdQPFX3NMHeoSdy/CqxYA+qNYhcnshEx0w1Lg==
+echo file_884ae6619f3ed2eb3916ee43572bb974.029=Mqlnlb3WsGNpNK2Oqc5UlNrg2qexUFc7PBDfckl+jjaCJ/rNLPBGFY/qUxCM29OJphma1xC0S9oUvzfJSoDN0w==
+echo file_884ae6619f3ed2eb3916ee43572bb974.030=5V/Vlg9+RNgN9fr878KzOWfvxv6mtrobAfhvBb3hqYYVcS7bVep6utEN7na26B0q2fJ5uLMRZtda3zVfmguCag==
+echo file_884ae6619f3ed2eb3916ee43572bb974.031=K9KRvtqgMR65oZDxeU/TAgo9zeoheQYVmkJ4XIHF5Qmprt0I4jKxx2qTp8tv8k06fd5p0XvdvD29AA0LcnV2Hg==
+echo file_884ae6619f3ed2eb3916ee43572bb974.032=s/x3DIEqEIsVZQart/JMuhsa+79ilgLIdjv+ACY7x7ETi8Ls/8iaN0/oCiwvBL5bB36Japl8S3RcmlAh1Rpwwg==
+echo file_884ae6619f3ed2eb3916ee43572bb974.033=87bdNnh5joZOiU6xUG5a7LSozpPRQISgEmpV2UwO+3/SOFewLLpzP5f1kYPxEFJFy6llvvjp5zfpkxEseV8pKA==
+echo file_884ae6619f3ed2eb3916ee43572bb974.034=ozOap5pG0a+OHmzqu94MObrcEgJFnJ/EZ0Rtkb1GQ3vIfDe8Yk90nw20SZqIl3xswyZxO/Q5OWOclvTt+M1QWw==
+echo file_884ae6619f3ed2eb3916ee43572bb974.035=WQAZ+wHOja/ZsN4+XrdzernZbb6+sUoyxTgHAcDSOPaikb9OOMtrKmL3KytxpQiUiTG9LRwoGhVxbvQOE5U4jg==
+echo file_884ae6619f3ed2eb3916ee43572bb974.036=7Iv6Pv6K3YS1GT6aDU9ipCnCmoiW1w2TY7wluhI/PG6WoYGJlmo98B/fTIRMvcvGk2+YHKvTUcvT/brnRSQElg==
+echo file_884ae6619f3ed2eb3916ee43572bb974.037=b37TQVvep3+pxRpoAM/mN97+6OHVSsnEhi3ezhMZ0dm9mixtG/8I+ELNQWVmles4YVXYiwk931hnXzOYHmVMYA==
+echo file_884ae6619f3ed2eb3916ee43572bb974.038=QnsqFTfjeEnjDy1xie2mXNz4AF0wT/U0Y8iN5erEE700OMKJzVAuocedWUf22GIXz7Y/6ct2lRtYekmQvli6vA==
+echo file_884ae6619f3ed2eb3916ee43572bb974.039=1BpXAeadKY5bXUdgCjryqhLotdMuyPSlVYMamu4A4eSqR2C5JBWoAIr+KWNi+KeKhBgA7oSnf/AMyAyLL/Ewow==
+echo file_884ae6619f3ed2eb3916ee43572bb974.040=xMkMwwNMB1UzrHR4g0hl+S0WPbq+NfAaY4oopfG1NszXJytCdUGryu4diqSEiSyVcOHRhP7+20EEVAI20gF4Gw==
+)
+goto:eof
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+::Encrypted86_B1809_4 STREAMLINED
+::===============================================================================================================
+::===============================================================================================================
+:EncryptedStream86_B1809_4
+>>datainfo.txt (
+echo name=c82af0a424a9332cb25aca7b53a5678e
+echo sha1=b9d8d8cd3e59e76b128342689ab3d10cbf58fb8e
+echo pass=dcd800d1dfa91b82131150af714d9f3017eb641e81f4e58057371747a2b3f278
+echo key=e61aa0bc88ce16fc2739b483a3b2319617bfb42ec3d28ee250d7e36ae704965b
+echo iv=d53c7647c5b752c56a100f05ecc51e97
+echo file_c82af0a424a9332cb25aca7b53a5678e.001=N3q8ryccAAQvXg2XwIC22AAAAAAsAAAAAAAAAB+2A9p7YfZKluh6Ruo251izwncBhGMiod+PTeCsrlDaZWZZkg==
+echo file_c82af0a424a9332cb25aca7b53a5678e.002=Bnh7niW6ORLPIckne43jhkIQMuAKr09OzNBBY7ATj2kWGDyDtxH14Mm2ai57pUroT3k4W7UHXN3BCbtzJuMwfQ==
+echo file_c82af0a424a9332cb25aca7b53a5678e.003=Dqs8yoaMX71hn5y+isvLDwYMg8Gwt+IKuYnxqIpq09T2zKlZ+SG8rYHBVZOaALFyMYyzq39IJ+Mhbf++TWTiBA==
+echo file_c82af0a424a9332cb25aca7b53a5678e.004=+3dQOes2HhyqAls6e3SEpb/tQckK/P74ITOSyWZuHc40PjiyiUmyVsEQ8HUQ6drrvMtMbPc6PCyX92o5hNXoPg==
+echo file_c82af0a424a9332cb25aca7b53a5678e.005=cLui3x9ieCTmvw92/i6yZY3Zw3R1h98IiJCguh/mEK4XEYpxyXv0LNYhkcKPmhnID62R/x5gaKOxsfDUFJgjIg==
+echo file_c82af0a424a9332cb25aca7b53a5678e.006=w2HgDJyHDgDhvhdbsFuTkKFN1wE/3BYJG4zu5PU0AwgGGdOLi+BZX+j8sqVxD3Jv9Tr8kcjhZHe8fFSXZa6d5g==
+echo file_c82af0a424a9332cb25aca7b53a5678e.007=JoBMkB2fR3rXUPoHPCFA91NSTCwuS0Wu5pRMi2NUfOQRw0qcYnPT0Z/Y452Ry84Eey3Ha2VljlCbqUMJQDwNFA==
+echo file_c82af0a424a9332cb25aca7b53a5678e.008=m3/fTsUIArSDB0+8JWsyP7W4NKsdNj3jB1gykQoLPvcJrh3NB7iPvudGC3XjjWywUcwKbCa3yM7veMeDGkMbEA==
+echo file_c82af0a424a9332cb25aca7b53a5678e.009=8IUeYyRJkacny81w08w4I632xB7OBxZxh6xVRDiQ5pXhnqvhCoF93UCuox70Fb97h9FXAS6cLqxJaXRcszxolQ==
+echo file_c82af0a424a9332cb25aca7b53a5678e.010=vTxuD8gg/sHNTM6LBfZjqB0fHAqg5D414xLs7+Y93qNaU6eKhvHbL4fXrTX2nvRfCtgZIsPanZB06L0bp3r7Pg==
+echo file_c82af0a424a9332cb25aca7b53a5678e.011=+G8PIZ5IieauOxalr8yWZ9kkorwnMUI9zOnyluXFdWb1VQP1K+ybBFSxI6IxPHPmOGRAQmo5oHv0S9XERgPlhg==
+echo file_c82af0a424a9332cb25aca7b53a5678e.012=zmZwxSqS52zM1wLXhxkQirdoQWSC5JaBqBJsZihrHujHbvR0OcHzz8tFZYiOzXjhI4DcS8UFiHaUgMemraRKDA==
+echo file_c82af0a424a9332cb25aca7b53a5678e.013=HR+3xXUkBIAUNZmkjwYf6ePL4aUC1lptps6OgzAAEcJXpA/7gEWJFgF//XCHWhoUAQ2B5/vibS33ohjN2JuhOw==
+echo file_c82af0a424a9332cb25aca7b53a5678e.014=1v5Oai1sOjGckSV6uSHfsLTR2DUZijhs4dPTIdoIQ2mAML4IXmskHVraeL4X6mNJ28kPnnGYnE17P8kAMP0qqg==
+echo file_c82af0a424a9332cb25aca7b53a5678e.015=JaCsQ5D2q/lpCzrrH5mYx3YxTkbvEWgycaoNnbVrs4iD6AGTVbjAoQdpvcp/rX/WnsKsAxsRgSNGnRhKO9cp/w==
+echo file_c82af0a424a9332cb25aca7b53a5678e.016=KW4oai1mqpKIAyJx5ppcFFfnx9IymGBziE4rOjYUTtRIjATPbV0mhD6AYzc2LMT/tznw4EWaN/6tEU4hK8G4Fw==
+echo file_c82af0a424a9332cb25aca7b53a5678e.017=WIomCDr0Qz+YZYq681bpNKgW+2F+HVzhE4lExz3LcdGBL0ICMURio8pxU4DFTvQiL8JfjBMPSMCF9zts4EhisA==
+echo file_c82af0a424a9332cb25aca7b53a5678e.018=5y6BqWR1E5tyVjajO7zB6f/2zqjv31x0I397MVTJcwOInzIX5muX3oGMgYQf3YM+eIVD26ZGRkAe//489FKb7A==
+echo file_c82af0a424a9332cb25aca7b53a5678e.019=uWniQgkyGi41856HPgDT2bdn4Pq2e4sJY47SEhKnH6bPDRV/NN/1ELTfkx4CvsPYlbQ4CZNdH97AnNRY+Fjvng==
+echo file_c82af0a424a9332cb25aca7b53a5678e.020=mRJrHR7e5Q4Xe+lE7Qk0883P1rSDyYy2tT/DPgF7kgHjzCLwMsfUw5U8zZHfiBZR4IQmpRTMx67Gd/b9cYhvPQ==
+echo file_c82af0a424a9332cb25aca7b53a5678e.021=b/IykIcScaAwmOQWSO1QmbPnAN3UiKApo9n+x4J+/Jsb5HJOseGM/4xkbQc/LqDK9j350CiKV2luVtj7nsNcXQ==
+echo file_c82af0a424a9332cb25aca7b53a5678e.022=XOynvAlm6Xd7rQ5R37/KrT28qAXMAYwhLnxXkDxxVRpHw0L7FHpzsM82Z3bLKx1Ayjj+UxG3xLNXwmA6PjIEWQ==
+echo file_c82af0a424a9332cb25aca7b53a5678e.023=j/KESIvF+B/jHYRe2F1P/nqSXKTkkXbVe4b1GvIEARtqBImENV4SVJ9wqhLq1g9ZD+J3epBQ5Sho7VFgdeuqcg==
+echo file_c82af0a424a9332cb25aca7b53a5678e.024=E4keTkG8VVp8SSmBe0WXyfzbut/eafeCRwUaTl9sustXrbAR2uZmQ6YS75pKQQc7ItrkyaH/DsOooTKhpjOMhw==
+echo file_c82af0a424a9332cb25aca7b53a5678e.025=FZbp0OHwaHOv3VXRwy9VPmmB0+WUH5ZM5VOYBSNZfz7esHk/OYQPne12OopFvKAA5rUwGKfEXLRjt4fVBmX3Mg==
+echo file_c82af0a424a9332cb25aca7b53a5678e.026=Ew7QMxQgaSI0J9WO8/inme36qYJE3Nlcm9rX+ATYYT7QaKWTsRlAzFq2ULqt+XvPANnXZO8IhtHVBH5oesZXKw==
+echo file_c82af0a424a9332cb25aca7b53a5678e.027=w6mLFNkt4p8wr9LZQU63O7f5vsd91GNlL64n9krIF+n5HHPcBwjAz3VpYHViw9dhVKeUjt22VsCdFOqWCt+sVQ==
+echo file_c82af0a424a9332cb25aca7b53a5678e.028=CkSc0wQuiWp5/oodYdItR2p/r3PYVYPplGUQ4XdZcCvEgmVN9h1pal2Xe4YW9084dqbNOrrdMPGs3wpEG3Jx1Q==
+echo file_c82af0a424a9332cb25aca7b53a5678e.029=zLUfJAHQLq//oXh3SZCKmm+ZjZ7DcWnyOjoO8Idn+ohqrbPuQa7pIHt06HwjMEj+bmS8/Idq8oTRVR1tHU1nsQ==
+echo file_c82af0a424a9332cb25aca7b53a5678e.030=QMdTB46aHevXLv4vti2Glj8h4rE3Trc2iTTHHaJkDiDKIKMsMzktK2fWAcuwYdN0131VMjdJI33dQZrZxNb2wA==
+echo file_c82af0a424a9332cb25aca7b53a5678e.031=IdvErfdRBrv4v98amVzcUG1u7l8AnPkg4e2gBTPoSDivtkzoQsOx6Pd161zD+HFr8lSH76cosHDHwOrGw641NQ==
+echo file_c82af0a424a9332cb25aca7b53a5678e.032=GVE+8fsiEyjXrUbb/MJ5lk7C5vdHs5eZE7NIyCJsF+4jB9dNG99H1KdY8+ssORw0TDpkj2sI1esoagrDNTvnyw==
+echo file_c82af0a424a9332cb25aca7b53a5678e.033=Uj+fGpkdbXDS3Iexw7sCePhnvnYQ82nCFY5+uOTbScIkOFHmCAAfj54ZW/Pv5+al4vFq0RcowDteyMSXz+cLrg==
+echo file_c82af0a424a9332cb25aca7b53a5678e.034=9Pzh3sQYdvamllA5TjlVbwAxIpFvpNPEF4Up3SMWq/fu97EohbZs/kth2OeR6iLO33OQ6tGVvLcMJLKTbYFouw==
+echo file_c82af0a424a9332cb25aca7b53a5678e.035=/Xq/Gn2QP10Gh4zrFaRUwCbpKjTUn83oiE3mNd1pWCh6Is+TC0GETtgisCc3fuvE+eWmqv2ojPfnc2GTznK0Iw==
+echo file_c82af0a424a9332cb25aca7b53a5678e.036=iOHTax4lFSQWaN8edii7EXMZr8921CsYDvduF68x8wxGYM1Wc9ckBRkhilxleExbT8X4hsJoQLDmmODDTIXT4A==
+echo file_c82af0a424a9332cb25aca7b53a5678e.037=i/5ius8KBX/qkAE7Cu3A4GGVMQU1fl4ZO5THQ9SD+bQkM/H48ldVnugDWYB+4MpCsoQhqG5WWVf+fc8b3btpVw==
+echo file_c82af0a424a9332cb25aca7b53a5678e.038=PmFP002OtK6cbkl+CavtfGMTgTqOuvaMWSnuaJ3/ty6mDXyLazU5dwqbuVK8NlzGVCAkUUO0OE0h5+xMdT8jow==
+echo file_c82af0a424a9332cb25aca7b53a5678e.039=WXrmYNpIoBwufuZHhFeVSYalKW4THX//io20wIuub4T08nLlI0X+FZa168wLIGJR08c1TkJqrKah0NTmkNVFtA==
+)
+goto:eof
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+::Encrypted64_C1809_4 STREAMLINED
+::===============================================================================================================
+::===============================================================================================================
+:EncryptedStream64_C1809_4
+>>datainfo.txt (
+echo name=d09ed4f60acf2e47c55d1a2a420dd93e
+echo sha1=e955971e3bf398b9859332b484cf868ec27bdb8e
+echo pass=f36470f155eaa3f315348121acb152506966d8ba0a9e9065d1f5af19c3d2e0b4
+echo key=552121cd0faf5fdb1a9a35167cc5f66e47e4939d48fe889e4ed89bb434d37a9a
+echo iv=c8f5cd80ac31d7900843a785929d4c02
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.001=N3q8ryccAAQ4OvwVwHg3OQEAAAAsAAAAAAAAAF26lTttTy1mIjkZi8Yx8dDQJCS3NonBcQ1wq9lzs8axhKZbIA==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.002=aOEAZ/akmQGqGtb7cRK5iWHlzqXpHtCsdDXFKwxbsJZWNdL2uB11n54C5RGZcyq4pS19R+dH+TqMg6MMNgaviw==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.003=YwBbir3LH/QrDpduSL3OPCgGzf2mUbpP5OrwH8njYFSmU/OcVNjP1AswyVc5AJWZNWrYX9VJHt9Ip+8PSwnamA==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.004=qBIRX3RI1AVidN5M72PqUmTmYtu5hwOq7q0HNKt6trge3v+pFSp0Lv3rtriqETBSq/+A8fhVu4swSbcNXCqQtA==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.005=2e1gNxyWVHXzpoge4syMBAf3eW7XjgYRKNH1+zyAGxQG7ML3GcCgxb+mWRir4htuUocsnHapMrAJHMcj7WGz+g==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.006=Kn1wcpaXLjOBQqSpbfoTvYbu1WsowdqhM3VOhAgnJxGU293EHV0SQih6mJ44yxVboHzMNVCM7nXNP5hppq2gjQ==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.007=pLEauZrNpz4JLTdMLC1L3SFwb0DTlcN7fxwo6uzbPOoGJPfsxITWsKkF3FGoEYj5ZVl6jCD9J5qnFIcJuL3oNA==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.008=H2Yf4TctD14/UodNhR5TmwwtcSQj21sjBf4CJCha7cCu7QRauNig/ZP9h4RxWCPsANNBbMx4tPLrd/c9kOj3lw==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.009=f5oHeHg/BJmRtzrvCGEXwb/p4mLPDxyL7jiwhwPX1LhQAe0F+QapW2axwFn3AmuOZC+WcYvBkZyapJiPbZJYgg==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.010=x+NfgPPAi1c45aDath/0J7iI/jMdr0c4I/+W4E6boTiGVo2CB16Og4xMYNRO0ZO0hd649Ya2SQHPNMGCUndXDw==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.011=dODugF0ev01RKk2g+Xc9RSbKn58BXU6mhzEKbS9USv+6RzyQks8kHwfaGkxznv68GDFRlVZ2CiWaLDAHTl1Z3g==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.012=wEEvdutPQaVw7bQVJiUJhQt70Io0ZcG+qKEAp5cnUOvqc5Hvm2iMsMfQBwunmQ7VSgDlLxdIf85KRrO25oLg9A==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.013=W1VF457D8KSav0HR2MQpbsHUBaCicTdiXxHaQjD6VWO5e3T0mgEmsi17DanVyrGJgEeBrmOH08j9h2w1qiaAkA==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.014=GHN38tIboV3mZyLtSxVTEbAmgceBnvAr0biRd3cvspMTm0hFKo3usZLF3pFGrEsBKwYN39arJvSSy1Q1oVJBCw==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.015=qbdsbh0knN24mjqkyESpD7kX9Du1LmEk7vCr+LKV29ssEHOBAlABpoQMoiipDoku6EjlkGFVVnQhSng9b1RNCQ==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.016=mZkJ2d15qd7W7fWCbCfYiGtEZYSfIZH+XIvmmIM5eSF6PYNLzug8H84rFJ2+CYbSR+M56W2XdXSK8OyeneUHlg==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.017=uiWNadT7vI81vJdGID8NAmcWMPgxQmrkKVaZhXRcHVdOmqWDus+DYBzL+vghzacFPNgoYDvMnf8ZeuGFjxkAUw==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.018=T+cg1N1HxjGEXNObfNf1l6vE49YqUW/5fqI2zAVWWzU1qAOL+ILWxk6u7VLX/0ERiexJeJr7jT36yBD0HpBevQ==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.019=ykLU+oDg1YNr4RTX3hXFkosCDNwKj+1xwq2fIG1J6QnKZNrQIbS1kKltAMAV7d92K792p4oFapmpG69K+jGGyg==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.020=Tb6Rm05PbXHtfPjdaAM70zFdW6yzaCfANl/AbTqAje7snrn1QY/7Q4Suj7xxb5HxPjujFpej1WvX6zzT3v/laQ==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.021=hhirKbyyevEHlqBDjG3xQCSuNivddU3nBuZ0sLc+3mo+FQxOsvm2yR6DTWLeQeblOBXKctIVphcZ6L7TUwIu9A==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.022=4R9y9T4Qf2Cbd9vuYws/DMnrPFve8YsXKWtX12JjEsMU98O0ZB7N98s6k8/YWX652fH3u1k2p63TslVjkuS0cA==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.023=RM53b0aHwKdWgUHo2+I4aBwax1G6nu/gE3iZPBjr2xT5f5cszoukHbKqFzd+cOWd/Bp4tvD2tB2Stpi/n0ahUw==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.024=0GeahG1ENjWQCmxRvb3PqMdU2+GIW+y+1pWkXYa0gbhM6hC+gvwYGZWwwIOmyTECPubHF9uAhwaW1nJ3mx9e3Q==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.025=JclyLAihGn3uUuT2slKo9ipGJ4kYPKKrBzlwTDTmfdNTjI4pxxCHqfHz3up7OPLu1t70tCrj11r3ozknx1LNdQ==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.026=fdbQTgJpK7/xdZHJ2FXD3MDiXZa/GcUzjqq+jQZivtJ45o+QiKW6SG3vF+tXlt3DzIWPOsIrMByiBKwlm5VdzA==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.027=K9WAVqqrbNO9rRIA/ErWsr6klvAsgfzWqGSon/safzTEdba69RuENZyNlwaVTFKy6g0BUJ1ufSwIJ1p7D0jLyA==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.028=o8kzUxH7+LWv7WC2/Q69IOFH8OltbHug4B8AqR/MkA4rJr3MKpc8TDLbytbp7Z9adP4zbGbXkJNCHLjQCVlekA==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.029=Niia1tqlJMsE4fwHKzNDwJMw444WZ37YWnfbl7gO9kCjWKK9QeAysLIUllscz/GCivteiqsELY9L0AhGldDhGA==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.030=qlJhSgsq/k3UjZHr6gaMnSvbPhrF+e2BWU92mJWTcokDhDxfHrqFwOcWIvDQ2uaBc3kBZPfm+8Koo+1M1UbW+g==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.031=wiNiAbNGmYfRQ29Pf6ytzF2piX7yKfcDIVPP+V243U9qbtH0MI3Dg//AaWYjp6a6Qf5HSMHMF/vN7SuD51hlAw==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.032=cWq8Vu4NcObkIl1leWAQ6fUGVN7OLcbe6piwol419wDMKzgbMJsk5VyWWskJYdmm3YC0UDms6fEMfBfXB7tuyA==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.033=TyKm8Gy6xptVye7kGw/2130ZnH6TRWa1SM4ao42ZmLMD4HiDz6Gcx6qtukK1VEBHE8Du+ghhe0l/FrRKW/cgOw==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.034=g5muDZOWvvcypCN4lFY8Fe+vULQ65JwaqEXgsvYTZiNdggfxj1k5oPZiG5Dc211t52agA7BEydMO2Go+sfza7A==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.035=+ZaWRa1s+M8kfrFQQ+kbX65tBB8IMDL+MlCgxGI+urPkzVn4wQplzSjEV1mwuspLgEWplu3nkPmF9PbUO0fxkg==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.036=tjY8PrEHjsmkKa/NbvgejwnrcjFNR6QqMqf28VyvVI4qV0sbba57b4oOHQHVoiS0eouwweEOZg6IkdDTir4Vgg==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.037=JLZWzB2jDHzoWfn9ICI7TJNGxSJRbDoRDzUxT6tSJq6Odm4kyeBuaqgyrFgWTYHmnva952MyRA4Iykk2soPHuw==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.038=OMJFJaQTRns4p9QEMTf3YfK4ofNZjD+a6xlzNFBoGSZE2u7eqEvbdy68e2nlECcKQ9SE6f9IkorN9mMGxisqJA==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.039=pTL5nRGIWo0awB7/ln3Otjzci/BCd/t8MIwrnrw14QGAVkvt3TTawTjJTep+TdRixSkT+7/y+lk6nLP7IEmw5A==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.040=YbBMJPNSmzNIdIqBNtlrOYe1Q+B8bSyo/DR2AnSB6yIxrTHOYq1BmwgxI/Z7mOCFr4WCxRpkyDAT4q2LAOEG7w==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.041=ESs37mJARnIf6pnSqvMUdnZlKuCEJvUAJITfahT2ynJoJ0s8Nvo4A3+ZMndwvgIsviFAu6mleyOywM4o/8D6DQ==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.042=bopY8naxCEPcgLCFFOiokiUoW6dwquwspJCtobV1ziudkzfH/PMuTrQ+ETP1K4cNK1cCwMvUqVl6XdIGZIPFtA==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.043=zr7wZ3HXPy35FbHL61/I3K2LkG286vkqBZJI+pM2tBndGTC0X1iwk2J+oF29V6SyrJHrGLRLO16YpZ+R1uF8Fw==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.044=fbCguxeSrjX1u8jY9V4oLGNFLXRVAT7dnX2VST4IxFjfSD7lY25bv47j371+rGh62McbEQNszCXk3q+u4sVbHA==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.045=ev0xdsHJmwlqSevoIGOPekDrJZFyhTt/6FV+9bXNJ1/jy8gJLjMIcpuIDKjdaRHQ/75ivn36SKEcV9mC92jCDA==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.046=yLAEIaLGEJNNBP7Gc7E5Kj2KeWPHt+e1ZEM/cAalPIFBlRZToQQdtxsMuvKCCMC4bWUhDKcOkMelc/KiKiQlOQ==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.047=kzzU7NMNWrYjqOeuPyI081kECUu7PbPiJ3yWtxaaZJM5VtDm0tEmm3Yob8TWx3t1r1PiEflhYu+pxCZrrhW+JA==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.048=GJnzbysIcv3sGZ4RCEDq/XEd/oQBnCo/RRyFmhkq1aK5QsWHOmeTdfNALLriidNOG/SszcxThGPwYE3CQIO8Mw==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.049=jgWFC1MXnSCXSezvxlJYBUB/GPbo6i5k1iwlS4a2PWZ8UiGYYUFdbeslntyfrMK+LpjYfhS+f2EcH1jzB1zRgA==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.050=8XHzBCa0ApNaEHqgqFdBp2rwyZUBGyjQzK5VDMfYAmjGRFb10Em6rhvj9/APirN7zNIJmcS8TkZygngTlb/iGg==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.051=OUoIPe+LmB52jAV/FsSECkvZIAsBl2+62zfEj/FQtJLSnqroIoH9jSF0g8O2M3FVRISq7C/2OVQ//vrUM2hqYg==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.052=fRYSmkBd2DS6S5GwWAN+uZRjs24QxZKEsxmnKuEWs0Ct96XQL5opirQN8ME9apG67WcnDRil+oPth0YiKnGjmw==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.053=WVe2nODuRDUVlO0uwvKngTG/Tfeq2RogUqqqRodHHJBS158Oa2wNhgsZ99uvhZY7LhhW9brQlbUVF0LgkhkE7Q==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.054=CPK6W5/6Skeg8G33uMKAzHNxsD/dWEGFtrR8W91xSrjSivYPPVDevCVLzuFtO6ehVhXBguSGmfuDipx0t/P8ng==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.055=feA0KWmNtPkadHmGKeOKQbsXaoFkS7LMVFTGEwzH2q72e8UKjiWvSOxhxXv+A5lhS3iXkwT0bP6LVq46P43ClQ==
+echo file_d09ed4f60acf2e47c55d1a2a420dd93e.056=2jOuGHk87ymtJ0HZETHyBFiJwc7RZV7g9TeTD8mbSqyvJPAqunIcwoJz1aVqLHOuy9sIwjSAsPxzdAiiBQfzhg==
+)
+goto:eof
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+::Encrypted64_B1809_4 STREAMLINED
+::===============================================================================================================
+::===============================================================================================================
+:EncryptedStream64_B1809_4
+>>datainfo.txt (
+echo name=87f5e0a563c652f46a4750e9a2686f15
+echo sha1=d56c035ed790620cbef1971139e75707741e6716
+echo pass=8fab67681506b49f823ed03917a531db0ba8e030b1b1a85b54e9831f7ce18d35
+echo key=240a603dfaab6a637823da3e1fd8c66579b9f7bf3862a26d1da136f04445132b
+echo iv=2594bf0a574f095c0987c1a35bedac06
+echo file_87f5e0a563c652f46a4750e9a2686f15.001=N3q8ryccAATSr71iwEiLMQEAAAAsAAAAAAAAAO3Zv8GzbRV3HDFskp3aCcDzzhOiZz6obF5l5XneTEMM5lSk0g==
+echo file_87f5e0a563c652f46a4750e9a2686f15.002=fW2RcpeJDN9llQQWmaCYPnq0+1L36tQmkvlQhLEr+N20CxcjGOatP3Dfe0ikOyVzzKbz2Xaam/LN70Aa+D++Dg==
+echo file_87f5e0a563c652f46a4750e9a2686f15.003=3bmQBBDVfHkEBHIzol4pcPqALQ3KFAgtWGzVpYpM/G8bd3L2ujp1nTQNZZBVoyufvfLn0Uq7rQcPGqtEPSBzOw==
+echo file_87f5e0a563c652f46a4750e9a2686f15.004=5KncruNO4M2lV1aWQQyqwBxaYtISrSGGgappO6frstAwwaKx9pobuRfXQN2ZKVORt38ZU+lc2t0ukJru6A4xVw==
+echo file_87f5e0a563c652f46a4750e9a2686f15.005=2L7OAssrFNbgdSqaLZKuPTpnVDjNsCkLOnNy8tLzBdLNCEo5Jq/dL33eXddQxgDjijzYwGkHkPmr5Dx2CBMHFg==
+echo file_87f5e0a563c652f46a4750e9a2686f15.006=Drezji134DcerFipegzarP/7hJPkGVxKysV+CRLx4OJ4RB8EtlwU0PInIxoIZ5DvaMknT0wArnXxfKnzvjJpEA==
+echo file_87f5e0a563c652f46a4750e9a2686f15.007=8ZK31hpbGf8Ygoi2sAInqK74XNe9+9z4iGo9It4pk7K/cB3yA/O6eCPFX7zdgi8mo5HLtb1y3le8EjtvH5vKWA==
+echo file_87f5e0a563c652f46a4750e9a2686f15.008=1EuNLF7wy8Erd9mIw0+tRASi7eSCdz7FV3W1W1DnGQrBG/GNIHmoWfQVuGs4M3cLzIgx5fyo8WsPC2BgKKfKbQ==
+echo file_87f5e0a563c652f46a4750e9a2686f15.009=coZ7c/MvDk0qRX6z5pJgOGJLfKf1YPDSlKKOyE3vhcPjniwjWmxqFje5nH48m54t3bnxu/l341ceZMSF/rEafw==
+echo file_87f5e0a563c652f46a4750e9a2686f15.010=dQmOPamLsYjlB6fjNe21dtITsQiE/owx/8kvD1XUfxLzEzcsnY+MtMQAgSvXigj1lS/+GFuKmjgy4sp3FMw4Hg==
+echo file_87f5e0a563c652f46a4750e9a2686f15.011=WOm9SxkAcbEaukyZu99124xq4/1XIlSgmLNPaMf81nWmC0a+ju8ipNsyKkTbq3eI0vKQf1ENfnY9oH5Xp3tDVQ==
+echo file_87f5e0a563c652f46a4750e9a2686f15.012=F0xyZbMAMGrNtYbdYMQXO1DhHpcpksK8EALp+QiZTMiQcIa4jkTEYMSpYogrss/I5XduIVhiFBIHQRTUGjSdeg==
+echo file_87f5e0a563c652f46a4750e9a2686f15.013=wQI+kJHuYJ7WCGFGZyhHAZjafKIbYwdcmzT/vHtI4bBYehpZk3LGVJw5hlQqMDjgiylUMrT6N0jnKQ5rUU5r1Q==
+echo file_87f5e0a563c652f46a4750e9a2686f15.014=ScORuy/NuZ845DC8xkoAUoHPC0HCXBb/fTxyHkdbumL8y/8CjreywdcRaLs8D9N12fOtrJP00KfIdSJkjmQeIA==
+echo file_87f5e0a563c652f46a4750e9a2686f15.015=kedabsapU5JsUNKKf6DCnFlUW5wcd/2PHrmT/JSrcJQ4nrAGdv8OmLN4K8Rr2QamBXpvzSo/4DpGHjn7fA9ROQ==
+echo file_87f5e0a563c652f46a4750e9a2686f15.016=s22X28DjzkM1bCrjfS3VfsF99LUnLSgXwnmmzSBmCo81Jk8dnBtU900qVXNEoLUw9e0yDD55wc0TcyUkR76nFA==
+echo file_87f5e0a563c652f46a4750e9a2686f15.017=yzORP93H94s6aQFYKU3oI9dpm5P/INFKwqIBFoV3K8xwyD5nU61LHVvtZ2TcekWmb+yu8KS6nL/qs/I2vBhYog==
+echo file_87f5e0a563c652f46a4750e9a2686f15.018=iuKRAahOBWR25q2ID1hor00oV49RyRgAMlGTH4tO0i/2vu5dAcijDUZFMjdNwwF/0o9oAa+nD05XT+ixf37lbQ==
+echo file_87f5e0a563c652f46a4750e9a2686f15.019=NMNcfWqio83pvo8JQIhEYgmU855Y8DNlx3CRhdLD1tBDoGJHVdz07fUm6D0vI9h8MRjYkWq1fSWSiY84KHgeLA==
+echo file_87f5e0a563c652f46a4750e9a2686f15.020=z3Ia4aLg7BPnTJgB0Ys+bt9Ei/MMal/QCesC7/UR47Ryz+ifs/Vbv/E2A8/qRJiE5ei8uJold4MyeKrVdR4XAA==
+echo file_87f5e0a563c652f46a4750e9a2686f15.021=4nORLA918yaNe64mVEdm/1pEoaaiU/2kI/FBdk48fEYXhG0oLK9fEKw8uWi48sRG54vDl0XyXwNBqdQ1OXhY9Q==
+echo file_87f5e0a563c652f46a4750e9a2686f15.022=GiMwgNmdWMaugW0Zvznxb3M5K2ko/UpOCd52fL4JVwpDBBXz4hUX/kQj7b3iU+NHx33F6osaYhGqsUWuvS7bJg==
+echo file_87f5e0a563c652f46a4750e9a2686f15.023=uY0xkpWmDFc/sFimXLSbAiE7sJScOK62AsISowj+rnIKqpxCE/AwnAgdVikMul2J3Ylx5hbIAo7uAYSpQrN0lg==
+echo file_87f5e0a563c652f46a4750e9a2686f15.024=30Zx27E/M7WLZjs5u86HJQGSHRwSj5hGicj8RROEIFkbqEG113r1sA2/5m7WI/9vMzuIkuSMZnPeyxsUTBAndw==
+echo file_87f5e0a563c652f46a4750e9a2686f15.025=WK2/3W72L2aAsCoOmbxM2H4qJmMjkZZAr9h5JEM/nzLRi8+6ZV5+Bd4Azjgc7dLAqgNI8zOTotqxA02agSoz7Q==
+echo file_87f5e0a563c652f46a4750e9a2686f15.026=ym4pOusUGLWOJtl7SJ8xrYfpB/mfRscUqv+8ysLm1fzMi7GLFbqn9kveT06UydQl+c+VRdYw5l3riuqpivZ1RA==
+echo file_87f5e0a563c652f46a4750e9a2686f15.027=wVTezAHM3WlbkrHxzLcfn+sOc0YIxGguL3aoVSuko/Fcycc+YcSNJDct895s7OchsBlEwB8SRgkp9TRWkMWrhw==
+echo file_87f5e0a563c652f46a4750e9a2686f15.028=9o+67/BEX1Ap09+ajQrtJenNOymvsyZPxh9HUoOlEcpeetF9Q2S2CgojNGYrfZ2YxpT85XQ4yuIBEH5QWud1vA==
+echo file_87f5e0a563c652f46a4750e9a2686f15.029=LnUXL2OPBVI6CEhNCZDsP1yy8PI71ZOTZzvfJDzfGgxjbwv+0ria+gRkJrHmcsdQdMrtfsOfB8F5MKVkFxfBQQ==
+echo file_87f5e0a563c652f46a4750e9a2686f15.030=4do94+i/2YfxLXGI55LOwRDgtpgx0iAKttXL3k8ki1DstgWnxybfyM4hnboE4FT+pWABD7CNTrnCi4335D7k6g==
+echo file_87f5e0a563c652f46a4750e9a2686f15.031=+WiOnrc3S2BUJExdELzfSqIpNuWIvM9PhGpnewqitDulZRkUtR5w/z9LT47XSxi4CYKxMUnm3pXnjOJRoUptCA==
+echo file_87f5e0a563c652f46a4750e9a2686f15.032=ifTdGso1BVohuKkXyttPdosFY+SBQQMJHUVCCe3DfwvlaiMiXIXWo1wZCz/0V6pMIUQsbIapSr0tuKlNHUW1dA==
+echo file_87f5e0a563c652f46a4750e9a2686f15.033=5o6wE1nCc1rCZbrOI7p5NWsYYWhZk2yInN1r5Gyub6T5EtCFone2+ZAk/HyDok+3356lNg5TLUndcPQ0K1OpbA==
+echo file_87f5e0a563c652f46a4750e9a2686f15.034=YQleWUK0baOfUHiQAoBI2eDfrSF9xodAcTjkngX16P4wuXDFZUMCa+o8/bc7aZYiq7w+5sRC/zm0Lq4dYfKheQ==
+echo file_87f5e0a563c652f46a4750e9a2686f15.035=hXL2j9A2OCXr2ii54vM+P5uz8q6hDDZ6YnDdOIarBUR1ivA7Sh0fX4L0zyi0HWxrNmAgXfmUMwGPeLJA8946gQ==
+echo file_87f5e0a563c652f46a4750e9a2686f15.036=S5l/o2cYQIvQt0tMEaSfwdK319tGw0IUSR8h2InYiOeo5HoA0Qqk6KzodYDmphVT1PLaizVWSDWxhEQfwKNjlw==
+echo file_87f5e0a563c652f46a4750e9a2686f15.037=fGk+TRQ8rf5yrdR6ETbvbTIQsZ7XrN/gkJrTUE8DYKIPbErwWM278BX9E6tbIeUjXejkWghSq2Vfh1hflvtLgg==
+echo file_87f5e0a563c652f46a4750e9a2686f15.038=rt4x7XrS70qtPikAwvzkZHRRHU9Xfsilh5FLBEKoIesxsVwLmHEgNVi0dnX87vOACq0Ib77qG3Gqgsuq4QgXRQ==
+echo file_87f5e0a563c652f46a4750e9a2686f15.039=nwL98ZyNs5cpS1L121qAqCBFratXQ8Zind8uEuSVVylArxZkwKdl0/Hq10NTZE49w+ITArdPlcSGYnGZp4/7uQ==
+echo file_87f5e0a563c652f46a4750e9a2686f15.040=aZc3wEgd/wFCHUXl9zzY80/hUQD15EYA/+NG9xhb9hiL14LzB1kOHcP36moqCWMIcLP7HhF/Q4xCXewdk6KaXw==
+echo file_87f5e0a563c652f46a4750e9a2686f15.041=bYc4A6UVgFmmeskNg9jUtl8ffdNyx+yDQniSgnQJghAkn1aC1G/Em1JuZEJ1+CpwyH37+AZDqCGeXF3mCGqJeA==
+echo file_87f5e0a563c652f46a4750e9a2686f15.042=sulo7AlXdttsWibHogPbn9vlBUxa6xfQWgKt/AMROKTCBOYqJYInVDahPFWA3GnGCJ6P66leS8kHZrxClqbiHQ==
+echo file_87f5e0a563c652f46a4750e9a2686f15.043=SuzfvhOPIko2b8PDJoxlycXVAeOemw4RhUFY9/82GmKrdWZGq7YdaA+iwJQKlFkqBmaoo3G1pzt6x36EGfwn6A==
+echo file_87f5e0a563c652f46a4750e9a2686f15.044=9wThRTVzyTGkif5XCkk2MEKf5UExZv7v1z+uK+yzG2k1Etd615CxxibTt/LcIvJv1UXthzyBi7mcG/jAbXqPNw==
+echo file_87f5e0a563c652f46a4750e9a2686f15.045=S7F8aa7/JWZjoW/+81Wcq87iZDyTf3zpZzdTPoIXDv2WJ42R7AGWi9AbDlAd7qIFoKb+rdN7Z5zHc2bx9KmbUg==
+echo file_87f5e0a563c652f46a4750e9a2686f15.046=mfzDVhDny4zkeZYX5yKocKwbtegW8ea+oLqOUGT7cLIU5++yDAIoReWWSP+Ai4axsHA89CV/GFclInuc2eQa3Q==
+echo file_87f5e0a563c652f46a4750e9a2686f15.047=i9clQWaPABfN7TasAMjbAIwlfEfUBhkbeqeXXWfBNZFzOaSwCjX13ODvYLQlovuUl1B/u5IYMLkRRJC/vQSWYw==
+echo file_87f5e0a563c652f46a4750e9a2686f15.048=CRGNUT/h2GuaSRaj5GOmrUdkyq1WWfDDL0sI2s/Vw/Ko6pWM8u7QhROuHdaN2GldIUgMhaB/aGjpVEE+h/Ebyw==
+echo file_87f5e0a563c652f46a4750e9a2686f15.049=PgTPiPXc/orLF4NVsDMoyAhJYgmgX8KULisa6djAoOTb3linpaSIklyqq7FlXParGYcF87YPMlVCk3gs7WXwlg==
+echo file_87f5e0a563c652f46a4750e9a2686f15.050=/JpHJAzWjgxU9KrXpd77f15FXOecJ83NzpF2IyZQh2I9lAhCV2pbfgo2O07v5IT2QSFZXLZjes/qCJwDWB13QQ==
+echo file_87f5e0a563c652f46a4750e9a2686f15.051=SeWbjgFexbVaHk6Gf94NYIzFDrPsOui9s/gfGGjfnnOzzpR+731qnqLtilsjrfXRxPoakh/1WLNmtsMP465M5A==
+echo file_87f5e0a563c652f46a4750e9a2686f15.052=krU2gKaqv97+5eaSJW2o+/Hf4Q21jKDJ9tYClh6gqVBJ+nrPiM+rA+JVzc+xdOlIf7zs1CMiYi9+Wm6BF1s2eQ==
+echo file_87f5e0a563c652f46a4750e9a2686f15.053=ovrpRNOltnpChhuE45bi1xAh7k1aPtb7F6QPebgWgAwuHbb9QnLSJF7Kbv387Ptv1JUsO2l0wWMf+/8D8lYiiQ==
+echo file_87f5e0a563c652f46a4750e9a2686f15.054=leA918NQgFGYDOstLnvSdvDJ+7PqtwseuyZuLeb2uxg6a3/5QXLJAWCE9BKcPHFvFySd5sGu8ZZktwkcqq6xnw==
+echo file_87f5e0a563c652f46a4750e9a2686f15.055=L0RKrFPZT3WGPxwxkDQ1J0LyVYlaBYJThivM79fCa+zIdenXjVx0gAyekODaZZFQHJSSxFJIHTmIW/ZXgl+wkw==
+)
+goto:eof
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
 ::DownloadStream64_B1809_3 STREAMLINED
 ::===============================================================================================================
 ::===============================================================================================================
@@ -5734,6 +6258,244 @@ echo 3092567b216a272f1e5e11515970042c^|cf83facb9fce2b7cc1684069bb727f8274977ebd^
 echo 4cd3e29cf84f0f0fd72241cef1d8e512^|32d2ed08cf40f070bb2522921c0f7718afdec5e6^|https://0x0.st/s56A.bin
 echo 40b825c01bf7f5583a34817ba8e41d31^|27e0d9ae1990f5e001900900fd001999de7b78fc^|https://0x0.st/s56m.bin
 echo 4db22f9c7b1f3c4315c21268272d551e^|874a1c8a5f8166bd6916842647559927ece3737c^|https://0x0.st/s56a.bin
+)
+goto:eof
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+::DownloadStream86_C1809_4 STREAMLINED
+::===============================================================================================================
+::===============================================================================================================
+:DownloadStream86_C1809_4
+>>download.txt (
+echo 884ae6619f3ed2eb3916ee43572bb974.001.obf^|533f90a9930e32803af70ed518be46fe4de95a65^|https://0x0.st/sh5i.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.002.obf^|a7595caceb1d7a871d7f3f991228e6084757c5cc^|https://0x0.st/sh5o.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.003.obf^|f9f57e1be97e889aaf067adde26ee417c8dea536^|https://0x0.st/sh5H.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.004.obf^|2f07c0f501a09b7581c0d03615eaba7e75ed3a9a^|https://0x0.st/sh5X.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.005.obf^|7ac3fa74269d4f50874974e10e74dcfe8d677878^|https://0x0.st/sh58.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.006.obf^|c0ecdce0acbf3578a8dea7dc3a1b0a9db399aa02^|https://0x0.st/sh5K.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.007.obf^|9f5b507d857d36245adcb7f3991645b13a88cebb^|https://0x0.st/sh5P.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.008.obf^|13a82eb0c8c7aafcc0d09c1ff519e1b1b7f7620d^|https://0x0.st/sh5Z.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.009.obf^|00738b66d58c22859b057096ec43f0eef582df45^|https://0x0.st/sh5N.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.010.obf^|6efe84db33a0c90896e02fda1ad907daa3648a58^|https://0x0.st/sh5q.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.011.obf^|648198eaeb27d3d5fabcc73ea7155b82b040dd1c^|https://0x0.st/sh5b.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.012.obf^|f2a24c7d2682f089e7458c801448a928499a8f8b^|https://0x0.st/sh5c.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.013.obf^|186ddd4d2d8735964284f07791df48c8d9c2b20e^|https://0x0.st/sh5T.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.014.obf^|635ab30e7bb056588a84dbc5e0dca6fbdcce50d2^|https://0x0.st/sh5A.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.015.obf^|ebad88003b632bfed458375c7c8f5d780e39837a^|https://0x0.st/sh5m.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.016.obf^|4bb2f415d4a63d0ffc2057b79646bba184da2d6e^|https://0x0.st/sh5a.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.017.obf^|3ea84eb00ad9df2fc8a891cfdb8c6e3f20ed33fe^|https://0x0.st/sh5B.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.018.obf^|f3093fcf8f949eaeba3004b2b93456566bd4a00a^|https://0x0.st/sh5M.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.019.obf^|d0d03b7c7b7ac141e033df16b88106254cf85bcc^|https://0x0.st/sh5u.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.020.obf^|0f7bb3eb74f844b8dfcbc0c4ca317a055dfde1f3^|https://0x0.st/sh5Q.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.021.obf^|a4a716e42cca27fa2b312c55b35dd734365e4cf9^|https://0x0.st/sh51.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.022.obf^|108390b2fd70d00e532dedebdc0cb9be2d36d90c^|https://0x0.st/sh5j.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.023.obf^|1247048adfc51d030f29dc5257682548d61c7de8^|https://0x0.st/sh52.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.024.obf^|cca4ba0cbe658ccefab9cf07fdb15a19da69e574^|https://0x0.st/sh5_.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.025.obf^|4710e80d5ad60925fd3db04d51f7dc712856781e^|https://0x0.st/sh5L.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.026.obf^|f263a5f6b0dc9e557c8a1f96faa2782caa0bd5f4^|https://0x0.st/sh59.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.027.obf^|1a396e4e3a18a6dd21797d7097453ff12f3cc6d9^|https://0x0.st/sh5p.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.028.obf^|480dc11b9451110efc48388bf281a9909684ecbc^|https://0x0.st/sh5f.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.029.obf^|7ffb4c69ebc9cafdb1521de6beadc33e769779e6^|https://0x0.st/sh5O.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.030.obf^|1634421332882b343bce00c755dc5f1d60fadf05^|https://0x0.st/sh5V.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.031.obf^|6195f8faf96e0a5b796747c68c060e787c6c77ce^|https://0x0.st/sh5W.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.032.obf^|764af9964ee42c08e71a303ebf269e76c4d3511b^|https://0x0.st/sh54.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.033.obf^|7270654eb92a42107bd94f5e368daaf481096840^|https://0x0.st/sh5J.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.034.obf^|99b7bf7f330683376fe688173ad5ea1c77a3d1e7^|https://0x0.st/sh5y.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.035.obf^|8e9d796eef57f69373b8e31b78302a8af09ed273^|https://0x0.st/sh5t.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.036.obf^|c7fb118180b50e405eaca6adf7db62b9da295fb0^|https://0x0.st/sh5v.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.037.obf^|4d6f61e5625c4c49c96f341a7e1c2acc127848da^|https://0x0.st/sh5w.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.038.obf^|cf5cd17915588145939851df37250f722eefd597^|https://0x0.st/sh5x.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.039.obf^|b4cab76a6f5dcd1aa60951a8175e35dca983250d^|https://0x0.st/sh53.bin
+echo 884ae6619f3ed2eb3916ee43572bb974.040.obf^|24429479eb99d3a73ef17dd0677f38b8bbf2a5e5^|https://0x0.st/sh5Y.bin
+)
+goto:eof
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+::DownloadStream86_B1809_4 STREAMLINED
+::===============================================================================================================
+::===============================================================================================================
+:DownloadStream86_B1809_4
+>>download.txt (
+echo c82af0a424a9332cb25aca7b53a5678e.001.obf^|b0e9d7009d38e9a2f537306b34c5b3bf09927390^|https://0x0.st/sh5U.bin
+echo c82af0a424a9332cb25aca7b53a5678e.002.obf^|0d0d8697e0249c5eb3afcdc9e74b1189e8a67308^|https://0x0.st/sh50.bin
+echo c82af0a424a9332cb25aca7b53a5678e.003.obf^|9829558595856d79ca4ecee0251bae4081b5bd73^|https://0x0.st/sh5G.bin
+echo c82af0a424a9332cb25aca7b53a5678e.004.obf^|2bafe0bac2f946dd87ab37a2208e4a87de7a377b^|https://0x0.st/sh5D.bin
+echo c82af0a424a9332cb25aca7b53a5678e.005.obf^|8b6878395a144b60c288c7f1261d45631d60268f^|https://0x0.st/sh5k.bin
+echo c82af0a424a9332cb25aca7b53a5678e.006.obf^|cf3e39bbab5a7f632c369a6f076ec379ec32be55^|https://0x0.st/sh5d.bin
+echo c82af0a424a9332cb25aca7b53a5678e.007.obf^|b64c820f1aea902b1a2d4f2ce39f176f7a79ffb2^|https://0x0.st/sh5n.bin
+echo c82af0a424a9332cb25aca7b53a5678e.008.obf^|26b38ca14f083b2f833dc3adcdbaa49221ab29ae^|https://0x0.st/sh55.bin
+echo c82af0a424a9332cb25aca7b53a5678e.009.obf^|83755e77e01fd06f856e6c4b216f99535fb8c685^|https://0x0.st/sh5R.bin
+echo c82af0a424a9332cb25aca7b53a5678e.010.obf^|ffbe311737fd12b7139d01d36973c3cb77ed2dd9^|https://0x0.st/sh57.bin
+echo c82af0a424a9332cb25aca7b53a5678e.011.obf^|af83b3146bab3f6584758c53dcd00314d18105e8^|https://0x0.st/sh5h.bin
+echo c82af0a424a9332cb25aca7b53a5678e.012.obf^|c409aa2ae464569b61e003c80dcc7334f50f5cb2^|https://0x0.st/sh5F.bin
+echo c82af0a424a9332cb25aca7b53a5678e.013.obf^|9b0729fa1f02da803b4d44aacf211b45dcba5f07^|https://0x0.st/sh5C.bin
+echo c82af0a424a9332cb25aca7b53a5678e.014.obf^|6868a69ea4bd90b3107b76784d0cf9aed513b499^|https://0x0.st/shRr.bin
+echo c82af0a424a9332cb25aca7b53a5678e.015.obf^|52aa3d56ac25cfa11835a1b36eeacae916160174^|https://0x0.st/shRs.bin
+echo c82af0a424a9332cb25aca7b53a5678e.016.obf^|935c4f5d2a3b82c4a1601f431e7aeb1e58cec6ab^|https://0x0.st/shRz.bin
+echo c82af0a424a9332cb25aca7b53a5678e.017.obf^|569fc3e2e6d70b0457913f7e6489917fc43f8c5d^|https://0x0.st/shR-.bin
+echo c82af0a424a9332cb25aca7b53a5678e.018.obf^|c245d83fda123af889fdb0445e00566acb0be39a^|https://0x0.st/shRo.bin
+echo c82af0a424a9332cb25aca7b53a5678e.019.obf^|5d78851d0f5c74fc428243514c9f1fd91c4f1e42^|https://0x0.st/shRH.bin
+echo c82af0a424a9332cb25aca7b53a5678e.020.obf^|c91aa633e9fa995af2a6dc3d75459628a08a8692^|https://0x0.st/shRX.bin
+echo c82af0a424a9332cb25aca7b53a5678e.021.obf^|127042ff35495ee4631b064d67fed37a3699bad3^|https://0x0.st/shR8.bin
+echo c82af0a424a9332cb25aca7b53a5678e.022.obf^|12c3fecad8530263f17902c0d34aed37f5825bdb^|https://0x0.st/shRK.bin
+echo c82af0a424a9332cb25aca7b53a5678e.023.obf^|6227b4a2685eeb73a3d184dfbe25e04ac135415c^|https://0x0.st/shRP.bin
+echo c82af0a424a9332cb25aca7b53a5678e.024.obf^|84188b08c5e35222eed3d714071bf756b3ade338^|https://0x0.st/shRZ.bin
+echo c82af0a424a9332cb25aca7b53a5678e.025.obf^|3ecfe7625a5fcbfe9e0cd57398dd7ea4fc6cdae8^|https://0x0.st/shRN.bin
+echo c82af0a424a9332cb25aca7b53a5678e.026.obf^|0fee5b20fcdbe6b8ccb2609882a17f5dbbba6eba^|https://0x0.st/shRq.bin
+echo c82af0a424a9332cb25aca7b53a5678e.027.obf^|86dc20bfaa077f66cc4853de055563c195b4a813^|https://0x0.st/shRb.bin
+echo c82af0a424a9332cb25aca7b53a5678e.028.obf^|f48209d5ce41101236c3021934419385b6d801f1^|https://0x0.st/shRc.bin
+echo c82af0a424a9332cb25aca7b53a5678e.029.obf^|7cda9b551078be54544112f332da612cbf5fe7f1^|https://0x0.st/shRT.bin
+echo c82af0a424a9332cb25aca7b53a5678e.030.obf^|136ea9fceac86817f64c9e94ee4d9cc89a4fce0c^|https://0x0.st/shRA.bin
+echo c82af0a424a9332cb25aca7b53a5678e.031.obf^|745e856cd8e1aa6760579ce85ca9d0a6de2b22f9^|https://0x0.st/shRm.bin
+echo c82af0a424a9332cb25aca7b53a5678e.032.obf^|3bb437e13ec5d5717ceab154e3f578686a36c121^|https://0x0.st/shRa.bin
+echo c82af0a424a9332cb25aca7b53a5678e.033.obf^|cfa61d51a3857261979b2011383709a9744348bf^|https://0x0.st/shRB.bin
+echo c82af0a424a9332cb25aca7b53a5678e.034.obf^|317e09178b1c0d3305465541bfeccfabba745255^|https://0x0.st/shRM.bin
+echo c82af0a424a9332cb25aca7b53a5678e.035.obf^|fb9a32a865ec254e9e73bf8f8b6bce5a6a902b49^|https://0x0.st/shRu.bin
+echo c82af0a424a9332cb25aca7b53a5678e.036.obf^|6ddc342f7cb7377dc92d50fa856bedd181039094^|https://0x0.st/shRS.bin
+echo c82af0a424a9332cb25aca7b53a5678e.037.obf^|075340b13e3c13890518581ecb3e987181ff4d20^|https://0x0.st/shRQ.bin
+echo c82af0a424a9332cb25aca7b53a5678e.038.obf^|1aba0cacfcfa97ac7a56d6a9da91a3f8ef3f8c15^|https://0x0.st/shR1.bin
+echo c82af0a424a9332cb25aca7b53a5678e.039.obf^|2bd68b846d9f8b08f48e3d0026eb160ffd6be9db^|https://0x0.st/shRj.bin
+)
+goto:eof
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+::DownloadStream64_C1809_4 STREAMLINED
+::===============================================================================================================
+::===============================================================================================================
+:DownloadStream64_C1809_4
+>>download.txt (
+echo d09ed4f60acf2e47c55d1a2a420dd93e.001.obf^|afea55cbd4835051a154038f8f8e2d8a8339dfe2^|https://0x0.st/shnH.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.002.obf^|4479ef75e2aaddbba2f2970ae5663172ecd877df^|https://0x0.st/shn8.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.003.obf^|55f7a6cc12d77761bf1b3234023ec11fbf4bdf77^|https://0x0.st/shnK.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.004.obf^|1f8eba80d575182826a671aae469f053f508394c^|https://0x0.st/shnP.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.005.obf^|453a36d1aac584b46b0d8df6013a3103ecd43d74^|https://0x0.st/shnZ.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.006.obf^|45d2f5c68b187c2679bcbcc67c0add08da7025c1^|https://0x0.st/shnN.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.007.obf^|08ecacd06e7eef8ef0360b5ac8b1a2055882ef7f^|https://0x0.st/shnq.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.008.obf^|ae9593561ff81d8398ccccae809e536df26bf988^|https://0x0.st/shnb.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.009.obf^|e6ba9ed323bf5c26502fff25429cfcf1dd77a274^|https://0x0.st/shnc.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.010.obf^|c7282131faf1a9419f40b5f8d21ddbb6a0d53516^|https://0x0.st/shnT.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.011.obf^|03d81df92146416824956aa7a955460ba97b2564^|https://0x0.st/shnA.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.012.obf^|5deb1433899e4d77d4e5f14d2ce2277c510c82f2^|https://0x0.st/shnm.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.013.obf^|eabdf4d74e8bfec1d7288410fee48e9a600025fd^|https://0x0.st/shna.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.014.obf^|2ecd179bf05caf485991324029a6ae790c2cf692^|https://0x0.st/shnB.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.015.obf^|b2d11a116b7108c74398f7bc0335a0edeec3d162^|https://0x0.st/shnM.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.016.obf^|aa37129ee983ecdb937eb08e5b0badabcc9f2659^|https://0x0.st/shnu.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.017.obf^|2400f74156930420086c42db0326c8140754e428^|https://0x0.st/shnS.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.018.obf^|b664a545164e372cdb1ee3e43165520d644588dc^|https://0x0.st/shnQ.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.019.obf^|58a2a8efbf8c26b2b0c4a62f479c4a2511bb1891^|https://0x0.st/shn1.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.020.obf^|a117d561594943e7c158c244cc114c3b0f559dd7^|https://0x0.st/shnj.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.021.obf^|f03232baaf7723cea4afa99a84b8e80693eec505^|https://0x0.st/shne.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.022.obf^|163f6b8b9daff1cbf1138f7d8aaddde4de60c2fa^|https://0x0.st/shn2.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.023.obf^|eae397822302032d2e31310379a5b09027095ea6^|https://0x0.st/shn_.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.024.obf^|bb18ecacf8a918a2ac718b57690775d871217f9c^|https://0x0.st/shnL.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.025.obf^|2a9ae9b30d12ca799aa322c915d85a2bf2cea221^|https://0x0.st/shn9.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.026.obf^|8524742902157c48c81ccb051f72693e3ada2d3a^|https://0x0.st/shnp.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.027.obf^|7464ca124f844e908a45efcfc1045c191fbb476b^|https://0x0.st/shnf.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.028.obf^|a7485edd2a822cde8c138c33c7c17102c8f1e4fc^|https://0x0.st/shnO.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.029.obf^|ec5e2fb2ae86e29bf294178b78a1693a677b748e^|https://0x0.st/shnV.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.030.obf^|20f41b9daa504801fc165bade08ade62e2885d7c^|https://0x0.st/shnW.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.031.obf^|775e7cf789d0b420ac985c9fa0c08f8ec5d391ee^|https://0x0.st/shn4.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.032.obf^|19dc47a0f9739d4c817bd16879de957211e841e0^|https://0x0.st/shnJ.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.033.obf^|954fd444c25f7266ec15d8f6dbcd853c281e9238^|https://0x0.st/shny.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.034.obf^|c3590867f9a3dd9d60d4b0dca6a926c9632c5b19^|https://0x0.st/shnt.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.035.obf^|67b5f4048e74b8ad5d601e1b6edb2fa9b6d4dca9^|https://0x0.st/shnw.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.036.obf^|f86b8f8ab23e2f82f04cd6bed8420d90d3e478c3^|https://0x0.st/shnx.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.037.obf^|cd4271287e616dfead1757e87f34ec5b95722a2c^|https://0x0.st/shn3.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.038.obf^|29cad7ca93c7c9c316ef824e80bce8e292188174^|https://0x0.st/shng.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.039.obf^|4176a3f3eca864b99d1084f41d2e2a27ad370fe3^|https://0x0.st/shnE.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.040.obf^|a30cfaa47c6baab1665d2cee5e2ad3dcf7724d68^|https://0x0.st/shn6.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.041.obf^|086cbf3b6a905fddbf1d327bd8655886425b89a3^|https://0x0.st/shnI.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.042.obf^|a2ff71a9cb31be7dcb7e8cb4314f31753bfb758e^|https://0x0.st/shnl.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.043.obf^|f04a53469af396174afaa8c34845e589cb226cf9^|https://0x0.st/shnU.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.044.obf^|39f6c7e1cd655c8caa3f5e8162d1f033dbb2038f^|https://0x0.st/shn0.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.045.obf^|7a8a4e3a443e875c5b612f66c4ba7868fa98b229^|https://0x0.st/shnG.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.046.obf^|a224176de3c64b9a0d9eb5fb5dafcadf2a870c66^|https://0x0.st/shnD.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.047.obf^|a50646eee7639ec0aaabeb1f384e5015ade7e884^|https://0x0.st/shnk.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.048.obf^|d9adba509f836ab9da7d37b4d88583758b947b4e^|https://0x0.st/shnd.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.049.obf^|a9f3674f885a4b8581df6beeecd10fc738ae29e0^|https://0x0.st/shnn.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.050.obf^|9f4a2070abf0123e4bba07e6369eb5798e02309f^|https://0x0.st/shn5.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.051.obf^|d818e991464a6c0b482f97057065606508352820^|https://0x0.st/shnR.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.052.obf^|259bd68232fb49062fb67e956276fe2fbcc9e032^|https://0x0.st/shn7.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.053.obf^|5addb0a11030695ab7a19e5a87051b8bfb9db077^|https://0x0.st/shnh.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.054.obf^|3459584b9be804e25acf2f8a89fee3f077e57ab3^|https://0x0.st/shnF.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.055.obf^|c84a15ce0b3927aa1c1dd8e093e7441904711fb4^|https://0x0.st/sh5r.bin
+echo d09ed4f60acf2e47c55d1a2a420dd93e.056.obf^|1d8ba9fc7d6b48dcbce3b51130e635f4efaf6867^|https://0x0.st/sh5s.bin
+)
+goto:eof
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+:================================================================================================================
+::DownloadStream64_B1809_4 STREAMLINED
+::===============================================================================================================
+::===============================================================================================================
+:DownloadStream64_B1809_4
+>>download.txt (
+echo 87f5e0a563c652f46a4750e9a2686f15.001.obf^|b029bb1ed31d592dd760f18522b1ee81108be844^|https://0x0.st/shve.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.002.obf^|f8574ae29010d3f7c0e3031c216953438b02e9a5^|https://0x0.st/shv2.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.003.obf^|21df23262f25866801124e736d0ae4177dbf3e18^|https://0x0.st/shv_.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.004.obf^|6cf462a383872a09922955216520051b18fc7b8d^|https://0x0.st/shvL.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.005.obf^|a47b64f14659afae40decd5c36d15b81924eb132^|https://0x0.st/shv9.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.006.obf^|fe02cadfd4325fc48c3575d466a30dee4b272d6c^|https://0x0.st/shvf.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.007.obf^|ae73303da0444b141a034e5f03471d1feaeeea09^|https://0x0.st/shvO.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.008.obf^|6c997f8dc1247535c83ca714262b39dd7d10e1f8^|https://0x0.st/shvV.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.009.obf^|828e7b1c9a0547e5209d198397fae1e45c5453d2^|https://0x0.st/shvW.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.010.obf^|41f106bee672ad2b434d12148f25db7b73e8927d^|https://0x0.st/shvJ.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.011.obf^|48c82824b1738a0f26f6f442b32404732e1f99d0^|https://0x0.st/shvy.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.012.obf^|5dffa0987e534007d40921bd526f5610e451dce4^|https://0x0.st/shvt.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.013.obf^|ec2491cef80ce155b2ce3e81cc513e89d504aee3^|https://0x0.st/shvw.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.014.obf^|4bea85aa0d88f215469a17d608c0ae2c8f444639^|https://0x0.st/shvx.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.015.obf^|5228761c214f172cd8d657c8e9e4cd950432dd06^|https://0x0.st/shv3.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.016.obf^|547a68442a66663d31224755aaa601665f765c35^|https://0x0.st/shvY.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.017.obf^|f8bfe26f53b3d2c98d27f0f62d59c905f63b0315^|https://0x0.st/shvg.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.018.obf^|175fe23182487d1c16f4be30be01191919d122a3^|https://0x0.st/shvE.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.019.obf^|476fc8938bce75ba8e24f39bceb885fcd350f7df^|https://0x0.st/shv6.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.020.obf^|4c340e78dad7025c85a51fd6690f2c706b86097d^|https://0x0.st/shvI.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.021.obf^|957ea864c23e1445214a4958803ffd6deca0c415^|https://0x0.st/shvl.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.022.obf^|d3c93ea1070df27a2ad982458993d2b07ab78fcd^|https://0x0.st/shvU.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.023.obf^|46915cd781b863650e185b328b512b076d211888^|https://0x0.st/shv0.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.024.obf^|2c50e41ce9178a0bc4258db8e2de112fe9ac8e7b^|https://0x0.st/shvG.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.025.obf^|9a8dc87805f8cbc1ec61a5bbc8c905eb061c7ee0^|https://0x0.st/shvk.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.026.obf^|838dcbaede18d87414ffc3dcb8c609f4235e117e^|https://0x0.st/shvn.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.027.obf^|0c9a6f4231c3523cd51cac747b41ef03d4d021b0^|https://0x0.st/shv5.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.028.obf^|d45daef6790376fe95914083f7f260e68f71d038^|https://0x0.st/shvR.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.029.obf^|8f8fe232c906d1300371719c8f145e381d620e3d^|https://0x0.st/shv7.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.030.obf^|7cb73855dead8f8e8cf1801db6306f63c3255f06^|https://0x0.st/shvh.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.031.obf^|37fa797b022bc2d2c3c344d95323597d311c4ff5^|https://0x0.st/shvF.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.032.obf^|35a17f118185c28c61105b718d23f110ab9a8d4d^|https://0x0.st/shvC.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.033.obf^|612f32f0da65decf4ca0526c9894f28c5dc13774^|https://0x0.st/shwr.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.034.obf^|fc270bdd23be53657beee06273549a50e6f474f3^|https://0x0.st/shwz.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.035.obf^|a31bbc427e9c0dd0fd239a365b1613ffb7236019^|https://0x0.st/shwi.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.036.obf^|71d5d543460499af36cff54f99db6c39dbaf9d0f^|https://0x0.st/shw-.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.037.obf^|e691746ca2eca3736880501411f833c32404b430^|https://0x0.st/shwo.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.038.obf^|721516019cb7bf64f21dcab2d6758c80ad52c7fa^|https://0x0.st/shwH.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.039.obf^|459928ffc0749458283fc407655a771174d3a59a^|https://0x0.st/shwX.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.040.obf^|66b7e75b7c97eb665efff0bd9d5db97f11cff727^|https://0x0.st/shw8.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.041.obf^|97b8fc6d165009fa9f343219531d182fe40794af^|https://0x0.st/shwK.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.042.obf^|82f8d06399864b266bf1fc5a4adae5124d96bfb8^|https://0x0.st/shwZ.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.043.obf^|806b7f1d2010c756615cbf5508ebdbcb30ff72cf^|https://0x0.st/shwN.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.044.obf^|06e3d89224fe5227efb5987ad29b01adaac8527d^|https://0x0.st/shwq.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.045.obf^|8424b80284482f663ac6883ae944737f2e0906e8^|https://0x0.st/shwb.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.046.obf^|e40b97edbb6bbf9a8c86a323203558520fb93f3f^|https://0x0.st/shwc.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.047.obf^|7247f5570f05b357e109593ed36a7c3ca5837291^|https://0x0.st/shwT.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.048.obf^|a6a319d2c5a02662aebced3aaff9608d10325149^|https://0x0.st/shwA.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.049.obf^|4edee228ae196d86d2ad6e3c1b07e6a49c452121^|https://0x0.st/shwm.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.050.obf^|9ac8859b930e077d93c51b40fb5c80d7e1d64f24^|https://0x0.st/shwa.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.051.obf^|0935803fa006cc6747da52d9e8d5372ab4f666b0^|https://0x0.st/shwB.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.052.obf^|c8b3696fd1cca21a711ee57b3afbacea7cd57ce4^|https://0x0.st/shwM.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.053.obf^|1901a10c7ec69d50932b5ce3ee8990a42c1317f8^|https://0x0.st/shwu.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.054.obf^|4fc13522c4c836ef3b8afa6f107cd4d30b574697^|https://0x0.st/shwS.bin
+echo 87f5e0a563c652f46a4750e9a2686f15.055.obf^|55a31afb41a6b03e90673c62498b444f0f8657a0^|https://0x0.st/shwQ.bin
 )
 goto:eof
 :================================================================================================================
@@ -6013,3 +6775,8 @@ echo:
 echo echo "$output" ^| grep -o 'http.*software-download.*"' | sed 's/",download.*//g'
 )
 goto:eof
+::===============================================================================================================
+::===============================================================================================================
+::===============================================================================================================
+::===============================================================================================================
+:EOF

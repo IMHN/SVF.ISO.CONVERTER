@@ -15,7 +15,11 @@
 
 **INFO:**
 
-Tool uses the static links for the Enterprise EVAL ISOs to download as source.
+Windows 7 and Windows 10 Dec Refresh upwards (17763.194/253) use new download/decryption created by [mkuba50](https://forums.mydigitallife.net/members/mkuba50.317641/).
+
+New method directly uses encrypted/splitted en-us ISO Uploads.
+
+Old method still uses the static links for the Enterprise EVAL ISOs to download as source.
 
 Then downloads the SVF to create the en-us Consumer or Business ISO from it.
 
